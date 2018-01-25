@@ -71,7 +71,7 @@ export default class HomepageLayout extends Component {
                   Schedule
                 </Menu.Item>
                 <Menu.Item position="right">
-                  <Button as="a" href='/api/v1/login/authsch/' inverted>
+                  <Button as="a" inverted>
                     Log in
                   </Button>
                 </Menu.Item>
@@ -81,7 +81,7 @@ export default class HomepageLayout extends Component {
             <Container text>
               <Header
                 as="h1"
-                content="KSZK"
+                content="Profil"
                 inverted
                 style={{
                   fontSize: "4em",
