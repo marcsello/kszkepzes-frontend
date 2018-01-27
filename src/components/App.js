@@ -1,12 +1,11 @@
-import React from 'react';
-import Header from './Header';
-import Main from './Main';
-import Profile from './Profile'
+import React from "react";
+import Header from "./Header";
+import Main from "./Main";
 
 const App = () => (
   <div>
-    {/*<Header />*/}
-    <Profile />
+    <Header />
+    <Main />
   </div>
 );
 

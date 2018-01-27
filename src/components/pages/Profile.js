@@ -33,7 +33,7 @@ const FixedMenu = () => (
   </Menu>
 );
 
-export default class Schedule extends Component {
+export default class Profile extends Component {
   state = {};
 
   hideFixedMenu = () => this.setState({ visible: false });
@@ -71,7 +71,7 @@ export default class Schedule extends Component {
               />
               <Header
                 as="h2"
-                content="Ütemterv"
+                content="Profil"
                 inverted
                 style={{ fontSize: "1.7em", fontWeight: "normal" }}
               />
