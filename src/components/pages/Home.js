@@ -1,118 +1,131 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
 import {
   Button,
   Container,
-  Grid,
   Header,
   Icon,
-  List,
-  Menu,
   Segment,
-  Visibility
+  Image,
+  Divider
 } from "semantic-ui-react";
-
-const FixedMenu = () => (
-  <Menu fixed="top" size="large">
-    <Container>
-      <Menu.Item as={NavLink} to="/home">
-        Home
-      </Menu.Item>
-      <Menu.Item as={NavLink} to="/roster">
-        Roster
-      </Menu.Item>
-      <Menu.Item as={NavLink} to="/schedule">
-        Schedule
-      </Menu.Item>
-      <Menu.Menu position="right">
-        <Menu.Item className="item">
-          <Button>Log in</Button>
-        </Menu.Item>
-      </Menu.Menu>
-    </Container>
-  </Menu>
-);
+import KSZKbiglogo from "../images/kszk_big_logo.png";
 
 export default class Home extends Component {
-  state = {};
-
-  hideFixedMenu = () => this.setState({ visible: false });
-  showFixedMenu = () => this.setState({ visible: true });
-
   render() {
-    const { visible } = this.state;
-
     return (
       <div>
-        {visible ? <FixedMenu /> : null}
-
-        <Visibility
-          onBottomPassed={this.showFixedMenu}
-          onBottomVisible={this.hideFixedMenu}
-          once={false}
-        >
-          <Segment
+        <Segment inverted textAlign="center" vertical>
+          <Header
+            as="h1"
+            content="Üdvözlünk a"
             inverted
-            textAlign="center"
-            style={{ minHeight: 700, padding: "1em 0em" }}
-            vertical
-          >
-            <Container text>
-              <Header
-                as="h1"
-                content="KSZK"
-                inverted
-                style={{
-                  fontSize: "4em",
-                  fontWeight: "normal",
-                  marginBottom: 0,
-                  marginTop: "3em"
-                }}
-              />
-              <Header
-                as="h2"
-                content="Főoldal"
-                inverted
-                style={{ fontSize: "1.7em", fontWeight: "normal" }}
-              />
-              <Button primary size="huge">
-                Get Started
-                <Icon name="right arrow" />
-              </Button>
-            </Container>
-          </Segment>
-        </Visibility>
-
-        <Segment inverted vertical style={{ padding: "5em 0em" }}>
+            style={{
+              fontSize: "3em",
+              fontWeight: "normal",
+              marginBottom: 0,
+              marginTop: "0.5em"
+            }}
+          />
+          <Header
+            as="h1"
+            content="Kollégiumi Számítástechnikai Kör"
+            inverted
+            style={{
+              fontSize: "4em",
+              fontWeight: "bold",
+              marginBottom: "0.5em",
+              marginTop: "0.5em"
+            }}
+          />
+          <Header
+            as="h1"
+            content="érdeklődőinek szánt weboldalán!"
+            inverted
+            style={{
+              fontSize: "3em",
+              fontWeight: "normal",
+              marginBottom: 0,
+              marginTop: "0.5em"
+            }}
+          />
+          <Image
+            verticalAlign="middle"
+            size="small"
+            src={KSZKbiglogo}
+            style={{ marginTop: "4em" }}
+          />
+          <Header
+            as="h1"
+            content="Mindenkit szeretettel várunk a KSZKépzés-re!"
+            inverted
+            style={{
+              fontSize: "3em",
+              fontWeight: "normal",
+              marginBottom: 0,
+              marginTop: "1em"
+            }}
+          />
           <Container>
-            <Grid divided inverted stackable>
-              <Grid.Row>
-                <Grid.Column width={3}>
-                  <Header inverted as="h4" content="About" />
-                  <List link inverted>
-                    <List.Item as="a">Sitemap</List.Item>
-                    <List.Item as="a">Contact Us</List.Item>
-                    <List.Item as="a">Religious Ceremonies</List.Item>
-                    <List.Item as="a">Gazebo Plans</List.Item>
-                  </List>
-                </Grid.Column>
-                <Grid.Column width={3}>
-                  <Header inverted as="h4" content="Services" />
-                  <List link inverted>
-                    <List.Item as="a">Banana Pre-Order</List.Item>
-                    <List.Item as="a">DNA FAQ</List.Item>
-                    <List.Item as="a">How To Access</List.Item>
-                    <List.Item as="a">Favorite X-Men</List.Item>
-                  </List>
-                </Grid.Column>
-                <Grid.Column width={7}>
-                  <Header as="h4" inverted>
-                    Footer Header
-                  </Header>
-                  <p>Created by DevTeam 2017.</p>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
+            <Button
+            href="/api/v1/login/authsch/"
+              primary
+              size="huge"
+              style={{
+                fontSize: "2em",
+                marginTop: "1em",
+                marginBottom: "1em"
+              }}
+            >
+              Jelentkezés
+              <Icon name="right arrow" />
+            </Button>
+          </Container>
+        </Segment>
+        <Segment style={{ padding: "8em 0em" }} vertical>
+          <Container text>
+            <Header as="h3" style={{ fontSize: "2em" }}>
+              Kik is vagyunk mi?
+            </Header>
+            <p style={{ fontSize: "1.33em" }}>
+              A Kollégiumi Számítástechnikai Kör az Egyetem legrégebben működő
+              és legnagyobb aktív, informatikával foglalkozó öntevékeny
+              csoportosulása, tavaly ünnepeltük 40. születésnapunkat. A patinás
+              név mögött vidám hangulatú, alkotó kedvű csapat rejlik, mely a Kar
+              jó szakmai képességű, számítástechnika iránt kiemelten érdeklődő
+              tagjaiból verbuválódott, és bővül évente új tehetségekkel, lelkes
+              informatikusokkal, villamosmérnökökkel.
+            </p>
+            <Button size="large" href="/circles">
+              Ismerd meg a köreinket! <Icon name="right arrow" />
+            </Button>
+            <Divider as="h4" className="header" style={{ margin: "3em 0em" }} />
+            <Header as="h3" style={{ fontSize: "2em" }}>
+              Lehetőségek
+            </Header>
+            <p style={{ fontSize: "1.33em" }}>
+              A KSZK a lehetőségek tárháza, a hely ahol Te – leendő mérnök –
+              minden területen kipróbálhatod, továbbképezheted magad. Nálunk
+              kibontakoztathatod kreativitásod, tapasztalatot, mérnöki
+              szemléletet szerezhetsz, miközben az ún. soft skill-jeidet is
+              fejlesztheted. Ha számodra a szakma hivatás, ha szeretsz új
+              dolgokat alkotni vagy csak jó társaságra vágysz, a legjobb helyre
+              kerültél. A reszort körei a szakma egy-egy meghatározó területével
+              foglalkoznak a fejlesztés és üzemeltetés területén.
+            </p>
+            <Divider as="h4" className="header" style={{ margin: "3em 0em" }} />
+            <Header as="h3" style={{ fontSize: "2em" }}>
+              Képzésünk
+            </Header>
+            <p style={{ fontSize: "1.33em" }}>
+              Kilenc alkalmas képzésünk végén Te is igazi KSZK-ssá válhatsz,
+              hiszen rengeteg szakmai tudást igyekszünk átadni nektek. A
+              képzésalkalmak rendkívül jó hangulatban telnek, és a szociális
+              irányultságú foglalkozások alatt egy nagyon jó csapat kovácsolódik
+              az érdeklődőkből. Az első képzés időpontja február 20. hétfő
+              19:30, ettől kezdve minden héten találkozunk ugyanabban az
+              időpontban. A képzés ideje alatt március 10-12 között rendezünk
+              tábort. Az alkalmakon és a táborban kötelező a részvétel.
+            </p>
           </Container>
         </Segment>
       </div>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Container, Header, Segment } from "semantic-ui-react";
 
-export default class Trainers extends Component {
+export default class Statistics extends Component {
   render() {
     return (
       <div>
@@ -9,7 +9,7 @@ export default class Trainers extends Component {
           <Container>
             <Header
               as="h1"
-              content="Képzők - TODO"
+              content="Statisztikák - TODO"
               inverted
               style={{
                 fontSize: "3em",
