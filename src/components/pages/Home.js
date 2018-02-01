@@ -33,94 +33,90 @@ const range = (count) => {
   return newArray;
 };
 
-const RegisterHeader = ({ image }) => (
-  <div className='car-image-kszk'>
-    <img src={`images/${image}.JPG`} width='100%' alt='' />
-    <div className='car-text-kszk'>
-      <Segment textAlign='center' vertical>
-        <Header
-          as='h1'
-          content='Üdvözlünk a'
-          inverted
-          style={{
-            fontSize: '3em',
-            fontWeight: 'normal',
-            marginBottom: 0,
-            marginTop: '0.5em',
-          }}
-        />
-        <Header
-          as='h1'
-          content='Kollégiumi Számítástechnikai Kör'
-          inverted
-          style={{
-            fontSize: '4em',
-            fontWeight: 'bold',
-            marginBottom: '0.5em',
-            marginTop: '0.5em',
-          }}
-        />
-        <Header
-          as='h1'
-          content='érdeklődőinek szánt weboldalán!'
-          inverted
-          style={{
-            fontSize: '3em',
-            fontWeight: 'normal',
-            marginBottom: 0,
-            marginTop: '0.5em',
-          }}
-        />
-        <Image
-          verticalAlign='middle'
-          size='small'
-          src={KSZKbiglogo}
-          style={{ marginTop: '4em' }}
-        />
-        <Header
-          as='h1'
-          content='Mindenkit szeretettel várunk a KSZKépzés-re!'
-          inverted
-          style={{
-            fontSize: '3em',
-            fontWeight: 'normal',
-            marginBottom: 0,
-            marginTop: '1em',
-          }}
-        />
-        <Container>
-          <Button
-            href='/api/v1/login/authsch/'
-            primary
-            size='huge'
-            style={{
-              fontSize: '2em',
-              marginTop: '1em',
-              marginBottom: '1em',
-            }}
-          >
-            Jelentkezés
-            <Icon name='right arrow' />
-          </Button>
-        </Container>
-      </Segment>
-    </div>
-  </div>
-);
-
 export default class Home extends Component {
   render() {
     return (
       <div>
-        <Slider {...settings}>
-          {
-            range(23).map(image => (
-              <div key={image}>
-                <RegisterHeader image={image} />
-              </div>
-            ))
-          }
-        </Slider>
+        <div className='car-image-kszk'>
+          <Slider {...settings}>
+            {
+              range(23).map(image => (
+                <div key={image}>
+                  <img src={`images/${image}.JPG`} width='100%' alt='' />
+                </div>
+              ))
+            }
+          </Slider>
+          <div className='car-text-kszk'>
+            <Segment textAlign='center' vertical>
+              <Header
+                as='h1'
+                content='Üdvözlünk a'
+                inverted
+                style={{
+                  fontSize: '3em',
+                  fontWeight: 'normal',
+                  marginBottom: 0,
+                  marginTop: '0.5em',
+                }}
+              />
+              <Header
+                as='h1'
+                content='Kollégiumi Számítástechnikai Kör'
+                inverted
+                style={{
+                  fontSize: '4em',
+                  fontWeight: 'bold',
+                  marginBottom: '0.5em',
+                  marginTop: '0.5em',
+                }}
+              />
+              <Header
+                as='h1'
+                content='érdeklődőinek szánt weboldalán!'
+                inverted
+                style={{
+                  fontSize: '3em',
+                  fontWeight: 'normal',
+                  marginBottom: 0,
+                  marginTop: '0.5em',
+                }}
+              />
+              <Image
+                verticalAlign='middle'
+                size='small'
+                src={KSZKbiglogo}
+                style={{ marginTop: '4em' }}
+              />
+              <Header
+                as='h1'
+                content='Mindenkit szeretettel várunk a KSZKépzés-re!'
+                inverted
+                style={{
+                  fontSize: '3em',
+                  fontWeight: 'normal',
+                  marginBottom: 0,
+                  marginTop: '1em',
+                }}
+              />
+              <Container>
+                <Button
+                  href='/api/v1/login/authsch/'
+                  primary
+                  size='huge'
+                  style={{
+                    fontSize: '2em',
+                    marginTop: '1em',
+                    marginBottom: '1em',
+                  }}
+                >
+                  Jelentkezés
+                  <Icon name='right arrow' />
+                </Button>
+              </Container>
+            </Segment>
+          </div>
+        </div>
         <Segment style={{ padding: '8em 0em' }} vertical>
           <Container text>
             <Header as='h3' style={{ fontSize: '2em' }}>
