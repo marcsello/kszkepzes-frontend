@@ -1,0 +1,12 @@
+.car-image-kszk {
+   position: relative;
+   width: 100%; /* for IE 6 */
+   /* height: 1000px; */
+}
+
+.car-text-kszk {
+   position: absolute;
+   left: 0;
+   width: 100%;
+   top: 0;
+}
