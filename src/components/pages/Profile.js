@@ -19,7 +19,9 @@ class Profile extends Component {
   }
 
   render() {
-    const { nick, groups, motivation, signed, id } = this.props;
+    const {
+      nick, groups, motivation, signed, id,
+    } = this.props;
     return (
       <div>
         <Segment textAlign='center' vertical>
@@ -55,12 +57,14 @@ class Profile extends Component {
               <Form.Checkbox
                 name='signed'
                 label='Szeretnék jelentkezni a KSZK-ba'
-                onChange={(_, v) => this.props.textChange({ target: { name: v.name, value: v.checked } })}
+                onChange={(_, v) =>
+                  this.props.textChange({ target: { name: v.name, value: v.checked } })
+                }
                 checked={signed}
               />
               <Form.Button
                 onClick={() => this.props.submitRegistration({
-                  nick, motivation, signed, groups, id
+                  nick, motivation, signed, groups, id,
                 })}
               >
                 Mentés
@@ -73,14 +77,16 @@ class Profile extends Component {
   }
 }
 
-const mapStateToProps = ({ user: { nick, groups, motivation, signed, id } }) => {
-  return {
-    nick,
-    groups,
-    motivation,
-    signed,
-    id,
-  };
-};
+const mapStateToProps = ({
+  user: {
+    nick, groups, motivation, signed, id,
+  },
+}) => ({
+  nick,
+  groups,
+  motivation,
+  signed,
+  id,
+});
 
 export default connect(mapStateToProps, { textChange, submitRegistration, groupChange })(Profile);

@@ -1,6 +1,5 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import { withRouter } from 'react-router'
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import Home from './pages/Home';
 import Trainers from './pages/Trainers';
 import Schedule from './pages/Schedule';

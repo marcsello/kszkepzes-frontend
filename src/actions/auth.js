@@ -9,8 +9,15 @@ const axios = ax.create({
 export const getUserData = () => (
   async (dispatch) => {
     const user = await axios.get('/api/v1/profiles/me');
-    const { id, join_date: joinDate, nick, motivation, signed, groups } = user.data;
-    dispatch({ type: GET_USERDATA, payload: { id, joinDate, nick, motivation, signed, groups } });
+    const {
+      id, join_date: joinDate, nick, motivation, signed, groups,
+    } = user.data;
+    dispatch({
+      type: GET_USERDATA,
+      payload: {
+        id, joinDate, nick, motivation, signed, groups,
+      },
+    });
   }
 );
 
@@ -24,7 +31,9 @@ export const groupChange = groups => (
   dispatch => (dispatch({ type: GROUP_CHANGE, payload: groups }))
 );
 
-export const submitRegistration = ({ nick, groups, signed, motivation, id }) => (
+export const submitRegistration = ({
+  nick, groups, signed, motivation, id,
+}) => (
   async (dispatch) => {
     const response = await axios.patch(`/api/v1/profiles/${id}/`, {
       nick, groups, signed, motivation,
