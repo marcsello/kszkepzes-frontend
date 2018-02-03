@@ -1,5 +1,5 @@
 import ax from 'axios';
-import { GET_USERDATA, PROFILE_CHANGE, GROUP_CHANGE } from './types';
+import { GET_USERDATA, PROFILE_CHANGE, GROUP_CHANGE, LOGOUT } from './types';
 
 const axios = ax.create({
   xsrfCookieName: 'csrftoken',
@@ -42,6 +42,15 @@ export const submitRegistration = ({
       alert('Sikeres mentés!');
     } else {
       alert('Mentés nem sikerült!');
+    }
+  }
+);
+
+export const logout = () => (
+  async (dispatch) => {
+    const response = await axios.get('/api/v1/logout/');
+    if (response) {
+      dispatch({ action: LOGOUT });
     }
   }
 );

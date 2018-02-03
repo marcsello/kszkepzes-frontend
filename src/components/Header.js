@@ -9,7 +9,7 @@ import {
   Image,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { getUserData } from '../actions';
+import { getUserData, logout } from '../actions';
 import KSZKlogo from './images/kszk_logo.svg';
 
 const FixedMenu = ({ user }) => (
@@ -31,7 +31,10 @@ const FixedMenu = ({ user }) => (
         <Menu.Item className='item'>
           {
             user.id ?
-              <Button as={Link} to='/profile'>Profilom</Button>
+              <div>
+                <Button as={Link} to='/profile'>Profilom</Button>
+                <Button onClick={() => this.props.logout()}>Kijelentkezés</Button>
+              </div>
             :
               <Button href='/api/v1/login/authsch/'>Bejelentkezés</Button>
           }
@@ -114,4 +117,4 @@ const mapStateToProps = ({ user }) => ({
   user,
 });
 
-export default connect(mapStateToProps, { getUserData })(Header);
+export default connect(mapStateToProps, { getUserData, logout })(Header);
