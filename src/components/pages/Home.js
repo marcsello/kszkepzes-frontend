@@ -8,6 +8,7 @@ import {
   Image,
   Divider,
 } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 import Slider from 'react-slick';
 import './Home.css';
 import KSZKbiglogo from '../images/kszk_big_logo.png';
@@ -33,7 +34,7 @@ const range = (count) => {
   return newArray;
 };
 
-export default class Home extends Component {
+class Home extends Component {
   render() {
     return (
       <div>
@@ -100,19 +101,36 @@ export default class Home extends Component {
                 }}
               />
               <Container>
-                <Button
-                  href='/api/v1/login/authsch/'
-                  primary
-                  size='huge'
-                  style={{
-                    fontSize: '2em',
-                    marginTop: '1em',
-                    marginBottom: '1em',
-                  }}
-                >
-                  Jelentkezés
-                  <Icon name='right arrow' />
-                </Button>
+                {
+                  this.props.user.id ?
+                    <Button
+                      href='/profile'
+                      primary
+                      size='huge'
+                      style={{
+                        fontSize: '2em',
+                        marginTop: '1em',
+                        marginBottom: '1em',
+                      }}
+                    >
+                      Profilom
+                      <Icon name='right arrow' />
+                    </Button>
+                      :
+                    <Button
+                      href='/api/v1/login/authsch/'
+                      primary
+                      size='huge'
+                      style={{
+                        fontSize: '2em',
+                        marginTop: '1em',
+                        marginBottom: '1em',
+                      }}
+                    >
+                      Bejelentkezés
+                      <Icon name='right arrow' />
+                    </Button>
+                }
               </Container>
             </Segment>
           </div>
@@ -168,3 +186,9 @@ export default class Home extends Component {
     );
   }
 }
+
+const mapStateToProps = ({ user }) => ({
+  user,
+});
+
+export default connect(mapStateToProps, {})(Home);

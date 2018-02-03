@@ -1,81 +1,105 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { Component } from 'react';
+import { NavLink, Link } from 'react-router-dom';
 import {
   Menu,
   Container,
   Button,
   Segment,
   Visibility,
-  Image
-} from "semantic-ui-react";
-import { Component } from "react";
-import KSZKlogo from "./images/kszk_logo.svg";
+  Image,
+} from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { getUserData } from '../actions';
+import KSZKlogo from './images/kszk_logo.svg';
 
-const FixedMenu = () => (
-  <Menu fixed="top" size="large" pointing>
+const FixedMenu = ({ user }) => (
+  <Menu fixed='top' size='large' pointing>
     <Container>
-      <Menu.Item as={NavLink} to="/home">
+      <Menu.Item as={NavLink} to='/home'>
         Főoldal
       </Menu.Item>
-      <Menu.Item as={NavLink} to="/circles">
+      <Menu.Item as={NavLink} to='/circles'>
         Köreink
       </Menu.Item>
-      <Menu.Item as={NavLink} to="/trainers">
+      <Menu.Item as={NavLink} to='/trainers'>
         Képzők
       </Menu.Item>
-      <Menu.Item as={NavLink} to="/schedule">
+      <Menu.Item as={NavLink} to='/schedule'>
         Ütemterv
       </Menu.Item>
-      <Menu.Menu position="right">
-        <Menu.Item className="item">
-          <Button href="/api/v1/login/authsch/">Bejelentkezés</Button>
+      <Menu.Menu position='right'>
+        <Menu.Item className='item'>
+          {
+            user.id ?
+              <Button as={Link} to='/profile'>Profilom</Button>
+            :
+              <Button href='/api/v1/login/authsch/'>Bejelentkezés</Button>
+          }
         </Menu.Item>
       </Menu.Menu>
     </Container>
   </Menu>
 );
 
-export default class Header extends Component {
-  state = {};
+class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: false,
+    };
+  }
+  componentWillMount() {
+    this.props.getUserData();
+  }
 
-  hideFixedMenu = () => this.setState({ visible: false });
-  showFixedMenu = () => this.setState({ visible: true });
+  hideFixedMenu() {
+    this.setState({ visible: false });
+  }
+
+  showFixedMenu() {
+    this.setState({ visible: true });
+  }
 
   render() {
     const { visible } = this.state;
 
     return (
       <div>
-        {visible ? <FixedMenu /> : null}
+        {visible ? <FixedMenu user={this.props.user} /> : null}
         <Visibility
-          onBottomPassed={this.showFixedMenu}
-          onBottomVisible={this.hideFixedMenu}
+          onBottomPassed={() => this.showFixedMenu()}
+          onBottomVisible={() => this.hideFixedMenu()}
           once={false}
         >
-          <Segment inverted textAlign="center" vertical>
+          <Segment inverted textAlign='center' vertical>
             <Container>
-              <Menu inverted secondary size="large">
-                <Menu.Item as={NavLink} to="/home">
+              <Menu inverted secondary size='large'>
+                <Menu.Item as={NavLink} to='/home'>
                   <Image
-                    size="mini"
+                    size='mini'
                     src={KSZKlogo}
-                    style={{ marginRight: "1.5em" }}
+                    style={{ marginRight: '1.5em' }}
                   />
                   Főoldal
                 </Menu.Item>
-                <Menu.Item as={NavLink} to="/circles">
+                <Menu.Item as={NavLink} to='/circles'>
                   Köreink
                 </Menu.Item>
-                <Menu.Item as={NavLink} to="/trainers">
+                <Menu.Item as={NavLink} to='/trainers'>
                   Képzők
                 </Menu.Item>
-                <Menu.Item as={NavLink} to="/schedule">
+                <Menu.Item as={NavLink} to='/schedule'>
                   Ütemterv
                 </Menu.Item>
-                <Menu.Item position="right">
-                  <Button as="a" href="/api/v1/login/authsch/" inverted>
-                    Bejelentkezés
-                  </Button>
+                <Menu.Item position='right'>
+                  {
+                    this.props.user.id ?
+                      <Button as={Link} to='/profile'>Profil</Button>
+                    :
+                      <Button as='a' href='/api/v1/login/authsch/' inverted>
+                        Bejelentkezés
+                      </Button>
+                  }
                 </Menu.Item>
               </Menu>
             </Container>
@@ -85,3 +109,9 @@ export default class Header extends Component {
     );
   }
 }
+
+const mapStateToProps = ({ user }) => ({
+  user,
+});
+
+export default connect(mapStateToProps, { getUserData })(Header);
