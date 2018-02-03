@@ -31,10 +31,10 @@ const FixedMenu = ({ user }) => (
         <Menu.Item className='item'>
           {
             user.id ?
-              <div>
-                <Button as={Link} to='/profile'>Profilom</Button>
-                <Button onClick={() => this.props.logout()}>Kijelentkezés</Button>
-              </div>
+              <Button.Group>
+                <Button primary as={Link} to='/profile'>Profilom</Button>
+                <Button onClick={() => this.props.logout()} icon='sign out' />
+              </Button.Group>
             :
               <Button href='/api/v1/login/authsch/'>Bejelentkezés</Button>
           }
@@ -97,7 +97,10 @@ class Header extends Component {
                 <Menu.Item position='right'>
                   {
                     this.props.user.id ?
-                      <Button as={Link} to='/profile'>Profil</Button>
+                      <Button.Group>
+                        <Button inverted as={Link} to='/profile'>Profil</Button>
+                        <Button onClick={() => this.props.logout()} icon='sign out' />
+                      </Button.Group>
                     :
                       <Button as='a' href='/api/v1/login/authsch/' inverted>
                         Bejelentkezés
