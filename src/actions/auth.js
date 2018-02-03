@@ -1,5 +1,7 @@
+// TODO: Separate actions
+
 import ax from 'axios';
-import { GET_USERDATA, PROFILE_CHANGE, GROUP_CHANGE, LOGOUT } from './types';
+import { GET_USERDATA, PROFILE_CHANGE, GROUP_CHANGE, LOGOUT, GET_NEWS } from './types';
 
 const axios = ax.create({
   xsrfCookieName: 'csrftoken',
@@ -17,6 +19,16 @@ export const getUserData = () => (
       payload: {
         id, joinDate, nick, motivation, signed, groups,
       },
+    });
+  }
+);
+
+export const getNews = () => (
+  async (dispatch) => {
+    const news = await axios.get('/api/v1/news');
+    dispatch({
+      type: GET_NEWS,
+      payload: news,
     });
   }
 );

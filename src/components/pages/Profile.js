@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Segment, Form, Dropdown, Divider, Card, Header } from 'semantic-ui-react';
+import { Container, Segment, Form, Dropdown, Divider, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { textChange, submitRegistration, groupChange } from '../../actions';
 
