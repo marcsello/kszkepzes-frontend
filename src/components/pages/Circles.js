@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Header, Segment } from 'semantic-ui-react';
 
-export default class Schedule extends Component {
+export default class Circles extends Component {
   render() {
     return (
       <div>
@@ -9,7 +9,7 @@ export default class Schedule extends Component {
           <Container>
             <Header
               as='h1'
-              content='Ütemterv - Hamarosan'
+              content='Körök - Hamarosan'
               inverted
               style={{
                 fontSize: '3em',

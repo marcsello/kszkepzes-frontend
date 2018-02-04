@@ -1,0 +1,12 @@
+.car-image-kszk {
+  position: relative;
+}
+
+.car-text-kszk {
+  position: absolute;
+  width: 100%;
+  top: 0px;
+  -webkit-text-fill-color: white;
+  -webkit-text-stroke-color: #888888;
+  -webkit-text-stroke-width: 0.75px;
+}

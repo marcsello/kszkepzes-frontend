@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import TodoReducer from './TodoReducer';
+import UserReducer from './UserReducer';
+import NewsReducer from './NewsReducer';
 
 const rootReducer = combineReducers({
-  todos: TodoReducer,
+  user: UserReducer,
+  news: NewsReducer,
 });
 
 export default rootReducer;

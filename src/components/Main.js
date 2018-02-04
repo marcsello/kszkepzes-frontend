@@ -1,19 +1,27 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
+
 import Home from './pages/Home';
-import Roster from './pages/Roster';
+import Trainers from './pages/Trainers';
 import Schedule from './pages/Schedule';
 import NotFound from './pages/NotFound';
+import Profile from './pages/Profile';
+import Statistics from './pages/Statistics';
+import Circles from './pages/Circles';
+import News from './pages/News';
 
 const Main = () => (
-  <main>
-    <Switch>
-      <Route exact path='/' component={Home} />
-      <Route path='/roster' component={Roster} />
-      <Route path='/schedule' component={Schedule} />
-      <Route component={NotFound} />
-    </Switch>
-  </main>
+  <Switch>
+    <Redirect exact from='/' to='/home' />
+    <Route exact path='/home' component={Home} />
+    <Route path='/news' component={News} />
+    <Route path='/trainers' component={Trainers} />
+    <Route path='/schedule' component={Schedule} />
+    <Route path='/profile' component={withRouter(Profile)} />
+    <Route path='/statistics' component={Statistics} />
+    <Route path='/circles' component={Circles} />
+    <Route component={NotFound} />
+  </Switch>
 );
 
 export default Main;
