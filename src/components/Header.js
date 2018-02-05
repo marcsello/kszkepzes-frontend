@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   Menu,
   Container,
@@ -15,11 +15,11 @@ import KSZKlogo from './images/kszk_logo.svg';
 const FixedMenu = ({ user }) => (
   <Menu fixed='top' size='large' pointing>
     <Container>
-      <Menu.Item as={NavLink} to='/home'>Főoldal</Menu.Item>
-      <Menu.Item as={NavLink} to='/news'>Hírek</Menu.Item>
-      <Menu.Item as={NavLink} to='/groups'>Köreink</Menu.Item>
-      {/* <Menu.Item as={NavLink} to='/trainers'>Képzők</Menu.Item> */}
-      <Menu.Item as={NavLink} to='/schedule'>Ütemterv</Menu.Item>
+      <Menu.Item as={Link} to='/home'>Főoldal</Menu.Item>
+      <Menu.Item as={Link} to='/news'>Hírek</Menu.Item>
+      <Menu.Item as={Link} to='/groups'>Köreink</Menu.Item>
+      {/* <Menu.Item as={Link} to='/trainers'>Képzők</Menu.Item> */}
+      <Menu.Item as={Link} to='/schedule'>Ütemterv</Menu.Item>
 
       <Menu.Menu position='right'>
         <Menu.Item className='item'>
@@ -71,7 +71,7 @@ class Header extends Component {
           <Segment inverted textAlign='center' vertical>
             <Container>
               <Menu inverted secondary size='large'>
-                <Menu.Item as={NavLink} to='/home'>
+                <Menu.Item as={Link} to='/home'>
                   <Image
                     size='mini'
                     src={KSZKlogo}
@@ -79,10 +79,10 @@ class Header extends Component {
                   />
                   Főoldal
                 </Menu.Item>
-                <Menu.Item as={NavLink} to='/news'>Hírek</Menu.Item>
-                <Menu.Item as={NavLink} to='/groups'>Köreink</Menu.Item>
-                {/* <Menu.Item as={NavLink} to='/trainers'>Képzők</Menu.Item> */}
-                <Menu.Item as={NavLink} to='/schedule'>Ütemterv</Menu.Item>
+                <Menu.Item as={Link} to='/news'>Hírek</Menu.Item>
+                <Menu.Item as={Link} to='/groups'>Köreink</Menu.Item>
+                {/* <Menu.Item as={Link} to='/trainers'>Képzők</Menu.Item> */}
+                <Menu.Item as={Link} to='/schedule'>Ütemterv</Menu.Item>
 
                 <Menu.Item position='right'>
                   {
