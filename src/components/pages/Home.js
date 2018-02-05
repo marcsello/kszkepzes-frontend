@@ -151,7 +151,7 @@ class Home extends Component {
               tagjaiból verbuválódott, és bővül évente új tehetségekkel, lelkes
               informatikusokkal, villamosmérnökökkel.
             </p>
-            <Button size='large' href='/circles'>
+            <Button size='large' href='/groups'>
               Ismerd meg a köreinket! <Icon name='right arrow' />
             </Button>
             <Divider as='h4' className='header' style={{ margin: '3em 0em' }} />
