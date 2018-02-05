@@ -7,7 +7,7 @@ import Schedule from './pages/Schedule';
 import NotFound from './pages/NotFound';
 import Profile from './pages/Profile';
 import Statistics from './pages/Statistics';
-import Circles from './pages/Circles';
+import Groups from './pages/Groups';
 import News from './pages/News';
 
 const Main = () => (
@@ -19,7 +19,7 @@ const Main = () => (
     <Route path='/schedule' component={Schedule} />
     <Route path='/profile' component={withRouter(Profile)} />
     <Route path='/statistics' component={Statistics} />
-    <Route path='/circles' component={Circles} />
+    <Route path='/groups' component={Groups} />
     <Route component={NotFound} />
   </Switch>
 );
