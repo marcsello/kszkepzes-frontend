@@ -55,10 +55,10 @@ class Home extends Component {
                 content='Üdvözlünk a'
                 inverted
                 style={{
-                  fontSize: '3em',
+                  fontSize: '3vw',
                   fontWeight: 'normal',
                   marginBottom: 0,
-                  marginTop: '0.5em',
+                  marginTop: '0.5vw',
                 }}
               />
               <Header
@@ -66,10 +66,10 @@ class Home extends Component {
                 content='Kollégiumi Számítástechnikai Kör'
                 inverted
                 style={{
-                  fontSize: '4em',
+                  fontSize: '4vw',
                   fontWeight: 'bold',
-                  marginBottom: '0.5em',
-                  marginTop: '0.5em',
+                  marginBottom: '0.5vw',
+                  marginTop: '0.5vw',
                 }}
               />
               <Header
@@ -77,27 +77,26 @@ class Home extends Component {
                 content='érdeklődőinek szánt weboldalán!'
                 inverted
                 style={{
-                  fontSize: '3em',
+                  fontSize: '3vw',
                   fontWeight: 'normal',
                   marginBottom: 0,
-                  marginTop: '0.5em',
+                  marginTop: '0.5vw',
                 }}
               />
               <Image
                 verticalAlign='middle'
-                size='small'
                 src={KSZKbiglogo}
-                style={{ marginTop: '4em' }}
+                style={{ marginTop: '4vw', width: '15%' }}
               />
               <Header
                 as='h1'
                 content='Mindenkit szeretettel várunk a KSZKépzés-re!'
                 inverted
                 style={{
-                  fontSize: '3em',
+                  fontSize: '3vw',
                   fontWeight: 'normal',
                   marginBottom: 0,
-                  marginTop: '1em',
+                  marginTop: '1vw',
                 }}
               />
               <Container>
@@ -108,9 +107,9 @@ class Home extends Component {
                       primary
                       size='huge'
                       style={{
-                        fontSize: '2em',
-                        marginTop: '1em',
-                        marginBottom: '1em',
+                        fontSize: '2vw',
+                        marginTop: '1vw',
+                        marginBottom: '1vw',
                       }}
                     >
                       Profilom
@@ -122,9 +121,9 @@ class Home extends Component {
                       primary
                       size='huge'
                       style={{
-                        fontSize: '2em',
-                        marginTop: '1em',
-                        marginBottom: '1em',
+                        fontSize: '2vw',
+                        marginTop: '1vw',
+                        marginBottom: '1vw',
                       }}
                     >
                       Bejelentkezés
