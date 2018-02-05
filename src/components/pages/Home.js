@@ -42,9 +42,9 @@ class Home extends Component {
         <div className='car-image-kszk'>
           <Slider {...settings}>
             {
-              range(23).map(image => (
+              range(32).map(image => (
                 <div key={image}>
-                  <img src={`images/${image}.JPG`} width='100%' alt='' />
+                  <img src={`images/${image}.jpg`} width='100%' alt='' />
                 </div>
               ))
             }
