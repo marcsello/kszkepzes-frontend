@@ -1,7 +1,7 @@
 // TODO: Separate actions
 
 import ax from 'axios';
-import { GET_USERDATA, PROFILE_CHANGE, GROUP_CHANGE, LOGOUT, GET_NEWS } from './types';
+import { GET_USERDATA, PROFILE_CHANGE, GROUP_CHANGE, GET_NEWS } from './types';
 
 const axios = ax.create({
   xsrfCookieName: 'csrftoken',
@@ -12,12 +12,15 @@ export const getUserData = () => (
   async (dispatch) => {
     const user = await axios.get('/api/v1/profiles/me');
     const {
-      id, join_date: joinDate, nick, motivation, signed, groups,
+      id,
+      join_date: joinDate,
+      nick,
+      motivation_about: motivationAbout,
+      motivation_profession: motivationProfession,
+      motivation_exercise: motivationExercise,
+      signed,
+      groups,
     } = user.data;
-    const motivationJSON = JSON.parse(motivation);
-    const motivationAbout = motivationJSON.first;
-    const motivationProfession = motivationJSON.second;
-    const motivationExercise = motivationJSON.third;
     dispatch({
       type: GET_USERDATA,
       payload: {
@@ -55,7 +58,12 @@ export const submitRegistration = ({
 }) => (
   async (dispatch) => {
     const response = await axios.patch(`/api/v1/profiles/${id}/`, {
-      nick, groups, signed, motivation: JSON.stringify({ first: motivationAbout, second: motivationProfession, third: motivationExercise }),
+      nick,
+      groups,
+      signed,
+      motivation_about: motivationAbout,
+      motivation_profession: motivationProfession,
+      motivation_exercise: motivationExercise,
     });
     if (response.data.id === id) {
       alert('Sikeres mentés!');
