@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
+
 import Home from './pages/Home';
 import Trainers from './pages/Trainers';
 import Schedule from './pages/Schedule';
@@ -7,11 +8,13 @@ import NotFound from './pages/NotFound';
 import Profile from './pages/Profile';
 import Statistics from './pages/Statistics';
 import Circles from './pages/Circles';
+import News from './pages/News';
 
 const Main = () => (
   <Switch>
     <Redirect exact from='/' to='/home' />
     <Route exact path='/home' component={Home} />
+    <Route path='/news' component={News} />
     <Route path='/trainers' component={Trainers} />
     <Route path='/schedule' component={Schedule} />
     <Route path='/profile' component={withRouter(Profile)} />

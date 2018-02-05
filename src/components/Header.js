@@ -15,18 +15,12 @@ import KSZKlogo from './images/kszk_logo.svg';
 const FixedMenu = ({ user }) => (
   <Menu fixed='top' size='large' pointing>
     <Container>
-      <Menu.Item as={NavLink} to='/home'>
-        Főoldal
-      </Menu.Item>
-      <Menu.Item as={NavLink} to='/circles'>
-        Köreink
-      </Menu.Item>
-      <Menu.Item as={NavLink} to='/trainers'>
-        Képzők
-      </Menu.Item>
-      <Menu.Item as={NavLink} to='/schedule'>
-        Ütemterv
-      </Menu.Item>
+      <Menu.Item as={NavLink} to='/home'>Főoldal</Menu.Item>
+      <Menu.Item as={NavLink} to='/news'>Hírek</Menu.Item>
+      <Menu.Item as={NavLink} to='/circles'>Köreink</Menu.Item>
+      <Menu.Item as={NavLink} to='/trainers'>Képzők</Menu.Item>
+      <Menu.Item as={NavLink} to='/schedule'>Ütemterv</Menu.Item>
+
       <Menu.Menu position='right'>
         <Menu.Item className='item'>
           {
@@ -85,15 +79,11 @@ class Header extends Component {
                   />
                   Főoldal
                 </Menu.Item>
-                <Menu.Item as={NavLink} to='/circles'>
-                  Köreink
-                </Menu.Item>
-                <Menu.Item as={NavLink} to='/trainers'>
-                  Képzők
-                </Menu.Item>
-                <Menu.Item as={NavLink} to='/schedule'>
-                  Ütemterv
-                </Menu.Item>
+                <Menu.Item as={NavLink} to='/news'>Hírek</Menu.Item>
+                <Menu.Item as={NavLink} to='/circles'>Köreink</Menu.Item>
+                <Menu.Item as={NavLink} to='/trainers'>Képzők</Menu.Item>
+                <Menu.Item as={NavLink} to='/schedule'>Ütemterv</Menu.Item>
+
                 <Menu.Item position='right'>
                   {
                     this.props.user.id ?
@@ -102,9 +92,7 @@ class Header extends Component {
                         <Button onClick={() => this.props.logout()} icon='sign out' />
                       </Button.Group>
                     :
-                      <Button as='a' href='/api/v1/login/authsch/' inverted>
-                        Bejelentkezés
-                      </Button>
+                      <Button as='a' href='/api/v1/login/authsch/' inverted>Bejelentkezés</Button>
                   }
                 </Menu.Item>
               </Menu>

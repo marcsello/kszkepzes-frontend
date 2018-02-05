@@ -10,6 +10,7 @@ import {
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import Slider from 'react-slick';
+import { Link } from 'react-router-dom';
 import './Home.css';
 import KSZKbiglogo from '../images/kszk_big_logo.png';
 
@@ -103,7 +104,8 @@ class Home extends Component {
                 {
                   this.props.user.id ?
                     <Button
-                      href='/profile'
+                      as={Link}
+                      to='/profile'
                       primary
                       size='huge'
                       style={{
@@ -112,7 +114,7 @@ class Home extends Component {
                         marginBottom: '1vw',
                       }}
                     >
-                      Profilom
+                      Jelentkezés
                       <Icon name='right arrow' />
                     </Button>
                       :
