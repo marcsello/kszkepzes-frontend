@@ -25,11 +25,14 @@ export const getUserData = () => (
 
 export const getNews = () => (
   async (dispatch) => {
-    const news = await axios.get('/api/v1/news');
-    dispatch({
-      type: GET_NEWS,
-      payload: news,
-    });
+    const response= await axios.get('/api/v1/news');
+    if(response) {
+      dispatch({
+        type: GET_NEWS,
+        payload: response.data,
+      });
+    }
+
   }
 );
 

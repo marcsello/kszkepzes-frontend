@@ -17,8 +17,8 @@ const FixedMenu = ({ user }) => (
     <Container>
       <Menu.Item as={NavLink} to='/home'>Főoldal</Menu.Item>
       <Menu.Item as={NavLink} to='/news'>Hírek</Menu.Item>
-      <Menu.Item as={NavLink} to='/circles'>Köreink</Menu.Item>
-      <Menu.Item as={NavLink} to='/trainers'>Képzők</Menu.Item>
+      <Menu.Item as={NavLink} to='/groups'>Köreink</Menu.Item>
+      {/* <Menu.Item as={NavLink} to='/trainers'>Képzők</Menu.Item> */}
       <Menu.Item as={NavLink} to='/schedule'>Ütemterv</Menu.Item>
 
       <Menu.Menu position='right'>
@@ -80,8 +80,8 @@ class Header extends Component {
                   Főoldal
                 </Menu.Item>
                 <Menu.Item as={NavLink} to='/news'>Hírek</Menu.Item>
-                <Menu.Item as={NavLink} to='/circles'>Köreink</Menu.Item>
-                <Menu.Item as={NavLink} to='/trainers'>Képzők</Menu.Item>
+                <Menu.Item as={NavLink} to='/groups'>Köreink</Menu.Item>
+                {/* <Menu.Item as={NavLink} to='/trainers'>Képzők</Menu.Item> */}
                 <Menu.Item as={NavLink} to='/schedule'>Ütemterv</Menu.Item>
 
                 <Menu.Item position='right'>

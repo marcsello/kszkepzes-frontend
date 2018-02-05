@@ -12,7 +12,6 @@ class News extends Component {
 
   render_news() {
     const news = this.props.news;
-    console.log(news);
 
     return news.map( (item, index) => (
       <div key={index}>
