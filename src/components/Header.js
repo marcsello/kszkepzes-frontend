@@ -9,7 +9,7 @@ import {
   Image,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { getUserData, logout } from '../actions';
+import { getUserData } from '../actions';
 import KSZKlogo from './images/kszk_logo.svg';
 
 const FixedMenu = ({ user }) => (
@@ -108,4 +108,4 @@ const mapStateToProps = ({ user }) => ({
   user,
 });
 
-export default connect(mapStateToProps, { getUserData, logout })(Header);
+export default connect(mapStateToProps, { getUserData })(Header);

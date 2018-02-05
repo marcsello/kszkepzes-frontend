@@ -64,12 +64,3 @@ export const submitRegistration = ({
     }
   }
 );
-
-export const logout = () => (
-  async (dispatch) => {
-    const response = await axios.get('/api/v1/logout/');
-    if (response) {
-      dispatch({ type: LOGOUT });
-    }
-  }
-);
