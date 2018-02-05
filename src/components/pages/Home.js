@@ -75,7 +75,7 @@ class Home extends Component {
               />
               <Header
                 as='h1'
-                content='érdeklődőinek szánt weboldalán!'
+                content='újoncképzésének weboldalán!'
                 inverted
                 style={{
                   fontSize: '3em',
@@ -92,7 +92,7 @@ class Home extends Component {
               />
               <Header
                 as='h1'
-                content='Mindenkit szeretettel várunk a KSZKépzés-re!'
+                content='Szeretettel várunk a KSZKépzésre!'
                 inverted
                 style={{
                   fontSize: '3em',
@@ -145,7 +145,7 @@ class Home extends Component {
             <p style={{ fontSize: '1.33em' }}>
               A Kollégiumi Számítástechnikai Kör az Egyetem legrégebben működő
               és legnagyobb aktív, informatikával foglalkozó öntevékeny
-              csoportosulása, tavaly ünnepeltük 40. születésnapunkat. A patinás
+              csoportosulása, idén ünnepeljük 42. születésnapunkat. A patinás
               név mögött vidám hangulatú, alkotó kedvű csapat rejlik, mely a Kar
               jó szakmai képességű, számítástechnika iránt kiemelten érdeklődő
               tagjaiból verbuválódott, és bővül évente új tehetségekkel, lelkes
@@ -177,9 +177,9 @@ class Home extends Component {
               hiszen rengeteg szakmai tudást igyekszünk átadni nektek. A
               képzésalkalmak rendkívül jó hangulatban telnek, és a szociális
               irányultságú foglalkozások alatt egy nagyon jó csapat kovácsolódik
-              az érdeklődőkből. Az első képzés időpontja február 20. hétfő
-              19:30, ettől kezdve minden héten találkozunk ugyanabban az
-              időpontban. A képzés ideje alatt március 10-12 között rendezünk
+              az érdeklődőkből. Az első képzés időpontja február 19. hétfő
+              20:00, ettől kezdve pedig minden héten találkozunk ugyanabban az
+              időpontban. A képzés ideje alatt március 9-11 között rendezünk
               tábort. Az alkalmakon és a táborban kötelező a részvétel.
             </p>
           </Container>
