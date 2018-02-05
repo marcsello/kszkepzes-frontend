@@ -47,11 +47,11 @@ export const groupChange = groups => (
 );
 
 export const submitRegistration = ({
-  nick, groups, signed, motivation, id,
+  nick, groups, signed, motivationAbout, motivationProfession, motivationExercise, id,
 }) => (
   async (dispatch) => {
     const response = await axios.patch(`/api/v1/profiles/${id}/`, {
-      nick, groups, signed, motivation,
+      nick, groups, signed, motivationAbout, motivationProfession, motivationExercise,
     });
     if (response.data.id === id) {
       alert('Sikeres mentés!');

@@ -24,7 +24,6 @@ const settings = {
   slidesToShow: 1,
   slidesToScroll: 1,
   centerMode: true,
-  lazyLoad: true,
 };
 
 const range = (count) => {

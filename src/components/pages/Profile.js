@@ -20,7 +20,7 @@ class Profile extends Component {
 
   render() {
     const {
-      nick, groups, motivation, signed, id,
+      nick, groups, motivationAbout, motivationProfession, motivationExercise, signed, id,
     } = this.props;
     return (
       <Container
@@ -43,16 +43,34 @@ class Profile extends Component {
               value={nick}
             />
 
-            <Divider horizontal>Motivációs levél</Divider>
+            <Divider horizontal>Motiváció</Divider>
             <Form.TextArea
               rows={10}
-              name='motivation'
+              name='motivationAbout'
               onChange={e => this.props.textChange(e)}
-              placeholder='Miért szeretnék jelentkezni...'
-              value={motivation}
+              placeholder='Mesélj nekünk egy kicsit magadról. Milyen szakmai vagy más eredményeket értél el, amikre büszke vagy?'
+              value={motivationAbout}
             />
 
-            <Divider horizontal>Érdekelt Körök</Divider>
+            <Divider horizontal />
+            <Form.TextArea
+              rows={10}
+              name='motivationProfession'
+              onChange={e => this.props.textChange(e)}
+              placeholder='Mit vársz el a képzéstõl, miért szeretnél rá jelentkezni, szerinted mire tudod majd használni az itt megszerzett tudást? Mit szeretnél elérni a szakmádban?'
+              value={motivationProfession}
+            />
+
+            <Divider horizontal />
+            <Form.TextArea
+              rows={10}
+              name='motivationExercise'
+              onChange={e => this.props.textChange(e)}
+              placeholder='Itt egy feladat kérdése lesz, éjfélig megcsináljuk a kérdést.'
+              value={motivationExercise}
+            />
+
+            <Divider horizontal>Érdekelődés</Divider>
             <Dropdown
               fluid
               multiple
@@ -73,7 +91,7 @@ class Profile extends Component {
             />
             <Form.Button
               onClick={() => this.props.submitRegistration({
-                nick, motivation, signed, groups, id,
+                nick, motivationAbout, motivationProfession, motivationExercise, signed, groups, id,
               })}
             >
               Mentés
@@ -87,12 +105,14 @@ class Profile extends Component {
 
 const mapStateToProps = ({
   user: {
-    nick, groups, motivation, signed, id,
+    nick, groups, motivationAbout, motivationProfession, motivationExercise, signed, id,
   },
 }) => ({
   nick,
   groups,
-  motivation,
+  motivationAbout,
+  motivationProfession,
+  motivationExercise,
   signed,
   id,
 });
