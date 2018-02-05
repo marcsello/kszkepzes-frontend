@@ -69,7 +69,7 @@ export const logout = () => (
   async (dispatch) => {
     const response = await axios.get('/api/v1/logout/');
     if (response) {
-      dispatch({ action: LOGOUT });
+      dispatch({ type: LOGOUT });
     }
   }
 );
