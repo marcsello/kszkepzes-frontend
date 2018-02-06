@@ -12,14 +12,34 @@ import { connect } from 'react-redux';
 import { getUserData } from '../actions';
 import KSZKlogo from './images/kszk_logo.svg';
 
+
+const menuItems = [
+  {
+    text: 'Főoldal',
+    to: '/home',
+    prefix: <Image size='mini' src={KSZKlogo} style={{ marginRight: '1.5em' }} />,
+  },
+  {
+    text: 'Hírek',
+    to: '/news',
+    prefix: '',
+  },
+  {
+    text: 'Köreink',
+    to: '/groups',
+    prefix: '',
+  },
+  {
+    text: 'Ütemterv',
+    to: '/schedule',
+    prefix: '',
+  },
+]
+
 const FixedMenu = ({ user }) => (
   <Menu fixed='top' size='large' pointing>
     <Container>
-      <Menu.Item as={Link} to='/home'>Főoldal</Menu.Item>
-      <Menu.Item as={Link} to='/news'>Hírek</Menu.Item>
-      <Menu.Item as={Link} to='/groups'>Köreink</Menu.Item>
-      {/* <Menu.Item as={Link} to='/trainers'>Képzők</Menu.Item> */}
-      <Menu.Item as={Link} to='/schedule'>Ütemterv</Menu.Item>
+      {menuItems.map( (item, i) => <Menu.Item key={i} as={Link} to={item.to}>{item.text}</Menu.Item>)}
 
       <Menu.Menu position='right'>
         <Menu.Item className='item'>
@@ -71,18 +91,12 @@ class Header extends Component {
           <Segment inverted textAlign='center' vertical>
             <Container>
               <Menu inverted secondary size='large'>
-                <Menu.Item as={Link} to='/home'>
-                  <Image
-                    size='mini'
-                    src={KSZKlogo}
-                    style={{ marginRight: '1.5em' }}
-                  />
-                  Főoldal
-                </Menu.Item>
-                <Menu.Item as={Link} to='/news'>Hírek</Menu.Item>
-                <Menu.Item as={Link} to='/groups'>Köreink</Menu.Item>
-                {/* <Menu.Item as={Link} to='/trainers'>Képzők</Menu.Item> */}
-                <Menu.Item as={Link} to='/schedule'>Ütemterv</Menu.Item>
+
+                {menuItems.map(
+                  (item, i) => (
+                    <Menu.Item key={i} as={Link} to={item.to}>{item.prefix}{item.text}</Menu.Item>
+                  )
+                )}
 
                 <Menu.Item position='right'>
                   {
@@ -95,6 +109,7 @@ class Header extends Component {
                       <Button as='a' href='/api/v1/login/authsch/' inverted>Bejelentkezés</Button>
                   }
                 </Menu.Item>
+
               </Menu>
             </Container>
           </Segment>
