@@ -185,13 +185,13 @@ class Home extends Component {
             <Divider as='h4' className='header' style={{ margin: '3em 0em' }} />
             <Segment inverted color='red' tertiary>
               <Header as='h3' style={{ fontSize: '2em' }}>
-                Korlátos férõhely
+                Korlátos férőhely
               </Header>
               <p style={{ fontSize: '1.33em' }}>
-                Általánosságban elmondható, hogy a KSZK tagjai rengeteg dologgal foglalkoznak a hétköznapjaik során, hogy minden informatikai rendszer úgy mûködjön a kollégiumban, ahogy kell. Így van ez velünk képzõkkel is, emiatt hetente csak egy képzésalkalmat tudunk tartani. Mivel az oktatóterem férõhelyében korlátozott, ezért a képzésre maximum 35 embert tudunk befogadni.
+                Általánosságban elmondható, hogy a KSZK tagjai rengeteg dologgal foglalkoznak a hétköznapjaik során, hogy minden informatikai rendszer úgy működjön a kollégiumban, ahogy kell. Így van ez velünk képzőkkel is, emiatt hetente csak egy képzésalkalmat tudunk tartani. Mivel az oktatóterem férőhelyében korlátozott, ezért a képzésre maximum 35 embert tudunk befogadni.
               </p>
               <p style={{ fontSize: '1.33em' }}>
-                Sajnos elõfordulhat olyan eset, hogy valaki már nem fér be a képzésre, ezért kérünk titeket, hogy ennek tudatában jelentkezzetek majd. Ilyen esetben reméljük ez nem szegi kedveteket és jövõre újra próbálkoztok majd!
+                Sajnos előfordulhat olyan eset, hogy valaki már nem fér be a képzésre, ezért kérünk titeket, hogy ennek tudatában jelentkezzetek majd. Ilyen esetben reméljük ez nem szegi kedveteket és jövőre újra próbálkoztok majd!
               </p>
           </Segment>
           </Container>
