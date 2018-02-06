@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Segment, Form, Dropdown, Divider, Header } from 'semantic-ui-react';
+import { Container, Form, Dropdown, Divider } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { textChange, submitRegistration, groupChange } from '../../actions';
 
@@ -29,75 +29,84 @@ class Profile extends Component {
           marginTop: '0.5em',
         }}
       >
-        <Divider horizontal>
-          <Header as='h2' content='Profil (Jelentkezés)' />
-        </Divider>
-        <Segment textAlign='center'>
-          <Form>
-            <Divider horizontal>Becenév</Divider>
-            <Form.Input
-              fluid
-              name='nick'
-              onChange={e => this.props.textChange(e)}
-              placeholder='Becenév'
-              value={nick}
-            />
+        <Form>
+          <Form.Input
+            fluid
+            name='nick'
+            label='Becenév'
+            onChange={e => this.props.textChange(e)}
+            placeholder='Becenév'
+            value={nick}
+          />
 
-            <Divider horizontal>Motiváció</Divider>
-            <Form.TextArea
-              rows={10}
-              name='motivationAbout'
-              onChange={e => this.props.textChange(e)}
-              placeholder='Mesélj nekünk egy kicsit magadról. Milyen szakmai vagy más eredményeket értél el, amikre büszke vagy?'
-              value={motivationAbout}
-            />
+          <Divider horizontal>Motiváció</Divider>
+          <Form.TextArea
+            rows={10}
+            name='motivationAbout'
+            label='Mesélj nekünk egy kicsit magadról. Milyen szakmai vagy más eredményeket értél el, amikre büszke vagy?'
+            onChange={e => this.props.textChange(e)}
+            placeholder='Mesélj nekünk egy kicsit magadról. Milyen szakmai vagy más eredményeket értél el, amikre büszke vagy?'
+            value={motivationAbout}
+          />
 
-            <Divider horizontal />
-            <Form.TextArea
-              rows={10}
-              name='motivationProfession'
-              onChange={e => this.props.textChange(e)}
-              placeholder='Mit vársz el a képzéstõl, miért szeretnél rá jelentkezni, szerinted mire tudod majd használni az itt megszerzett tudást? Mit szeretnél elérni a szakmádban?'
-              value={motivationProfession}
-            />
+          <Divider horizontal />
+          <Form.TextArea
+            rows={10}
+            label='Mit vársz el a képzéstõl, miért szeretnél rá jelentkezni, szerinted mire tudod majd használni az itt megszerzett tudást? Mit szeretnél elérni a szakmádban?'
+            name='motivationProfession'
+            onChange={e => this.props.textChange(e)}
+            placeholder='Mit vársz el a képzéstõl, miért szeretnél rá jelentkezni, szerinted mire tudod majd használni az itt megszerzett tudást? Mit szeretnél elérni a szakmádban?'
+            value={motivationProfession}
+          />
 
-            <Divider horizontal />
-            <Form.TextArea
-              rows={10}
-              name='motivationExercise'
-              onChange={e => this.props.textChange(e)}
-              placeholder='Itt egy feladat kérdése lesz, éjfélig megcsináljuk a kérdést.'
-              value={motivationExercise}
-            />
+          <Divider horizontal />
+          <Form.TextArea
+            rows={10}
+            name='motivationExercise'
+            onChange={e => this.props.textChange(e)}
+            placeholder=''
+            label={
+              <p>
+                Alább találsz néhány elgondolkodtató kérdést, megoldandó feladatot. A kérdések és feladatok elkészítése opcionális, nem titkolt célunk ezzel a lelkesedés felmérése. A válaszokat a lenti szövegdobozba várjuk a feladatszámok megjelölésével.
+                <br />
+                Szeretnéd kedvenc tantárgyad vik.wiki oldalát elérni, de szomorúan látod, hogy az oldal nem jön be. A Steam pedig hibátlanul megy a háttérben és az emailek is megérkeznek... Szobatársadnak pont megvan a vik.wiki szerverének IP-címe. Csodálkozva látod, hogy a böngésző címsorába írva eléred a kiszolgáló webszervert. Mi lehet a baj?
+                <br />
+                Két előadás közti szünetben úgy döntesz, hogy laptopoddal az index.hu tech cikkeit fogod görgetni. Ám az oldal nem válaszol. Sőt: a régebbi oldalak többsége sem. Ugyanakkor a Facebook, Gmail, de még az egyetemi oldalak többsége is működik. Van valami ötleted mi okozhatja a gondot?
+                <br />
+                Találsz egy értelmetlen szöveget egy honlapon (például: https://static.mbraptor.ml/zebra.html), de feltűnik, hogy két egyenlőségjellel fejeződik be. Nyomozz, s a végeredményt (amit találtál) írd ide!
+              </p>
+            }
+            value={motivationExercise}
+          />
 
-            <Divider horizontal>Érdekelődés</Divider>
-            <Dropdown
-              fluid
-              multiple
-              selection
-              placeholder='DevTeam, ...'
-              onChange={(_, v) => this.props.groupChange(v.value)}
-              options={options}
-              defaultValue={groups}
-            />
-            <br />
-            <Form.Checkbox
-              name='signed'
-              label='Szeretnék jelentkezni a KSZK-ba'
-              onChange={(_, v) =>
-                this.props.textChange({ target: { name: v.name, value: v.checked } })
-              }
-              checked={signed}
-            />
-            <Form.Button
-              onClick={() => this.props.submitRegistration({
-                nick, motivationAbout, motivationProfession, motivationExercise, signed, groups, id,
-              })}
-            >
-              Mentés
-            </Form.Button>
-          </Form>
-        </Segment>
+          <Divider horizontal>Érdekelődés</Divider>
+          <Dropdown
+            fluid
+            multiple
+            selection
+            placeholder='DevTeam, ...'
+            onChange={(_, v) => this.props.groupChange(v.value)}
+            options={options}
+            defaultValue={groups}
+          />
+          <br />
+          <Form.Checkbox
+            name='signed'
+            label='Szeretnék jelentkezni a KSZK-ba'
+            onChange={(_, v) =>
+              this.props.textChange({ target: { name: v.name, value: v.checked } })
+            }
+            checked={signed}
+          />
+          <Form.Button
+            primary
+            onClick={() => this.props.submitRegistration({
+              nick, motivationAbout, motivationProfession, motivationExercise, signed, groups, id,
+            })}
+          >
+            Mentés
+          </Form.Button>
+        </Form>
       </Container>
     );
   }
