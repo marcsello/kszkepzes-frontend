@@ -25,6 +25,7 @@ const settings = {
   slidesToScroll: 1,
   centerMode: true,
   lazyLoad: true,
+  initialSlide: Math.floor((Math.random() * 32) + 1),
 };
 
 const range = (count) => {
