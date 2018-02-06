@@ -88,7 +88,7 @@ class Header extends Component {
                   {
                     this.props.user.id ?
                       <Button.Group>
-                        <Button inverted as={Link} to='/profile'>Profil</Button>
+                        <Button inverted as={Link} to='/profile'>Profilom</Button>
                         <Button as='a' href='/api/v1/logout/' icon='sign out' />
                       </Button.Group>
                     :
