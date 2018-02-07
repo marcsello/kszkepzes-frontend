@@ -66,15 +66,26 @@ class Profile extends Component {
             onChange={e => this.props.textChange(e)}
             placeholder=''
             label={
-              <p>
-                Alább találsz néhány elgondolkodtató kérdést, megoldandó feladatot. A kérdések és feladatok elkészítése opcionális, nem titkolt célunk ezzel a lelkesedés felmérése. A válaszokat a lenti szövegdobozba várjuk a feladatszámok megjelölésével.
-                <br />
-                Szeretnéd kedvenc tantárgyad vik.wiki oldalát elérni, de szomorúan látod, hogy az oldal nem jön be. A Steam pedig hibátlanul megy a háttérben és az emailek is megérkeznek... Szobatársadnak pont megvan a vik.wiki szerverének IP-címe. Csodálkozva látod, hogy a böngésző címsorába írva eléred a kiszolgáló webszervert. Mi lehet a baj?
-                <br />
-                Két előadás közti szünetben úgy döntesz, hogy laptopoddal az index.hu tech cikkeit fogod görgetni. Ám az oldal nem válaszol. Sőt: a régebbi oldalak többsége sem. Ugyanakkor a Facebook, Gmail, de még az egyetemi oldalak többsége is működik. Van valami ötleted mi okozhatja a gondot?
-                <br />
-                Találsz egy értelmetlen szöveget egy honlapon (például: https://static.mbraptor.ml/zebra.html), de feltűnik, hogy két egyenlőségjellel fejeződik be. Nyomozz, s a végeredményt (amit találtál) írd ide!
-              </p>
+              <div>
+                <b>Alább találsz néhány elgondolkodtató kérdést, megoldandó feladatot. A kérdések és feladatok elkészítése opcionális, nem titkolt célunk ezzel a lelkesedés felmérése. A válaszokat a lenti szövegdobozba várjuk a feladatszámok megjelölésével.</b>
+                <ol>
+                  <li>
+                  Szeretnéd kedvenc tantárgyad vik.wiki oldalát elérni, de szomorúan látod, hogy az oldal nem jön be. A Steam pedig hibátlanul megy a háttérben és az emailek is megérkeznek... Szobatársadnak pont megvan a vik.wiki szerverének IP-címe. Csodálkozva látod, hogy a böngésző címsorába írva eléred a kiszolgáló webszervert. Mi lehet a baj?
+                  </li>
+                  <br />
+                  <li>
+                  Két előadás közti szünetben úgy döntesz, hogy laptopoddal az index.hu tech cikkeit fogod görgetni. Ám az oldal nem válaszol. Sőt: a régebbi oldalak többsége sem. Ugyanakkor a Facebook, Gmail, de még az egyetemi oldalak többsége is működik. Van valami ötleted mi okozhatja a gondot?
+                  </li>
+                  <br />
+                  <li>
+                  Találsz egy értelmetlen szöveget egy honlapon (például: <a href='https://static.mbraptor.ml/zebra.html'>https://static.mbraptor.ml/zebra.html</a>), de feltűnik, hogy két egyenlőségjellel fejeződik be. Nyomozz, s a végeredményt (amit találtál) írd ide!
+                  </li>
+                  <br />
+                  <li>
+                  A <b>kszkepzes18.sch.bme.hu</b> címen elérhető gépen fut egy szolgáltatás az alapértelmezett <b>5432</b> porton (a belépés mindhárom paraméteréhez használd az előző feladat végeredményét). Belépés után keresd meg a feladat megoldását!
+                  </li>
+                </ol>
+              </div>
             }
             value={motivationExercise}
           />
