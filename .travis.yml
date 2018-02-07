@@ -1,0 +1,13 @@
+language: node_js
+python:
+  - 8
+  - 9
+
+# command to install dependencies
+install:
+  - npm install
+
+# command to run tests
+script:
+  - ./node_modules/.bin/eslint .
+  - npm run test
