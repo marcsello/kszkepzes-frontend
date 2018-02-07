@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Container, Form, Dropdown, Divider } from 'semantic-ui-react';
+import { Container, Form, Dropdown, Divider, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { textChange, submitRegistration, groupChange } from '../../actions';
 
 const options = [
   { key: 'DT', text: 'DevTeam', value: 'DT' },
-  { key: 'NET', text: 'NeTeam', value: 'NET' },
+  { key: 'NET', text: 'NETeam', value: 'NET' },
   { key: 'ST', text: 'SecurITeam', value: 'ST' },
   { key: 'SYS', text: 'SysAdmin', value: 'SYS' },
   { key: 'HAT', text: 'Hallgatói Tudásbázis', value: 'HAT' },
@@ -29,6 +29,11 @@ class Profile extends Component {
           marginTop: '0.5em',
         }}
       >
+        <Segment inverted color='red' tertiary>
+          <p style={{ fontSize: '1.33em' }}>
+            A profilod mentés után is módosítható a későbbiekben, egészen február 14. 23:59-ig.
+          </p>
+        </Segment>
         <Form>
           <Form.Input
             fluid
@@ -52,10 +57,10 @@ class Profile extends Component {
           <Divider horizontal />
           <Form.TextArea
             rows={10}
-            label='Mit vársz el a képzéstõl, miért szeretnél rá jelentkezni, szerinted mire tudod majd használni az itt megszerzett tudást? Mit szeretnél elérni a szakmádban?'
+            label='Mit vársz el a képzéstől, miért szeretnél rá jelentkezni, szerinted mire tudod majd használni az itt megszerzett tudást? Mit szeretnél elérni a szakmádban?'
             name='motivationProfession'
             onChange={e => this.props.textChange(e)}
-            placeholder='Mit vársz el a képzéstõl, miért szeretnél rá jelentkezni, szerinted mire tudod majd használni az itt megszerzett tudást? Mit szeretnél elérni a szakmádban?'
+            placeholder='Mit vársz el a képzéstől, miért szeretnél rá jelentkezni, szerinted mire tudod majd használni az itt megszerzett tudást? Mit szeretnél elérni a szakmádban?'
             value={motivationProfession}
           />
 
@@ -67,14 +72,14 @@ class Profile extends Component {
             placeholder=''
             label={
               <div>
-                <b>Alább találsz néhány elgondolkodtató kérdést, megoldandó feladatot. A kérdések és feladatok elkészítése opcionális, nem titkolt célunk ezzel a lelkesedés felmérése. A válaszokat a lenti szövegdobozba várjuk a feladatszámok megjelölésével.</b>
+                <b>Alább találsz néhány elgondolkodtató kérdést, megoldandó feladatot. A kérdések és feladatok elkészítése opcionális, nem titkolt célunk ezzel a lelkesedés felmérése. A válaszokat a kérdések alatti szövegdobozba várjuk.</b>
                 <ol>
                   <li>
                   Szeretnéd kedvenc tantárgyad vik.wiki oldalát elérni, de szomorúan látod, hogy az oldal nem jön be. A Steam pedig hibátlanul megy a háttérben és az emailek is megérkeznek... Szobatársadnak pont megvan a vik.wiki szerverének IP-címe. Csodálkozva látod, hogy a böngésző címsorába írva eléred a kiszolgáló webszervert. Mi lehet a baj?
                   </li>
                   <br />
                   <li>
-                  Két előadás közti szünetben úgy döntesz, hogy laptopoddal az index.hu tech cikkeit fogod görgetni. Ám az oldal nem válaszol. Sőt: a régebbi oldalak többsége sem. Ugyanakkor a Facebook, Gmail, de még az egyetemi oldalak többsége is működik. Van valami ötleted mi okozhatja a gondot?
+                  Két előadás közti szünetben úgy döntesz, hogy laptopoddal az index.hu tech cikkeit fogod görgetni. Ám az oldal nem válaszol, a hiba okát megpróbálod kideríteni. Ekkor veszed észre, hogy az alábbiakat sem éred el: sze.hu, 444.hu, corvinus.hu, startlap.hu. Ugyanakkor a Facebook, a Gmail, a YouTube, de még az egyetemi oldalak többsége is működik. Szerinted mi lehet a hiba oka?
                   </li>
                   <br />
                   <li>
@@ -82,7 +87,7 @@ class Profile extends Component {
                   </li>
                   <br />
                   <li>
-                  A <b>kszkepzes18.sch.bme.hu</b> címen elérhető gépen fut egy szolgáltatás az alapértelmezett <b>5432</b> porton (a belépés mindhárom paraméteréhez használd az előző feladat végeredményét). Belépés után keresd meg a feladat megoldását!
+                  A <b>kszkepzes18.sch.bme.hu</b> címen elérhető gépen fut egy szolgáltatás az alapértelmezett <b>5432</b> porton (használd az előző feladatban kapott adatokat). Belépés után keresd meg a feladat megoldását!
                   </li>
                 </ol>
               </div>
@@ -103,7 +108,7 @@ class Profile extends Component {
           <br />
           <Form.Checkbox
             name='signed'
-            label='Szeretnék jelentkezni a KSZK-ba'
+            label='Szeretnék jelentkezni a KSZKépzésre'
             onChange={(_, v) =>
               this.props.textChange({ target: { name: v.name, value: v.checked } })
             }
