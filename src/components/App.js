@@ -1,14 +1,13 @@
 import React from 'react';
-import Header from './Header';
+import PageLayout from './PageLayout';
 import Main from './Main';
 import Footer from './Footer';
 
 const App = () => (
-  <div>
-    <Header />
+  <PageLayout>
     <Main />
     <Footer />
-  </div>
+  </PageLayout>
 );
 
 export default App;
