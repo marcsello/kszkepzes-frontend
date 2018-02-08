@@ -10,34 +10,37 @@ const axios = ax.create({
 
 export const getUserData = () => (
   async (dispatch) => {
-    const user = await axios.get('/api/v1/profiles/me');
-    const {
-      id,
-      join_date: joinDate,
-      nick,
-      motivation_about: motivationAbout,
-      motivation_profession: motivationProfession,
-      motivation_exercise: motivationExercise,
-      signed,
-      groups,
-    } = user.data;
-    dispatch({
-      type: GET_USERDATA,
-      payload: {
-        id, joinDate, nick, motivationAbout, motivationProfession, motivationExercise, signed, groups,
-      },
-    });
+    try {
+      const user = await axios.get('/api/v1/profiles/me');
+      const {
+        id,
+        join_date: joinDate,
+        nick,
+        motivation_about: motivationAbout,
+        motivation_profession: motivationProfession,
+        motivation_exercise: motivationExercise,
+        signed,
+        groups,
+      } = user.data;
+      dispatch({
+        type: GET_USERDATA,
+        payload: {
+          id, joinDate, nick, motivationAbout, motivationProfession, motivationExercise, signed, groups,
+        },
+      });
+    } catch (e) {}
   }
 );
 
 export const getNews = () => (
   async (dispatch) => {
-    const response= await axios.get('/api/v1/news');
-    if(response) {
+    try {
+      const response = await axios.get('/api/v1/news');
       dispatch({
         type: GET_NEWS,
         payload: response.data,
       });
+    } catch(e) {
     }
 
   }
@@ -57,18 +60,20 @@ export const submitRegistration = ({
   nick, groups, signed, motivationAbout, motivationProfession, motivationExercise, id,
 }) => (
   async (dispatch) => {
-    const response = await axios.patch(`/api/v1/profiles/${id}/`, {
-      nick,
-      groups,
-      signed,
-      motivation_about: motivationAbout,
-      motivation_profession: motivationProfession,
-      motivation_exercise: motivationExercise,
-    });
-    if (response.data.id === id) {
-      alert('Sikeres mentés!');
-    } else {
-      alert('Mentés nem sikerült!');
-    }
+    try {
+      const response = await axios.patch(`/api/v1/profiles/${id}/`, {
+        nick,
+        groups,
+        signed,
+        motivation_about: motivationAbout,
+        motivation_profession: motivationProfession,
+        motivation_exercise: motivationExercise,
+      });
+      if (response.data.id === id) {
+        alert('Sikeres mentés!');
+      } else {
+        alert('Mentés nem sikerült!');
+      }
+    } catch(e) {}
   }
 );
