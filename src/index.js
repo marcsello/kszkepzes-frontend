@@ -8,7 +8,6 @@ import 'semantic-ui-css/semantic.min.css';
 
 import configureStore from './configureStore';
 import App from './components/App';
-import registerServiceWorker from './registerServiceWorker';
 
 const store = configureStore();
 
@@ -20,5 +19,3 @@ render(
   </Provider>,
   document.getElementById('root'),
 );
-
-// registerServiceWorker();
