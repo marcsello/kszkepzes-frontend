@@ -83,7 +83,7 @@ class Profile extends Component {
                   </li>
                   <br />
                   <li>
-                  Találsz egy értelmetlen szöveget egy honlapon (például: <a href='https://static.mbraptor.ml/zebra.html'>https://static.mbraptor.ml/zebra.html</a>), de feltűnik, hogy két egyenlőségjellel fejeződik be. Nyomozz, s a végeredményt (amit találtál) írd ide!
+                  Találsz egy értelmetlen szöveget egy honlapon (például: <a href='http://kszkepzes18.sch.bme.hu/zebra.html'>http://kszkepzes18.sch.bme.hu/zebra.html</a>), de feltűnik, hogy két egyenlőségjellel fejeződik be. Nyomozz, s a végeredményt (amit találtál) írd ide!
                   </li>
                   <br />
                   <li>
