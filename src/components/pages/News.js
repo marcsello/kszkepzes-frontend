@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Container, Header, Segment, Divider } from 'semantic-ui-react';
+import { Container, Header, Segment, Item } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import { getNews } from '../../actions';
 
@@ -14,11 +15,15 @@ class News extends Component {
     const news = this.props.news;
 
     return news.map( (item, index) => (
-      <div key={index}>
-        { index > 0 ? <Divider /> : ''}
-        <Header as='h3' style={{ fontSize: '2em' }}>{item.title}</Header>
-        <p style={{ fontSize: '1.33em' }}>{item.text}</p>
-      </div>
+      <Item key={index}>
+        <Item.Content>
+          <Item.Header as='a'>{item.title}</Item.Header>
+          <Item.Meta>{moment(item.created_at).format('LLLL')}</Item.Meta>
+          <Item.Description>{item.text}</Item.Description>
+          {/* TODO: Get author name from server.
+            <Item.Extra>{item.author}</Item.Extra> */}
+        </Item.Content>
+      </Item>
     ));
 
   }
@@ -43,8 +48,8 @@ class News extends Component {
         </Segment>
 
         <Segment style={{ padding: '8em 0em' }} vertical>
-          <Container text>
-            {this.render_news()}
+          <Container text textAlign='justified'>
+            <Item.Group>{this.render_news()}</Item.Group>
           </Container>
         </Segment>
       </div>
