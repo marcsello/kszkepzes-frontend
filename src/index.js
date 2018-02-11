@@ -6,6 +6,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'semantic-ui-css/semantic.min.css';
 
+import registerServiceWorker from './registerServiceWorker';
 import configureStore from './configureStore';
 import App from './components/App';
 
@@ -19,3 +20,6 @@ render(
   </Provider>,
   document.getElementById('root'),
 );
+
+registerServiceWorker();
+
