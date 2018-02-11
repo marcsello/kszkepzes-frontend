@@ -47,10 +47,10 @@ const FixedMenu = ({ user }) => (
             user.id ?
               <Button.Group>
                 <Button primary as={Link} to='/profile'>Profilom</Button>
-                <Button as='a' href='/api/v1/logout/' icon='sign out' />
+                <Button as='a' href='/api/v1/logout/' target="_blank" rel="noopener noreferrer" icon='sign out' />
               </Button.Group>
             :
-              <Button as='a' href='/api/v1/login/authsch/'>Bejelentkezés</Button>
+              <Button as='a' href='/api/v1/login/authsch/'  target="_blank" rel="noopener noreferrer" >Bejelentkezés</Button>
           }
         </Menu.Item>
       </Menu.Menu>
@@ -103,10 +103,10 @@ class Header extends Component {
                     this.props.user.id ?
                       <Button.Group>
                         <Button inverted as={Link} to='/profile'>Profilom</Button>
-                        <Button as='a' href='/api/v1/logout/' icon='sign out' />
+                        <Button as='a' href='/api/v1/logout/'  target="_blank" rel="noopener noreferrer"  icon='sign out' />
                       </Button.Group>
                     :
-                      <Button as='a' href='/api/v1/login/authsch/' inverted>Bejelentkezés</Button>
+                      <Button as='a' href='/api/v1/login/authsch/'  target="_blank" rel="noopener noreferrer" inverted>Bejelentkezés</Button>
                   }
                 </Menu.Item>
 
