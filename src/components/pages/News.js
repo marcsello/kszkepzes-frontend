@@ -20,8 +20,7 @@ class News extends Component {
           <Item.Header as='a'>{item.title}</Item.Header>
           <Item.Meta>{moment(item.created_at).format('LLLL')}</Item.Meta>
           <Item.Description>{item.text}</Item.Description>
-          {/* TODO: Get author name from server.
-            <Item.Extra>{item.author}</Item.Extra> */}
+          <Item.Extra>{item.author_name}</Item.Extra>
         </Item.Content>
       </Item>
     ));
