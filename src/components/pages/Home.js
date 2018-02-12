@@ -180,7 +180,7 @@ class Home extends Component {
               irányultságú foglalkozások alatt egy nagyon jó csapat kovácsolódik
               az érdeklődőkből. Az első képzés időpontja február 19. hétfő
               20:00, ettől kezdve pedig minden héten találkozunk ugyanabban az
-              időpontban. A képzés ideje alatt március 9-11 között rendezünk
+              időpontban. A képzés ideje alatt április 6-8 között rendezünk
               tábort. Az alkalmakon és a táborban kötelező a részvétel.
             </p>
             <Divider as='h4' className='header' style={{ margin: '3em 0em' }} />
