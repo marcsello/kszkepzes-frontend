@@ -1,5 +1,5 @@
-import { axios } from './auth'
-import { GET_NEWS, WRITE_NEWS, ADD_NEWS, DELETE_NEWS, CLEAR_WRITE } from './types'
+import { axios } from './auth';
+import { GET_NEWS, WRITE_NEWS, ADD_NEWS, DELETE_NEWS, CLEAR_WRITE } from './types';
 
 export const getNews = () => (
   async (dispatch) => {
@@ -9,20 +9,20 @@ export const getNews = () => (
         type: GET_NEWS,
         payload: response.data,
       });
-    } catch(e) {
+    } catch (e) {
+      console.log(e);
     }
-
   }
 );
 
-export const postNews = ({title, author, text}) =>(
-  async(dispatch) =>{
-    try{
+export const postNews = ({ title, author, text }) => (
+  async (dispatch) => {
+    try {
       const response = await axios.post('/api/v1/news/', {
-        "author": author,
-        "title": title,
-        "text": text,
-      })
+        author,
+        title,
+        text,
+      });
       if (response.data.id) {
         alert('Sikeres mentés!');
         dispatch({
@@ -32,15 +32,15 @@ export const postNews = ({title, author, text}) =>(
       } else {
         alert('Mentés nem sikerült!');
       }
-    }catch(e){
-        console.log(e);
-      }
+    } catch (e) {
+      console.log(e);
     }
+  }
 );
 
-export const deleteNews = (news) =>(
-  async(dispatch) =>{
-    try{
+export const deleteNews = news => (
+  async (dispatch) => {
+    try {
       const response = await axios.delete(`/api/v1/news/${news.id}/`);
       if (!response.data.id) {
         alert('Sikeres törlés!');
@@ -51,12 +51,12 @@ export const deleteNews = (news) =>(
       } else {
         alert('A törlés nem sikerült!');
       }
-    }catch(e){
+    } catch (e) {
       console.log(e);
     }
   });
 
-export const writeNews = ({target : {name, value}}) => (
+export const writeNews = ({ target: { name, value } }) => (
   (dispatch) => {
     dispatch({ type: WRITE_NEWS, payload: value, target: name });
   }

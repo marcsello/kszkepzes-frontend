@@ -9,8 +9,8 @@ export default (state = INITIAL_STATE, action) => {
     case ADD_NEWS:
       return [action.payload, ...state];
     case DELETE_NEWS:
-      let index = state.indexOf(action.payload);
-      let array = [...state];
+      const index = state.indexOf(action.payload);
+      const array = [...state];
       array.splice(index, 1);
       return [...array];
     default:

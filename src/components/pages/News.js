@@ -1,55 +1,49 @@
 import React, { Component } from 'react';
-import { Container, Header, Segment, Divider, List, Modal,
-         Button, Image, Form, Input, TextArea, Checkbox, Icon } from 'semantic-ui-react';
+import { Container, Header, Segment, Divider, List, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import AddNewsForm  from '../forms/AddNewsForm'
+import AddNewsForm from '../forms/AddNewsForm';
 
-import { getNews, deleteNews } from '../../actions/news'
+import { getNews, deleteNews } from '../../actions/news';
 
 class News extends Component {
-
   componentWillMount() {
     this.props.getNews();
   }
 
-  render_news() {
-    const news = this.props.news;
-
-    return news.map( (item, index) => (
-      <div key={index} id={index}>
+  renderNews() {
+    return this.props.news.map((item, index) => (
+      <div key={item.id} id={index}>
         { index > 0 ? <Divider /> : ''}
         <Header as='h3' style={{ fontSize: '2em' }}>{item.title}</Header>
         <p style={{ fontSize: '1.33em' }}>{item.text}</p>
         <Button
           color='red'
           size='mini'
-          onClick={() => this.props.deleteNews(item)}  >Delete</Button>
+          onClick={() => this.props.deleteNews(item)}
+        >
+        Delete
+        </Button>
       </div>
     ));
-
   }
 
-  render_sidebar() {
-    const news = this.props.news;
-
-    return news.map( (item, index) => (
-        <List.Item as='a' href={`#${index}`}>
-          <List.Icon name='align justify' verticalAlign={"middle"}/>
-          <List.Content>
-            <List.Header>
-              {item.title}
-            </List.Header>
-          </List.Content>
-        </List.Item>
+  renderSidebar() {
+    return this.props.news.map((item, index) => (
+      <List.Item as='a' href={`#${index}`}>
+        <List.Icon name='align justify' verticalAlign='middle' />
+        <List.Content>
+          <List.Header>
+            {item.title}
+          </List.Header>
+        </List.Content>
+      </List.Item>
     ));
-
   }
 
   render() {
-
     return (
       <div>
-      {/*  <Segment inverted textAlign='center' vertical>
+        {/*  <Segment inverted textAlign='center' vertical>
           <Container>
             <Header
               as='h1'
@@ -67,15 +61,15 @@ class News extends Component {
         </Segment>
         */}
 
-        <Segment floated={'left'} style={{ padding: '3em 3em' }} vertical>
+        <Segment floated='left' style={{ padding: '3em 3em' }} vertical>
           <AddNewsForm />
-          <Container text textAlign = {'center'}>
-            {this.render_news()}
+          <Container text textAlign='center'>
+            {this.renderNews()}
           </Container>
         </Segment>
-        <Segment floated={'right'} style={{ padding: '1em 1em' }} vertical>
-          <List size={'big'} link divided>
-              {this.render_sidebar()}
+        <Segment floated='right' style={{ padding: '1em 1em' }} vertical>
+          <List size='big' link divided>
+            {this.renderSidebar()}
           </List>
         </Segment>
       </div>
