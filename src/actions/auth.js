@@ -3,7 +3,7 @@
 import ax from 'axios';
 import { GET_USERDATA, PROFILE_CHANGE, GROUP_CHANGE, GET_NEWS } from './types';
 
-const axios = ax.create({
+export const axios = ax.create({
   xsrfCookieName: 'csrftoken',
   xsrfHeaderName: 'X-CSRFToken',
 });

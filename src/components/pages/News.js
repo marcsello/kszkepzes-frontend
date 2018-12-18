@@ -3,7 +3,8 @@ import { Container, Header, Segment, Divider,
         List, Modal, Button, Image, Form, Input, TextArea, Checkbox, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
-import { getNews } from '../../actions';
+import { getNews, } from '../../actions';
+import { postNews, writeNews } from '../../actions/news.js'
 
 class News extends Component {
 
@@ -13,21 +14,36 @@ class News extends Component {
 
 
   render_add_news(){
+    const { title, text } = this.props.newNews;
+    const author = this.props.user.id;
     return (
     <Modal trigger={<Button >Add news</Button>}>
-    <Modal.Header>Select a Photo</Modal.Header>
-    <Modal.Content image>
+    <Modal.Header>Új hír:</Modal.Header>
+    <Modal.Content>
     <Form>
-      <Form.Field control={Input} label='Title' placeholder='Title' />
-      <Form.Field control={TextArea} label='Text' placeholder='Tell us what you wanr...' />
-      <Form.Field control={Checkbox} label='I agree to the Terms and Conditions' />
+      <Form.Field
+        control={Input}
+        label='Title'
+        name='title'
+        onChange={e => this.props.writeNews(e)}
+        value={title}
+        placeholder='Title' />
+      <Form.Field
+        control={TextArea}
+        label='Text'
+        name='text'
+        onChange={e => this.props.writeNews(e)}
+        value={text}
+        placeholder='Tell us what you want...' />
     </Form>
     </Modal.Content>
     <Modal.Actions>
-       <Button basic color='red' >
+       <Button inverted color='red' >
          <Icon name='remove' /> Cancel
        </Button>
-       <Button color='green'>
+       <Button
+         inverted color='green'
+         onClick={() => this.props.postNews({title, text, author})}>
          <Icon name='checkmark' /> Add
        </Button>
      </Modal.Actions>
@@ -104,6 +120,6 @@ class News extends Component {
 }
 
 
-const mapStateToProps = ({ news }) => ({ news });
+const mapStateToProps = ({ news, newNews, user }) => ({ news, newNews, user });
 
-export default connect(mapStateToProps, { getNews })(News);
+export default connect(mapStateToProps, { getNews, postNews, writeNews,  })(News);
