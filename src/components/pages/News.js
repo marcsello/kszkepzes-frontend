@@ -1,55 +1,15 @@
 import React, { Component } from 'react';
-import { Container, Header, Segment, Divider,
-        List, Modal, Button, Image, Form, Input, TextArea, Checkbox, Icon } from 'semantic-ui-react';
+import { Container, Header, Segment, Divider, List, Modal,
+         Button, Image, Form, Input, TextArea, Checkbox, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import AddNewsForm  from '../forms/AddNewsForm'
 
-import { getNews, } from '../../actions';
-import { postNews, writeNews } from '../../actions/news.js'
+import { getNews, deleteNews } from '../../actions/news'
 
 class News extends Component {
 
   componentWillMount() {
     this.props.getNews();
-  }
-
-
-  render_add_news(){
-    const { title, text } = this.props.newNews;
-    const author = this.props.user.id;
-    return (
-    <Modal trigger={<Button >Add news</Button>}>
-    <Modal.Header>Új hír:</Modal.Header>
-    <Modal.Content>
-    <Form>
-      <Form.Field
-        control={Input}
-        label='Title'
-        name='title'
-        onChange={e => this.props.writeNews(e)}
-        value={title}
-        placeholder='Title' />
-      <Form.Field
-        control={TextArea}
-        label='Text'
-        name='text'
-        onChange={e => this.props.writeNews(e)}
-        value={text}
-        placeholder='Tell us what you want...' />
-    </Form>
-    </Modal.Content>
-    <Modal.Actions>
-       <Button inverted color='red' >
-         <Icon name='remove' /> Cancel
-       </Button>
-       <Button
-         inverted color='green'
-         onClick={() => this.props.postNews({title, text, author})}>
-         <Icon name='checkmark' /> Add
-       </Button>
-     </Modal.Actions>
-  </Modal>
-
-);
   }
 
   render_news() {
@@ -60,6 +20,10 @@ class News extends Component {
         { index > 0 ? <Divider /> : ''}
         <Header as='h3' style={{ fontSize: '2em' }}>{item.title}</Header>
         <p style={{ fontSize: '1.33em' }}>{item.text}</p>
+        <Button
+          color='red'
+          size='mini'
+          onClick={() => this.props.deleteNews(item)}  >Delete</Button>
       </div>
     ));
 
@@ -104,7 +68,7 @@ class News extends Component {
         */}
 
         <Segment floated={'left'} style={{ padding: '3em 3em' }} vertical>
-          {this.render_add_news()}
+          <AddNewsForm />
           <Container text textAlign = {'center'}>
             {this.render_news()}
           </Container>
@@ -120,6 +84,6 @@ class News extends Component {
 }
 
 
-const mapStateToProps = ({ news, newNews, user }) => ({ news, newNews, user });
+const mapStateToProps = ({ news }) => ({ news });
 
-export default connect(mapStateToProps, { getNews, postNews, writeNews,  })(News);
+export default connect(mapStateToProps, { getNews, deleteNews })(News);
