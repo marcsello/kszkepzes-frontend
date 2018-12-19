@@ -63,16 +63,11 @@ class News extends Component {
         </Segment>
         */}
 
-        <Segment floated='left' style={{ padding: '3em 3em' }} vertical>
+        <Segment style={{ padding: '3em 3em' }} vertical>
           <AddNewsForm />
           <Container text textAlign='center'>
             {this.renderNews()}
           </Container>
-        </Segment>
-        <Segment floated='right' style={{ padding: '1em 1em' }} vertical>
-          <List size='big' link divided>
-            {this.renderSidebar()}
-          </List>
         </Segment>
       </div>
     );
