@@ -1,5 +1,6 @@
 import { axios } from './auth';
-import { GET_NEWS, WRITE_NEWS, ADD_NEWS, DELETE_NEWS, CLEAR_WRITE } from './types';
+import { GET_NEWS, WRITE_NEWS, ADD_NEWS, DELETE_NEWS,
+  CLEAR_WRITE, SELECT_NEWS, EDIT_NEWS } from './types';
 
 export const getNews = () => (
   async (dispatch) => {
@@ -38,6 +39,30 @@ export const postNews = ({ title, author, text }) => (
   }
 );
 
+export const editNews = ({ id, title, editedBy, text }) => (
+  async (dispatch) => {
+    try {
+      const response = await axios.patch(`/api/v1/news/${id}/`, {
+        author: editedBy,
+        title,
+        text,
+      });
+      if (response.data.id) {
+        alert('Sikeres mentés!');
+        dispatch({
+          type: EDIT_NEWS,
+          payload: response.data,
+
+        });
+      } else {
+        alert('Mentés nem sikerült!');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
 export const deleteNews = news => (
   async (dispatch) => {
     try {
@@ -65,5 +90,11 @@ export const writeNews = ({ target: { name, value } }) => (
 export const clearWrite = () => (
   (dispatch) => {
     dispatch({ type: CLEAR_WRITE });
+  }
+);
+
+export const setSelectedNews = item => (
+  (dispatch) => {
+    dispatch({ type: SELECT_NEWS, payload: item });
   }
 );

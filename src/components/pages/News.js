@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Container, Header, Segment, Divider, List, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import AddNewsForm from '../forms/AddNewsForm';
+import EditNewsForm from '../forms/EditNewsForm';
 
-import { getNews, deleteNews } from '../../actions/news';
+import { getNews, deleteNews, setSelectedNews } from '../../actions/news';
 
 class News extends Component {
   componentWillMount() {
@@ -16,6 +17,7 @@ class News extends Component {
         { index > 0 ? <Divider /> : ''}
         <Header as='h3' style={{ fontSize: '2em' }}>{item.title}</Header>
         <p style={{ fontSize: '1.33em' }}>{item.text}</p>
+        <EditNewsForm onClick={() => this.props.setSelectedNews(item)} />
         <Button
           color='red'
           size='mini'
@@ -80,4 +82,4 @@ class News extends Component {
 
 const mapStateToProps = ({ news }) => ({ news });
 
-export default connect(mapStateToProps, { getNews, deleteNews })(News);
+export default connect(mapStateToProps, { getNews, deleteNews, setSelectedNews })(News);
