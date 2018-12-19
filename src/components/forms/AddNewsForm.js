@@ -5,11 +5,26 @@ import { connect } from 'react-redux';
 import { postNews, writeNews, clearWrite } from '../../actions/news';
 
 class AddNewsForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showModal: false,
+    };
+  }
+
   render() {
     const { title, text } = this.props.newNews;
     const author = this.props.user.id;
     return (
-      <Modal trigger={<Button >Add news</Button>}>
+      <Modal
+        open={this.state.showModal}
+        trigger={
+          <Button
+            onClick={() => { this.setState({ showModal: true }); }}
+          >Add news
+          </Button>
+        }
+      >
         <Modal.Header>Új hír:</Modal.Header>
         <Modal.Content>
           <Form>
@@ -32,14 +47,20 @@ class AddNewsForm extends Component {
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button inverted color='red' >
-            <Icon name='remove' /> Cancel
+          <Button
+            inverted
+            color='red'
+            onClick={() => { this.setState({ showModal: false }); }}
+          >
+            <Icon name='remove' />
+            Cancel
           </Button>
           <Button
             inverted
             color='green'
             onClick={() => {
                     this.props.postNews({ title, text, author });
+                    this.setState({ showModal: false });
                     this.props.clearWrite();
                     }}
           >

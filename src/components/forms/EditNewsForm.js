@@ -5,11 +5,24 @@ import { connect } from 'react-redux';
 import { writeNews, editNews, clearWrite } from '../../actions/news';
 
 class EditNewsForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showModal: false,
+    };
+  }
+
   render() {
     const { id, title, text } = this.props.selectedNews;
     const editedBy = this.props.user.id;
     return (
-      <Modal onOpen={this.props.onClick} trigger={<Button size='mini' >Edit</Button>}>
+      <Modal
+        open={this.state.showModal}
+        onOpen={this.props.onClick}
+        trigger={
+          <Button onClick={() => { this.setState({ showModal: true }); }} size='mini' >Edit</Button>
+        }
+      >
         <Modal.Header>Szerkesztés:</Modal.Header>
         <Modal.Content>
           <Form>
@@ -32,7 +45,11 @@ class EditNewsForm extends Component {
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button inverted color='red' >
+          <Button
+            inverted
+            color='red'
+            onClick={() => { this.setState({ showModal: false }); }}
+          >
             <Icon name='remove' /> Cancel
           </Button>
           <Button
@@ -42,6 +59,7 @@ class EditNewsForm extends Component {
                     this.props.editNews({
                                        id, title, text, editedBy,
                                       });
+                    this.setState({ showModal: false });
                     this.props.clearWrite();
                     }}
           >
