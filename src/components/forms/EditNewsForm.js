@@ -21,7 +21,7 @@ class EditNewsForm extends Component {
         onOpen={this.props.onClick}
         trigger={
           <Button
-            floated={this.props.floated}
+            compact
             onClick={() => { this.setState({ showModal: true }); }}
             size='mini'
           >
