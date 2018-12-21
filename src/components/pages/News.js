@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Segment, Item, Button, Grid } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import AddNewsForm from '../forms/AddNewsForm';
 import EditNewsForm from '../forms/EditNewsForm';
@@ -43,9 +44,9 @@ class News extends Component {
             <Grid>
               <Grid.Row className='news-extra'>
                 <Grid.Column floated='left' width={10}>
-                  <p> Készült: {item.created_at} </p>
-                  {/* TODO get the name who edited it */}
-                  <p> Szerkesztve: {item.created_at} </p>
+                  <p> Készült: {moment(item.created_at).format('LLLL')} </p>
+                  {/* TODO get the time when was edited */}
+                  <p> Szerkesztve: {moment(item.updated_at).format('LLLL')}</p>
                 </Grid.Column>
                 <Grid.Column floated='right' width={5}>
                   <p> Írta: <strong>{item.author_name}</strong></p>

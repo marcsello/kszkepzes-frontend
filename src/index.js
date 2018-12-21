@@ -10,6 +10,10 @@ import configureStore from './configureStore';
 import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 
+import moment from 'moment';
+
+moment.locale();
+
 const store = configureStore();
 
 render(
@@ -22,4 +26,3 @@ render(
 );
 
 registerServiceWorker();
-
