@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { Container, Header, Segment, Divider, List, Button } from 'semantic-ui-react';
+import { Container, Segment, Item, Button, Grid } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+
 import AddNewsForm from '../forms/AddNewsForm';
 import EditNewsForm from '../forms/EditNewsForm';
 
 import { getNews, deleteNews, setSelectedNews } from '../../actions/news';
+
+import './News.css';
 
 class News extends Component {
   componentWillMount() {
@@ -12,61 +15,62 @@ class News extends Component {
   }
 
   renderNews() {
-    return this.props.news.map((item, index) => (
-      <div key={item.id} id={index}>
-        { index > 0 ? <Divider /> : ''}
-        <Header as='h3' style={{ fontSize: '2em' }}>{item.title}</Header>
-        <p style={{ fontSize: '1.33em' }}>{item.text}</p>
-        <EditNewsForm onClick={() => this.props.setSelectedNews(item)} />
-        <Button
-          color='red'
-          size='mini'
-          onClick={() => this.props.deleteNews(item)}
-        >
-        Delete
-        </Button>
-      </div>
-    ));
-  }
-
-  renderSidebar() {
-    return this.props.news.map((item, index) => (
-      <List.Item as='a' href={`#${index}`}>
-        <List.Icon name='align justify' verticalAlign='middle' />
-        <List.Content>
-          <List.Header>
+    return this.props.news.map(item => (
+      <Item key={item.id}>
+        <Item.Content>
+          <Item.Header
+            as='h3'
+            style={{ fontSize: '2em' }}
+          >
             {item.title}
-          </List.Header>
-        </List.Content>
-      </List.Item>
+            <EditNewsForm
+              floated='right'
+              onClick={() => this.props.setSelectedNews(item)}
+            />
+            <Button
+              color='red'
+              size='mini'
+              floated='right'
+              onClick={() => this.props.deleteNews(item)}
+            >
+            Delete
+            </Button>
+          </Item.Header>
+          <Item.Description style={{ fontSize: '1.33em' }}>
+            <pre>{item.text}</pre>
+          </Item.Description>
+          <Item.Extra>
+            <Grid>
+              <Grid.Row className='news-extra'>
+                <Grid.Column floated='left' width={10}>
+                  <p> Készült: {item.created_at} </p>
+                  {/* TODO get the name who edited it */}
+                  <p> Szerkesztve: {item.created_at} </p>
+                </Grid.Column>
+                <Grid.Column floated='right' width={5}>
+                  <p> Írta: <strong>{item.author_name}</strong></p>
+                  {/* TODO get the edited by name */}
+                  <p> Szerkesztette: {item.author_name}</p>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Item.Extra>
+        </Item.Content>
+      </Item>
     ));
   }
 
   render() {
     return (
       <div>
-        {/*  <Segment inverted textAlign='center' vertical>
-          <Container>
-            <Header
-              as='h1'
-              content='Hírek'
-              inverted
-              style={{
-                fontSize: '2em',
-                fontWeight: 'normal',
-                marginBottom: 0,
-                marginTop: '0.2em',
-                padding: 0
-              }}
-            />
-          </Container>
-        </Segment>
-        */}
 
         <Segment style={{ padding: '3em 3em' }} vertical>
+          {/*  { this.props.user.is_superuser ? <AddNewsForm /> : ''} */}
           <AddNewsForm />
           <Container text textAlign='center'>
-            {this.renderNews()}
+            <Item.Group divided>
+              {this.renderNews()}
+            </Item.Group>
           </Container>
         </Segment>
       </div>
@@ -75,6 +79,6 @@ class News extends Component {
 }
 
 
-const mapStateToProps = ({ news }) => ({ news });
+const mapStateToProps = ({ news, user }) => ({ news, user });
 
 export default connect(mapStateToProps, { getNews, deleteNews, setSelectedNews })(News);

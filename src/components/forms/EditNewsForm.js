@@ -20,7 +20,13 @@ class EditNewsForm extends Component {
         open={this.state.showModal}
         onOpen={this.props.onClick}
         trigger={
-          <Button onClick={() => { this.setState({ showModal: true }); }} size='mini' >Edit</Button>
+          <Button
+            floated={this.props.floated}
+            onClick={() => { this.setState({ showModal: true }); }}
+            size='mini'
+          >
+            Edit
+          </Button>
         }
       >
         <Modal.Header>Szerkesztés:</Modal.Header>
