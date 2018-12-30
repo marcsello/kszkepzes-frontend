@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Header, Segment, Menu } from 'semantic-ui-react';
+import Events from './Events'
 
 export default class Statistics extends Component {
   state = { activeItem: 'events' }
@@ -9,18 +10,31 @@ export default class Statistics extends Component {
     const { activeItem } = this.state
     return (
       <div>
-          <Container textAlign="center">
-          <Menu tabular compact={true}>
-            <Menu.Item name='events' active={activeItem === 'events'} onClick={this.handleItemClick} />
+          <Container
+            textAlign="center"
+            style={{
+              padding: '20px'
+            }}
+          >
+          <Menu
+            attached='top'
+            tabular
+            size='huge'
+            compact={true}>
+            <Menu.Item
+              name='events'
+              active={activeItem === 'events'}
+              onClick={this.handleItemClick}
+            >Alkalmak
+            </Menu.Item>
             <Menu.Item
               name='trainees'
               active={activeItem === 'trainees'}
               onClick={this.handleItemClick}
-            />
-            <Segment inverted textAlign='center' vertical>
-
-            </Segment>
+            >Képződők
+            </Menu.Item>
           </Menu>
+          { activeItem === 'events' ? <Events /> : '' }
         </Container>
       </div>
     );
