@@ -47,10 +47,10 @@ const FixedMenu = ({ user }) => (
             user.id ?
               <Button.Group>
                 <Button primary as={Link} to='/profile'>Profilom</Button>
-                <Button as='a' href='/api/v1/logout/' icon='sign out' />
+                <Button as='a' href='/api/v1/logout/'icon='sign out' />
               </Button.Group>
             :
-              <Button as='a' href='/api/v1/login/authsch/'>Bejelentkezés</Button>
+              <Button as='a' href='/api/v1/login/authsch/' >Bejelentkezés</Button>
           }
         </Menu.Item>
       </Menu.Menu>
