@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Header, Segment, Menu } from 'semantic-ui-react';
+import { Container, Menu } from 'semantic-ui-react';
 import Events from './Events'
 
 export default class Statistics extends Component {
@@ -13,7 +13,7 @@ export default class Statistics extends Component {
           <Container
             textAlign="center"
             style={{
-              padding: '20px'
+              padding: '60px',
             }}
           >
           <Menu

@@ -9,6 +9,7 @@ import Profile from './pages/Profile';
 import Statistics from './pages/Statistics';
 import Groups from './pages/Groups';
 import News from './pages/News';
+import EventDetail from './pages/EventDetail';
 
 const Main = () => (
   <Switch>
@@ -20,6 +21,7 @@ const Main = () => (
     <Route path='/profile' component={withRouter(Profile)} />
     <Route path='/statistics' component={Statistics} />
     <Route path='/groups' component={Groups} />
+    <Route path='/events/:id' component={EventDetail} />
     <Route component={NotFound} />
   </Switch>
 );
