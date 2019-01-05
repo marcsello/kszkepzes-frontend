@@ -20,7 +20,7 @@ class Events extends Component {
           </Link>
         </Table.Cell>
         <Table.Cell>{moment(event.date).format('LL')}</Table.Cell>
-        <Table.Cell>111</Table.Cell>
+        <Table.Cell>{event.visitor_number}</Table.Cell>
       </Table.Row>
     );
     });
