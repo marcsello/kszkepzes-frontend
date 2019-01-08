@@ -1,5 +1,5 @@
 import axios from './session';
-import { GET_USERDATA, PROFILE_CHANGE, GROUP_CHANGE, GET_NEWS } from './types';
+import { GET_USERDATA, PROFILE_CHANGE, GROUP_CHANGE } from './types';
 
 
 export const getUserData = () => (
@@ -21,20 +21,6 @@ export const getUserData = () => (
         payload: {
           id, joinDate, nick, motivationAbout, motivationProfession, motivationExercise, signed, groups,
         },
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  }
-);
-
-export const getNews = () => (
-  async (dispatch) => {
-    try {
-      const response = await axios.get('/api/v1/news');
-      dispatch({
-        type: GET_NEWS,
-        payload: response.data,
       });
     } catch (e) {
       console.log(e);
