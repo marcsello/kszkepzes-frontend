@@ -1,12 +1,6 @@
-// TODO: Separate actions
-
-import ax from 'axios';
+import axios from './session';
 import { GET_USERDATA, PROFILE_CHANGE, GROUP_CHANGE, GET_NEWS } from './types';
 
-export const axios = ax.create({
-  xsrfCookieName: 'csrftoken',
-  xsrfHeaderName: 'X-CSRFToken',
-});
 
 export const getUserData = () => (
   async (dispatch) => {

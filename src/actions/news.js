@@ -1,4 +1,4 @@
-import { axios } from './auth';
+import axios from './session';
 import { GET_NEWS, WRITE_NEWS, ADD_NEWS, DELETE_NEWS,
   CLEAR_WRITE, SELECT_NEWS, EDIT_NEWS } from './types';
 
