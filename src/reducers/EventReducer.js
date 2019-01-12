@@ -1,4 +1,4 @@
-import { GET_EVENTS, GET_EVENT_BY_ID, VISITOR_CHANGE, WRITE_EVENT } from '../actions/types';
+import { GET_EVENTS, GET_EVENT_BY_ID, VISITOR_CHANGE, WRITE_EVENT, ADD_EVENT } from '../actions/types';
 
 const INITIAL_STATE = { newEvent: {} };
 
@@ -11,7 +11,9 @@ export default (state = INITIAL_STATE, action) => {
     case VISITOR_CHANGE:
       return { ...state, selectedEvent: { ...state.selectedEvent, visitors: action.payload } };
     case WRITE_EVENT:
-      return { ...state, newEvent: { ...state.selectedEvent, [action.target]: action.payload } };
+      return { ...state, newEvent: { ...state.newEvent, [action.target]: action.payload } };
+    case ADD_EVENT:
+      return { ...state, events: [...state.events, action.payload] };
     default:
       return state;
   }

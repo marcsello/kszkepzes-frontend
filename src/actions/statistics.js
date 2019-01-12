@@ -5,6 +5,7 @@ import {
   GET_TRAINEES, VISITOR_CHANGE,
   GET_NOTES_BY_EVENT,
   WRITE_EVENT,
+  ADD_EVENT,
 } from './types';
 
 export const getEvents = () => (
@@ -79,9 +80,9 @@ export const submitVisitors = ({ id, visitors }) => (
   }
 );
 
-export const writeEvent = event => (
+export const writeEvent = ({ target: { name, value } }) => (
   (dispatch) => {
-    dispatch({ type: WRITE_EVENT, payload: event.target.value, target: event.name });
+    dispatch({ type: WRITE_EVENT, payload: value, target: name });
   }
 );
 
@@ -89,5 +90,27 @@ export const writeEvent = event => (
 export const eventDate = (name, value) => (
   (dispatch) => {
     dispatch({ type: WRITE_EVENT, payload: value, target: name });
+  }
+);
+
+export const addEvent = ({ name, date }) => (
+  async (dispatch) => {
+    try {
+      const response = await axios.post('/api/v1/events/', {
+        name,
+        date,
+      });
+      if (response.data.id) {
+        alert('Sikeres mentés!');
+        dispatch({
+          type: ADD_EVENT,
+          payload: response.data,
+        });
+      } else {
+        alert('Mentés nem sikerült!');
+      }
+    } catch (e) {
+      console.log(e);
+    }
   }
 );

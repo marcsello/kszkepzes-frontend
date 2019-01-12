@@ -3,8 +3,8 @@ import { Modal, Button, Form, Input, TextArea, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { DateTimeInput } from 'semantic-ui-calendar-react';
 
-import { clearWrite } from '../../actions/news';
-import { writeEvent, eventDate } from '../../actions/statistics'
+// import { clearWrite } from '../../actions/news';
+import { writeEvent, eventDate, addEvent } from '../../actions/statistics'
 
 class AddEventForm extends Component {
   constructor(props) {
@@ -59,6 +59,7 @@ class AddEventForm extends Component {
             <DateTimeInput
               name="date"
               label="Dátum:"
+              dateFormat='YYYY-MM-DD'
               placeholder="Date"
               value={this.state.date}
               iconPosition="left"
@@ -79,8 +80,8 @@ class AddEventForm extends Component {
             inverted
             color='green'
             onClick={() => {
-                    this.props.addEvent();
-                    this.setState({ showModal: false });
+                    this.props.addEvent(this.props.newEvent);
+                    this.setState({ showModal: false, date: '' });
                     }}
           >
             <Icon name='checkmark' /> Add
@@ -93,4 +94,4 @@ class AddEventForm extends Component {
 
 const mapStateToProps = ({ events: { newEvent } }) => ({ newEvent });
 
-export default connect(mapStateToProps, { writeEvent, clearWrite, eventDate })(AddEventForm);
+export default connect(mapStateToProps, { writeEvent, addEvent, eventDate })(AddEventForm);
