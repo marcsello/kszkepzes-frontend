@@ -1,6 +1,6 @@
-import { GET_EVENTS, GET_EVENT_BY_ID, VISITOR_CHANGE } from '../actions/types';
+import { GET_EVENTS, GET_EVENT_BY_ID, VISITOR_CHANGE, WRITE_EVENT } from '../actions/types';
 
-const INITIAL_STATE = {};
+const INITIAL_STATE = { newEvent: {} };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -10,6 +10,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, selectedEvent: action.payload };
     case VISITOR_CHANGE:
       return { ...state, selectedEvent: { ...state.selectedEvent, visitors: action.payload } };
+    case WRITE_EVENT:
+      return { ...state, newEvent: { ...state.selectedEvent, [action.target]: action.payload } };
     default:
       return state;
   }

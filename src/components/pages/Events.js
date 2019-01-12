@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Container, Table } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { getEvents } from '../../actions/statistics';
+import AddEventForm from '../forms/AddEventForm';
 
 class Events extends Component {
   componentWillMount() {
@@ -42,6 +43,7 @@ class Events extends Component {
             {this.props.events ? this.renderEvents() : 'Nincs még alaklom beírva'}
           </Table.Body>
         </Table>
+        <AddEventForm />
       </Container>
     );
   }

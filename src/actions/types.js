@@ -19,3 +19,4 @@ export const GET_TRAINEE_BY_ID = 'get_trainee_by_id';
 export const VISITOR_CHANGE = 'visitor_change';
 
 export const GET_NOTES_BY_EVENT = 'get_notes_by_event';
+export const WRITE_EVENT = 'write_event';

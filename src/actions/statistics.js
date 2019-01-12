@@ -1,5 +1,11 @@
-import { axios } from './auth';
-import { GET_EVENTS, GET_EVENT_BY_ID, GET_TRAINEES, VISITOR_CHANGE, GET_NOTES_BY_EVENT } from './types';
+import axios from './session';
+import {
+  GET_EVENTS,
+  GET_EVENT_BY_ID,
+  GET_TRAINEES, VISITOR_CHANGE,
+  GET_NOTES_BY_EVENT,
+  WRITE_EVENT,
+} from './types';
 
 export const getEvents = () => (
   async (dispatch) => {
@@ -70,5 +76,18 @@ export const submitVisitors = ({ id, visitors }) => (
     } catch (e) {
       console.log(e);
     }
+  }
+);
+
+export const writeEvent = event => (
+  (dispatch) => {
+    dispatch({ type: WRITE_EVENT, payload: event.target.value, target: event.name });
+  }
+);
+
+
+export const eventDate = (name, value) => (
+  (dispatch) => {
+    dispatch({ type: WRITE_EVENT, payload: value, target: name });
   }
 );
