@@ -6,6 +6,7 @@ import {
   GET_NOTES_BY_EVENT,
   WRITE_EVENT,
   ADD_EVENT,
+  DELETE_EVENT,
 } from './types';
 
 export const getEvents = () => (
@@ -114,3 +115,21 @@ export const addEvent = ({ name, date }) => (
     }
   }
 );
+
+export const deleteEvent = event => (
+  async (dispatch) => {
+    try {
+      const response = await axios.delete(`/api/v1/events/${event.id}/`);
+      if (!response.data.id) {
+        alert('Sikeres törlés!');
+        dispatch({
+          type: DELETE_EVENT,
+          payload: event,
+        });
+      } else {
+        alert('A törlés nem sikerült!');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  });

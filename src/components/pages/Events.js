@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import { Container, Table } from 'semantic-ui-react';
+import { Container, Table, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { getEvents } from '../../actions/statistics';
+import { getEvents, deleteEvent } from '../../actions/statistics';
 import AddEventForm from '../forms/AddEventForm';
 
 class Events extends Component {
@@ -22,6 +22,16 @@ class Events extends Component {
         </Table.Cell>
         <Table.Cell>{moment(event.date).format('LL')}</Table.Cell>
         <Table.Cell>{event.visitor_number}</Table.Cell>
+        <Table.Cell compact>
+          <Button
+            onClick={() => this.props.deleteEvent(event)}
+            color='red'
+            compact
+            size='small'
+          >
+          Delete
+          </Button>
+        </Table.Cell>
       </Table.Row>
     );
     });
@@ -36,6 +46,7 @@ class Events extends Component {
               <Table.HeaderCell>Alkalom neve</Table.HeaderCell>
               <Table.HeaderCell>Dátum</Table.HeaderCell>
               <Table.HeaderCell>Jelen voltak</Table.HeaderCell>
+              <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
 
@@ -51,4 +62,4 @@ class Events extends Component {
 
 const mapStateToProps = ({ events: { events }, user }) => ({ events, user });
 
-export default connect(mapStateToProps, { getEvents })(Events);
+export default connect(mapStateToProps, { getEvents, deleteEvent })(Events);
