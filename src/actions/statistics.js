@@ -2,7 +2,8 @@ import axios from './session';
 import {
   GET_EVENTS,
   GET_EVENT_BY_ID,
-  GET_TRAINEES, VISITOR_CHANGE,
+  GET_TRAINEES,
+  VISITOR_CHANGE,
   GET_NOTES_BY_EVENT,
   WRITE_EVENT,
   ADD_EVENT,
@@ -51,9 +52,9 @@ export const getTrainees = () => (
   }
 );
 
-export const visitorChange = visitors => (
-  dispatch => (dispatch({ type: VISITOR_CHANGE, payload: visitors }))
-);
+export const visitorChange = ({ id }) => {
+  return (dispatch => (dispatch({ type: VISITOR_CHANGE, payload: id })));
+};
 
 export const getNotesByEvent = id => (
   async (dispatch) => {

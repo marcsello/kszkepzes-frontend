@@ -16,7 +16,25 @@ export default (state = INITIAL_STATE, action) => {
     case GET_EVENT_BY_ID:
       return { ...state, selectedEvent: action.payload };
     case VISITOR_CHANGE:
-      return { ...state, selectedEvent: { ...state.selectedEvent, visitors: action.payload } };
+      const index = state.selectedEvent.visitors.indexOf(action.payload);
+      if (index !== -1) {
+        state.selectedEvent.visitors.splice(index, 1);
+        return {
+          ...state,
+          selectedEvent: {
+            ...state.selectedEvent,
+            visitors: state.selectedEvent.visitors,
+          },
+        };
+      }
+      state.selectedEvent.visitors.push(action.payload)
+      return {
+        ...state,
+        selectedEvent: {
+          ...state.selectedEvent,
+          visitors: state.selectedEvent.visitors,
+        },
+      };
     case WRITE_EVENT:
       return { ...state, newEvent: { ...state.newEvent, [action.target]: action.payload } };
     case ADD_EVENT:
