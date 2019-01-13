@@ -1,49 +1,75 @@
 import React, { Component } from 'react';
-import { Container, Item, Dropdown, Button, Label, Comment, Form, Header } from 'semantic-ui-react';
+import {
+  Container,
+  Item,
+  Button,
+  Comment,
+  Form,
+  Header,
+  Table,
+  Icon,
+  Checkbox,
+} from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { getEventById, getTrainees, visitorChange, getNotesByEvent, submitVisitors } from '../../actions/statistics';
 
 class EventDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      edit: false,
+    };
+  }
+
   componentWillMount() {
     this.props.getEventById(this.props.match.params.id);
     this.props.getTrainees();
     this.props.getNotesByEvent(this.props.match.params.id);
   }
 
+
+  renderTrainees() {
+    return this.props.trainees.map((item) => {
+      const isVisitor = this.props.selectedEvent.visitors.find(i => i === item.id);
+      return (
+        <Table.Row>
+          <Table.Cell>
+            {item.full_name}
+          </Table.Cell>
+          {!this.state.edit ?
+            <Table.Cell textAlign='center'>
+              {
+                  isVisitor ?
+                    <Icon color='green' name='checkmark' />
+                  :
+                    <Icon color='green' name='cancel' />
+                }
+            </Table.Cell>
+            :
+            <Table.Cell textAlign='center'>
+              <Checkbox
+                defaultChecked={isVisitor ? true : false}
+                onChange={() => this.props.visitorChange(item)}
+              />
+            </Table.Cell>
+          }
+          <Table.Cell>
+          </Table.Cell>
+        </Table.Row>
+      );
+    });
+  }
+
   renderEvent() {
     const { id, name, date, visitors } = this.props.selectedEvent;
-    const usernames = this.props.trainees.map((item) => {
-      return ({
-        key: item.id,
-        text: item.full_name,
-        value: item.id,
-      });
-    });
-
     return (
       <Item>
         <Item.Header as='h2'>{name}</Item.Header>
         <Item.Header as='h3'>Dátum: {moment(date).format('LL')}</Item.Header>
-        <Label>Jelen voltak:</Label>
-        <Dropdown
-          multiple
-          selection
-          placeholder='Újoncok hozzáadása'
-          style={{
-            minWidth: '150px',
-            maxWidth: '200px',
-          }}
-          onChange={(_, v) => this.props.visitorChange(v.value)}
-          defaultValue={visitors}
-          options={usernames}
-        />
-      <Button onCLick={this.props.submitVisitors({id, visitors})}>
-          Megerősítés
-        </Button>
       </Item>
-      );
-    }
+    );
+  }
 
   renderComments() {
     const notes = this.props.eventNotes;
@@ -59,8 +85,7 @@ class EventDetail extends Component {
           </Comment.Text>
         </Comment.Content>
       </Comment>
-      )
-    );
+    ));
   }
 
   render() {
@@ -75,9 +100,43 @@ class EventDetail extends Component {
         </Container>
         <Container
           style={{
-            padding: '80px'
+            padding: '80px',
           }}
         >
+          <Table celled centered>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell>Név</Table.HeaderCell>
+                <Table.HeaderCell>Jelen volt</Table.HeaderCell>
+                <Table.HeaderCell>Megjegyzések</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              { this.props.trainees &&
+                this.props.selectedEvent ?
+                this.renderTrainees()
+                :
+                ''
+              }
+            </Table.Body>
+          </Table>
+          <Button
+            onClick={() => this.setState({ edit: true })}
+          >
+          Edit
+          </Button>
+          { this.state.edit ?
+            <Button
+              onClick={() => {
+                              this.setState({ edit: false });
+                              this.props.submitVisitors(this.props.selectedEvent);
+                            }
+                      }
+            >Save
+            </Button>
+            :
+            ''
+          }
           <Comment.Group>
             <Header dividing>
               Megjegyzések
