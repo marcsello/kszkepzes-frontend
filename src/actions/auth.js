@@ -1,12 +1,6 @@
-// TODO: Separate actions
+import axios from './session';
+import { GET_USERDATA, PROFILE_CHANGE, GROUP_CHANGE } from './types';
 
-import ax from 'axios';
-import { GET_USERDATA, PROFILE_CHANGE, GROUP_CHANGE, GET_NEWS } from './types';
-
-const axios = ax.create({
-  xsrfCookieName: 'csrftoken',
-  xsrfHeaderName: 'X-CSRFToken',
-});
 
 export const getUserData = () => (
   async (dispatch) => {
@@ -28,21 +22,9 @@ export const getUserData = () => (
           id, joinDate, nick, motivationAbout, motivationProfession, motivationExercise, signed, groups,
         },
       });
-    } catch (e) {}
-  }
-);
-
-export const getNews = () => (
-  async (dispatch) => {
-    try {
-      const response = await axios.get('/api/v1/news');
-      dispatch({
-        type: GET_NEWS,
-        payload: response.data,
-      });
-    } catch(e) {
+    } catch (e) {
+      console.log(e);
     }
-
   }
 );
 
@@ -59,7 +41,7 @@ export const groupChange = groups => (
 export const submitRegistration = ({
   nick, groups, signed, motivationAbout, motivationProfession, motivationExercise, id,
 }) => (
-  async (dispatch) => {
+  async () => {
     try {
       const response = await axios.patch(`/api/v1/profiles/${id}/`, {
         nick,
@@ -74,6 +56,8 @@ export const submitRegistration = ({
       } else {
         alert('Mentés nem sikerült!');
       }
-    } catch(e) {}
+    } catch (e) {
+      console.log(e);
+    }
   }
 );

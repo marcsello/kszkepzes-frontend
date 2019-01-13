@@ -1,50 +1,85 @@
 import React, { Component } from 'react';
-import { Container, Header, Segment, Divider } from 'semantic-ui-react';
+import { Container, Segment, Item, Button, Grid } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
-import { getNews } from '../../actions';
+import AddNewsForm from '../forms/AddNewsForm';
+import EditNewsForm from '../forms/EditNewsForm';
+
+import { getNews, deleteNews, setSelectedNews } from '../../actions/news';
+
+import './News.css';
 
 class News extends Component {
-
   componentWillMount() {
     this.props.getNews();
   }
 
-  render_news() {
-    const news = this.props.news;
-
-    return news.map( (item, index) => (
-      <div key={index}>
-        { index > 0 ? <Divider /> : ''}
-        <Header as='h3' style={{ fontSize: '2em' }}>{item.title}</Header>
-        <p style={{ fontSize: '1.33em' }}>{item.text}</p>
-      </div>
+  renderNews() {
+    return this.props.news.map(item => (
+      <Item key={item.id}>
+        <Item.Content>
+          <Item.Header
+            style={{ fontSize: '2em', width: '100%' }}
+          >
+            <Grid>
+              <Grid.Column floated='center' width={12}>
+                {item.title}
+              </Grid.Column>
+              <Grid.Column floated='right' width={4}>
+                <EditNewsForm
+                  onClick={() => this.props.setSelectedNews(item)}
+                />
+                <Button
+                  compact
+                  color='red'
+                  size='mini'
+                  onClick={() => this.props.deleteNews(item)}
+                >
+                  Delete
+                </Button>
+              </Grid.Column>
+            </Grid>
+          </Item.Header>
+          <Item.Description className='news-text' style={{ fontSize: '1.33em' }}>
+            {this.renderMultiLine(item.text)}
+          </Item.Description>
+          <Item.Extra>
+            <Grid>
+              <Grid.Row className='news-extra'>
+                <Grid.Column floated='left' width={10}>
+                  <p> Készült: {moment(item.created_at).format('LLLL')} </p>
+                  <p> Szerkesztve: {moment(item.updated_at).format('LLLL')}</p>
+                </Grid.Column>
+                <Grid.Column floated='right' width={5}>
+                  <p> Írta: <strong>{item.author_name}</strong></p>
+                  {/* TODO get the edited by name */}
+                  <p> Szerkesztette: {item.author_name}</p>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Item.Extra>
+        </Item.Content>
+      </Item>
     ));
+  }
 
+  renderMultiLine(text) {
+    const strings = text.split('\n');
+    return strings.map(string => <p>{string}</p>);
   }
 
   render() {
     return (
       <div>
-        <Segment inverted textAlign='center' vertical>
-          <Container>
-            <Header
-              as='h1'
-              content='Hírek'
-              inverted
-              style={{
-                fontSize: '3em',
-                fontWeight: 'normal',
-                marginBottom: 0,
-                marginTop: '0.5em',
-              }}
-            />
-          </Container>
-        </Segment>
 
-        <Segment style={{ padding: '8em 0em' }} vertical>
-          <Container text>
-            {this.render_news()}
+        <Segment style={{ padding: '3em 3em' }} vertical>
+          {/*  { this.props.user.is_superuser ? <AddNewsForm /> : ''} */}
+          <Container text textAlign='center'>
+            <AddNewsForm />
+            <Item.Group divided>
+              {this.renderNews()}
+            </Item.Group>
           </Container>
         </Segment>
       </div>
@@ -53,6 +88,6 @@ class News extends Component {
 }
 
 
-const mapStateToProps = ({ news }) => ({ news });
+const mapStateToProps = ({ news, user }) => ({ news, user });
 
-export default connect(mapStateToProps, { getNews })(News);
+export default connect(mapStateToProps, { getNews, deleteNews, setSelectedNews })(News);
