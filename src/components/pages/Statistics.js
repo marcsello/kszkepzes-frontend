@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Menu } from 'semantic-ui-react';
 import Events from './Events'
+import Trainees from './Trainees'
 
 export default class Statistics extends Component {
   state = { activeItem: 'events' }
@@ -35,6 +36,7 @@ export default class Statistics extends Component {
             </Menu.Item>
           </Menu>
           { activeItem === 'events' ? <Events /> : '' }
+          { activeItem === 'trainees' ? <Trainees /> : '' }
         </Container>
       </div>
     );
