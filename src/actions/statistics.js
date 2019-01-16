@@ -8,6 +8,7 @@ import {
   WRITE_EVENT,
   ADD_EVENT,
   DELETE_EVENT,
+  GET_TRAINEE_BY_ID,
 } from './types';
 
 export const getEvents = () => (
@@ -30,6 +31,20 @@ export const getEventById = id => (
       const response = await axios.get(`/api/v1/events/${id}`);
       dispatch({
         type: GET_EVENT_BY_ID,
+        payload: response.data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
+export const getTraineeById = id => (
+  async (dispatch) => {
+    try {
+      const response = await axios.get(`/api/v1/profiles/${id}`);
+      dispatch({
+        type: GET_TRAINEE_BY_ID,
         payload: response.data,
       });
     } catch (e) {

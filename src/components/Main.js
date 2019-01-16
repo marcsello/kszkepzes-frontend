@@ -10,6 +10,7 @@ import Statistics from './pages/Statistics';
 import Groups from './pages/Groups';
 import News from './pages/News';
 import EventDetail from './pages/EventDetail';
+import TraineeDetail from './pages/TraineeDetail';
 
 const Main = () => (
   <Switch>
@@ -22,6 +23,7 @@ const Main = () => (
     <Route path='/statistics' component={Statistics} />
     <Route path='/groups' component={Groups} />
     <Route path='/events/:id' component={EventDetail} />
+    <Route path='/trainees/:id' component={TraineeDetail} />
     <Route component={NotFound} />
   </Switch>
 );
