@@ -13,12 +13,12 @@ class Trainees extends Component {
     return (this.props.events.map((event) => {
       if (event.visitors.includes(trainee.id)) {
         return (
-          <Table.Cell>
+          <Table.Cell textAlign='center'>
             <Icon color='green' name='checkmark' />
           </Table.Cell>);
       }
       return (
-        <Table.Cell>
+        <Table.Cell textAlign='center'>
           <Icon color='red' name='cancel' />
         </Table.Cell>);
     }));

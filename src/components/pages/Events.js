@@ -22,7 +22,7 @@ class Events extends Component {
         </Table.Cell>
         <Table.Cell>{moment(event.date).format('LL')}</Table.Cell>
         <Table.Cell>{event.visitor_number}</Table.Cell>
-        <Table.Cell compact>
+        <Table.Cell>
           <Button
             onClick={() => this.props.deleteEvent(event)}
             color='red'
