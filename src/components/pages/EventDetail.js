@@ -138,8 +138,7 @@ class EventDetail extends Component {
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              { this.props.trainees &&
-                this.props.selectedEvent ?
+              { this.props.selectedEvent ?
                 this.renderTrainees()
                 :
                 ''
