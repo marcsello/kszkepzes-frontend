@@ -71,20 +71,6 @@ export const visitorChange = ({ id }) => {
   return (dispatch => (dispatch({ type: VISITOR_CHANGE, payload: id })));
 };
 
-export const getNotesByEvent = id => (
-  async (dispatch) => {
-    try {
-      const response = await axios.get('/api/v1/notes/', { params: { eventID: id } });
-      dispatch({
-        type: GET_NOTES_BY_EVENT,
-        payload: response.data,
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  }
-);
-
 export const submitVisitors = ({ id, visitors }) => (
   async () => {
     try {
