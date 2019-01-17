@@ -43,7 +43,7 @@ class EventDetail extends Component {
                   isVisitor ?
                     <Icon color='green' name='checkmark' />
                   :
-                    <Icon color='green' name='cancel' />
+                    <Icon color='red' name='cancel' />
                 }
             </Table.Cell>
             :

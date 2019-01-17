@@ -1,12 +1,27 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Container, Table } from 'semantic-ui-react';
+import { Container, Table, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { getTrainees } from '../../actions/statistics';
+import { getTrainees, getEvents } from '../../actions/statistics';
 
 class Trainees extends Component {
   componentWillMount() {
     this.props.getTrainees();
+    this.props.getEvents();
+  }
+
+  renderVisitedStatus(trainee) {
+    return (this.props.events.map((event) => {
+      if (event.visitors.includes(trainee.id)) {
+        return (
+          <Table.Cell>
+            <Icon color='green' name='checkmark' />
+          </Table.Cell>);
+      }
+      return (
+        <Table.Cell>
+          <Icon color='red' name='cancel' />
+        </Table.Cell>);
+    }));
   }
 
   renderTrainees() {
@@ -14,13 +29,19 @@ class Trainees extends Component {
     { return (
       <Table.Row>
         <Table.Cell>
-          <Link to={`trainees/${trainee.id}`}>
-            {trainee.full_name}
-          </Link>
+          {trainee.full_name}
         </Table.Cell>
+        {this.renderVisitedStatus(trainee)}
       </Table.Row>
     );
     });
+  }
+
+  renderTableHeader() {
+    return (this.props.events.map(event => (
+      <Table.HeaderCell>
+        {event.name}
+      </Table.HeaderCell>)));
   }
 
   render() {
@@ -30,6 +51,7 @@ class Trainees extends Component {
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Képződők</Table.HeaderCell>
+              { this.renderTableHeader() }
             </Table.Row>
           </Table.Header>
 
@@ -42,6 +64,6 @@ class Trainees extends Component {
   }
 }
 
-const mapStateToProps = ({ trainees: { trainees }, user }) => ({ trainees, user });
+const mapStateToProps = ({ trainees: { trainees }, events: { events }, user }) => ({ trainees, events, user });
 
-export default connect(mapStateToProps, { getTrainees })(Trainees);
+export default connect(mapStateToProps, { getTrainees, getEvents })(Trainees);
