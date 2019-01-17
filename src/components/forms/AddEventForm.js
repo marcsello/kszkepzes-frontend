@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Modal, Button, Form, Input, TextArea, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { DateTimeInput } from 'semantic-ui-calendar-react';
-
-// import { clearWrite } from '../../actions/news';
 import { writeEvent, eventDate, addEvent } from '../../actions/statistics'
 
 class AddEventForm extends Component {

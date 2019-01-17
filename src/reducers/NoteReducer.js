@@ -1,4 +1,9 @@
-import { GET_NOTES_BY_EVENT, WRITE_NOTE, ADD_EVENT_NOTE } from '../actions/types';
+import {
+  GET_NOTES_BY_EVENT,
+  WRITE_NOTE,
+  ADD_EVENT_NOTE,
+  CLEAR_WRITE,
+} from '../actions/types';
 
 const INITIAL_STATE = { eventNotes: [], actualNote: {} };
 
@@ -10,6 +15,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, actualNote: { ...state.actualNote, note: action.payload } };
     case ADD_EVENT_NOTE:
       return { ...state, eventNotes: [...state.eventNotes, action.payload] };
+    case CLEAR_WRITE:
+      return { ...state, actualNote: { note: '' } };
     default:
       return state;
   }

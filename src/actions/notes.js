@@ -2,7 +2,8 @@ import axios from './session';
 import {
   GET_NOTES_BY_EVENT,
   WRITE_NOTE,
-  ADD_NOTE,
+  ADD_EVENT_NOTE,
+  CLEAR_WRITE,
 } from './types';
 
 export const getNotesByEvent = id => (
@@ -26,9 +27,9 @@ export const writeNote = (event) => {
 export const postEventNote = ({ eventid, userid, note }) => (
   async (dispatch) => {
     try {
-      const response = await axios.post('/api/v1/note/', {
+      const response = await axios.post('/api/v1/notes/', {
         event: eventid ? eventid : '',
-        user: userid ? eventid : '',
+        profile: userid ? eventid : '',
         note,
       });
       if (response.data.id) {
@@ -37,7 +38,14 @@ export const postEventNote = ({ eventid, userid, note }) => (
           type: ADD_EVENT_NOTE,
           payload: response.data,
         });
+      }
     } catch (e) {
       console.log(e);
     }
   });
+
+export const clearWrite = () => (
+  (dispatch) => {
+    dispatch({ type: CLEAR_WRITE });
+  }
+);

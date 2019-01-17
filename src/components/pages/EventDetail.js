@@ -12,7 +12,8 @@ import {
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { getEventById, getTrainees, visitorChange, getNotesByEvent, submitVisitors } from '../../actions/statistics';
+import { getEventById, getTrainees, visitorChange, submitVisitors } from '../../actions/statistics';
+import { getNotesByEvent, writeNote, clearWrite, postEventNote } from '../../actions/notes';
 
 class EventDetail extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class EventDetail extends Component {
 
   renderTrainees() {
     return this.props.trainees.map((item) => {
-      const isVisitor = this.props.selectedEvent.visitors.find(i => i === item.id);
+      const isVisitor = this.props.selectedEvent.visitors.includes(item.id);
       return (
         <Table.Row>
           <Table.Cell>
@@ -55,6 +56,20 @@ class EventDetail extends Component {
             </Table.Cell>
           }
           <Table.Cell>
+            {this.props.eventNotes.map((note) => {
+              if (note.profile === item.id) {
+                return (
+                  <Comment.Content>
+                    <Comment.Author>{note.created_by_name}</Comment.Author>
+                    <Comment.Text>
+                      {note.note}
+                    </Comment.Text>
+                  </Comment.Content>
+                );
+            }
+            return ('');
+          })
+          }
           </Table.Cell>
         </Table.Row>
       );
@@ -62,7 +77,7 @@ class EventDetail extends Component {
   }
 
   renderEvent() {
-    const { id, name, date, visitors } = this.props.selectedEvent;
+    const { name, date } = this.props.selectedEvent;
     return (
       <Item>
         <Item.Header as='h2'>{name}</Item.Header>
@@ -89,6 +104,8 @@ class EventDetail extends Component {
   }
 
   render() {
+    const event = this.props.selectedEvent;
+    const note = this.props.actualNote;
     return (
       <Container>
         <Container textAlign='center'>
@@ -147,8 +164,22 @@ class EventDetail extends Component {
               ''
             }
             <Form reply>
-              <Form.TextArea />
-              <Button content='Megjegyzés hozzáadása' labelPosition='left' icon='edit' primary />
+              <Form.TextArea
+                value={note.note}
+                onChange={e => this.props.writeNote(e)}
+              />
+              <Button
+                onClick={() => {
+                                this.props.postEventNote({ eventid: event.id,
+                                                          note: note.note });
+                                this.props.clearWrite();
+                              }
+                        }
+                content='Megjegyzés hozzáadása'
+                labelPosition='left'
+                icon='edit'
+                primary
+              />
             </Form>
           </Comment.Group>
         </Container>
@@ -157,6 +188,19 @@ class EventDetail extends Component {
   }
 }
 
-const mapStateToProps = ({ notes: { eventNotes }, events: { selectedEvent }, trainees: { trainees } }) => ({ eventNotes, selectedEvent, trainees });
+const mapStateToProps = ({
+  notes: { eventNotes, actualNote },
+  events: { selectedEvent },
+  trainees: { trainees }
+}) => ({ eventNotes, selectedEvent, trainees, actualNote });
 
-export default connect(mapStateToProps, { getEventById, getTrainees, visitorChange, getNotesByEvent, submitVisitors })(EventDetail);
+export default connect(mapStateToProps, {
+  getEventById,
+  getTrainees,
+  visitorChange,
+  getNotesByEvent,
+  submitVisitors,
+  writeNote,
+  clearWrite,
+  postEventNote,
+})(EventDetail);
