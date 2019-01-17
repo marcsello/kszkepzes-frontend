@@ -1,25 +1,43 @@
 import React, { Component } from 'react';
-import { Container, Header, Segment } from 'semantic-ui-react';
+import { Container, Menu } from 'semantic-ui-react';
+import Events from './Events'
+import Trainees from './Trainees'
 
 export default class Statistics extends Component {
+  state = { activeItem: 'events' }
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+
   render() {
+    const { activeItem } = this.state
     return (
       <div>
-        <Segment inverted textAlign='center' vertical>
-          <Container>
-            <Header
-              as='h1'
-              content='Statisztikák - Hamarosan'
-              inverted
-              style={{
-                fontSize: '3em',
-                fontWeight: 'normal',
-                marginBottom: 0,
-                marginTop: '0.5em',
-              }}
-            />
-          </Container>
-        </Segment>
+          <Container
+            textAlign="center"
+            style={{
+              padding: '60px',
+            }}
+          >
+          <Menu
+            attached='top'
+            tabular
+            size='huge'
+            compact={true}>
+            <Menu.Item
+              name='events'
+              active={activeItem === 'events'}
+              onClick={this.handleItemClick}
+            >Alkalmak
+            </Menu.Item>
+            <Menu.Item
+              name='trainees'
+              active={activeItem === 'trainees'}
+              onClick={this.handleItemClick}
+            >Képződők
+            </Menu.Item>
+          </Menu>
+          { activeItem === 'events' ? <Events /> : '' }
+          { activeItem === 'trainees' ? <Trainees /> : '' }
+        </Container>
       </div>
     );
   }
