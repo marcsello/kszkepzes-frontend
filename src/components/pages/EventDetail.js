@@ -9,6 +9,7 @@ import {
   Table,
   Icon,
   Checkbox,
+  Popup,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -56,20 +57,24 @@ class EventDetail extends Component {
             </Table.Cell>
           }
           <Table.Cell>
-            {this.props.eventNotes.map((note) => {
-              if (note.profile === item.id) {
-                return (
-                  <Comment.Content>
-                    <Comment.Author>{note.created_by_name}</Comment.Author>
-                    <Comment.Text>
-                      {note.note}
-                    </Comment.Text>
-                  </Comment.Content>
-                );
-            }
-            return ('');
-          })
-          }
+            <Popup
+              trigger={<Button icon='add' />}
+              content={this.props.eventNotes.map((note) => {
+                  if (note.profile === item.id) {
+                    return (
+                      <Comment.Content>
+                        <Comment.Author>{note.created_by_name}</Comment.Author>
+                        <Comment.Text>
+                          {note.note}
+                        </Comment.Text>
+                      </Comment.Content>
+                    );
+                }
+                return ('');
+                })
+              }
+              basic
+            />
           </Table.Cell>
         </Table.Row>
       );
@@ -88,19 +93,23 @@ class EventDetail extends Component {
 
   renderComments() {
     const notes = this.props.eventNotes;
-    return notes.map(note => (
-      <Comment>
-        <Comment.Content>
-          <Comment.Author>{note.created_by_name}</Comment.Author>
-          <Comment.Metadata>
-            {moment(note.created_at).format('LL')}
-          </Comment.Metadata>
-          <Comment.Text>
-            {note.note}
-          </Comment.Text>
-        </Comment.Content>
-      </Comment>
-    ));
+    return notes.map((note) => {
+      if (!note.profile) {
+        return (
+          <Comment>
+            <Comment.Content>
+              <Comment.Author>{note.created_by_name}</Comment.Author>
+              <Comment.Metadata>
+                {moment(note.created_at).format('LL')}
+              </Comment.Metadata>
+              <Comment.Text>
+                {note.note}
+              </Comment.Text>
+            </Comment.Content>
+          </Comment>);
+      }
+      return '';
+    });
   }
 
   render() {
