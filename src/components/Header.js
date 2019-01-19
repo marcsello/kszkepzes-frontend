@@ -12,39 +12,49 @@ import { connect } from 'react-redux';
 import { getUserData } from '../actions';
 import KSZKlogo from './images/kszk_logo.svg';
 
-
 const menuItems = [
   {
     text: 'Főoldal',
     to: '/home',
     prefix: <Image size='mini' src={KSZKlogo} style={{ marginRight: '1.5em' }} />,
+    permissionLevel: 0,
   },
   {
     text: 'Hírek',
     to: '/news',
     prefix: '',
+    permissionLevel: 0,
   },
   {
     text: 'Köreink',
     to: '/groups',
     prefix: '',
+    permissionLevel: 0,
   },
   {
     text: 'Ütemterv',
     to: '/schedule',
     prefix: '',
+    permissionLevel: 1,
   },
   {
     text: 'Statisztika',
     to: '/statistics',
     prefix: '',
+    permissionLevel: 3,
   },
-]
+];
 
 const FixedMenu = ({ user }) => (
   <Menu fixed='top' size='large' pointing>
     <Container>
-      {menuItems.map( (item, i) => <Menu.Item key={i} as={Link} to={item.to}>{item.text}</Menu.Item>)}
+      {menuItems.map((item, i) =>
+        (user.permission >= item.permissionLevel ||
+          (item.permissionLevel === 0)
+          ?
+          <Menu.Item key={i} as={Link} to={item.to}>{item.text}</Menu.Item>
+          :
+          null))}
 
       <Menu.Menu position='right'>
         <Menu.Item className='item'>
@@ -82,6 +92,8 @@ class Header extends Component {
     this.setState({ visible: true });
   }
 
+
+
   render() {
     const { visible } = this.state;
 
@@ -97,11 +109,12 @@ class Header extends Component {
             <Container>
               <Menu inverted secondary size='large'>
 
-                {menuItems.map(
-                  (item, i) => (
+                {menuItems.map((item, i) =>
+                  (this.props.user.permission >= item.permissionLevel ||
+                    (item.permissionLevel === 0) ?
                     <Menu.Item key={i} as={Link} to={item.to}>{item.prefix}{item.text}</Menu.Item>
-                  )
-                )}
+                    :
+                    null))}
 
                 <Menu.Item position='right'>
                   {

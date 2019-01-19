@@ -15,11 +15,28 @@ export const getUserData = () => (
         motivation_exercise: motivationExercise,
         signed,
         groups,
+        role,
       } = user.data;
+      let permission;
+      switch (role) {
+        case 'Applicant':
+          permission=1;
+          break;
+        case 'Student':
+          permission=2;
+          break;
+        case 'Staff':
+          permission=3;
+          break;
+        default:
+          permission=0;
+          break;
+      }
+
       dispatch({
         type: GET_USERDATA,
         payload: {
-          id, joinDate, nick, motivationAbout, motivationProfession, motivationExercise, signed, groups,
+          id, joinDate, nick, motivationAbout, motivationProfession, motivationExercise, signed, groups, role, permission
         },
       });
     } catch (e) {
