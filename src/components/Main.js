@@ -9,6 +9,7 @@ import Profile from './pages/Profile';
 import Statistics from './pages/Statistics';
 import Groups from './pages/Groups';
 import News from './pages/News';
+import Applications from './pages/Applications';
 import EventDetail from './pages/EventDetail';
 
 const Main = () => (
@@ -22,6 +23,7 @@ const Main = () => (
     <Route path='/statistics' component={Statistics} />
     <Route path='/groups' component={Groups} />
     <Route path='/events/:id' component={EventDetail} />
+    <Route path='/applications' component={Applications} />
     <Route component={NotFound} />
   </Switch>
 );

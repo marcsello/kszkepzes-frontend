@@ -39,6 +39,11 @@ const menuItems = [
     to: '/statistics',
     prefix: '',
   },
+  {
+    text: 'Jelentkezések',
+    to: '/applications',
+    prefix: '',
+  },
 ]
 
 const FixedMenu = ({ user }) => (
