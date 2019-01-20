@@ -34,6 +34,11 @@ const menuItems = [
     to: '/schedule',
     prefix: '',
   },
+  {
+    text: 'Házi feladatok',
+    to: '/homework',
+    prefix: '',
+  },
 ]
 
 const FixedMenu = ({ user }) => (
