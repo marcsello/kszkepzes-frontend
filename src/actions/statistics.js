@@ -8,6 +8,7 @@ import {
   ADD_EVENT,
   DELETE_EVENT,
   GET_TRAINEE_BY_ID,
+  GET_PROFILES,
 } from './types';
 
 export const getEvents = () => (
@@ -134,3 +135,17 @@ export const deleteEvent = event => (
       console.log(e);
     }
   });
+
+export const getProfiles = () => (
+  async (dispatch) => {
+    try {
+      const response = await axios.get('/api/v1/profiles/');
+      dispatch({
+        type: GET_PROFILES,
+        payload: response.data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);

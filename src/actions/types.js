@@ -26,3 +26,5 @@ export const DELETE_EVENT = 'delete_event';
 export const WRITE_NOTE = 'write_note';
 export const CLEAR_NOTE = 'clear_note';
 export const ADD_EVENT_NOTE = 'add_note';
+
+export const GET_PROFILES = 'get_profiles';

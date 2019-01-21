@@ -1,25 +1,33 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import { Container, Table, Button } from 'semantic-ui-react';
+import { Container, Table, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { getTrainees } from '../../actions/statistics';
+import { getProfiles } from '../../actions/statistics';
 
 class Applications extends Component {
   componentWillMount() {
-    this.props.getTrainees();
+    this.props.getProfiles();
   }
 
   renderApplicants() {
-    return this.props.trainees.map((trainee) =>
+    return this.props.profiles.map((profile) =>
     { return (
       <Table.Row>
         <Table.Cell>
-          <Link to={`trainee/${trainee.id}`}>
-            {trainee.full_name}
+          <Link to={`profile/${profile.id}`}>
+            {profile.full_name}
           </Link>
         </Table.Cell>
-        <Table.Cell>
+        <Table.Cell textAlign='center'>
+          { profile.role === 'Student' ?
+            <Icon color='green' name='checkmark' />
+            :
+              profile.role === 'Staff' ?
+              <strong>Staff</strong>
+              :
+              <Icon color='red' name='cancel' />
+          }
         </Table.Cell>
       </Table.Row>
     );
@@ -43,7 +51,7 @@ class Applications extends Component {
           </Table.Header>
 
           <Table.Body>
-            {this.props.trainees ? this.renderApplicants() : 'Nincs még alaklom beírva'}
+            {this.renderApplicants()}
           </Table.Body>
         </Table>
       </Container>
@@ -51,6 +59,6 @@ class Applications extends Component {
   }
 }
 
-const mapStateToProps = ({ trainees: { trainees }, user }) => ({ trainees, user });
+const mapStateToProps = ({ trainees: { profiles }, user }) => ({ profiles, user });
 
-export default connect(mapStateToProps, { getTrainees })(Applications);
+export default connect(mapStateToProps, { getProfiles })(Applications);

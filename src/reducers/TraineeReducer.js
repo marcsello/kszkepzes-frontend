@@ -1,6 +1,6 @@
-import { GET_TRAINEES, GET_TRAINEE_BY_ID } from '../actions/types';
+import { GET_TRAINEES, GET_TRAINEE_BY_ID, GET_PROFILES } from '../actions/types';
 
-const INITIAL_STATE = {};
+const INITIAL_STATE = { profiles: [] };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -8,6 +8,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, trainees: [...action.payload] };
     case GET_TRAINEE_BY_ID:
       return { ...state, selectedTrainee: action.payload };
+    case GET_PROFILES:
+      return { ...state, profiles: [...action.payload] };
     default:
       return state;
   }
