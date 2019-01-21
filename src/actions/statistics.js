@@ -9,6 +9,7 @@ import {
   DELETE_EVENT,
   GET_TRAINEE_BY_ID,
   GET_PROFILES,
+  SET_STAFF,
 } from './types';
 
 export const getEvents = () => (
@@ -144,6 +145,21 @@ export const getProfiles = () => (
         type: GET_PROFILES,
         payload: response.data,
       });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
+export const setStaffStatus = id => (
+  async (dispatch) => {
+    try {
+      const response = await axios.patch(`/api/v1/profiles/${id}/`, {
+        signed: true,
+        role: 'Staff',
+      });
+      if (response.data.id) {
+      }
     } catch (e) {
       console.log(e);
     }

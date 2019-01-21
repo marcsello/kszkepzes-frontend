@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import { Container, Table, Icon } from 'semantic-ui-react';
+import { Container, Table, Icon, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { getProfiles } from '../../actions/statistics';
+import { getProfiles, setStaffStatus } from '../../actions/statistics';
 
 class Applications extends Component {
   componentWillMount() {
@@ -29,6 +29,15 @@ class Applications extends Component {
               <Icon color='red' name='cancel' />
           }
         </Table.Cell>
+        <Table.Cell>
+          <Button
+            onClick={() => this.props.setStaffStatus(profile.id)}
+            color='blue'
+            size='tiny'
+          >
+          ADD STAFF STATUS
+          </Button>
+        </Table.Cell>
       </Table.Row>
     );
     });
@@ -47,6 +56,7 @@ class Applications extends Component {
             <Table.Row>
               <Table.HeaderCell>Jelentkezettek</Table.HeaderCell>
               <Table.HeaderCell>Jelentkezés elfogadva:</Table.HeaderCell>
+              <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
 
@@ -61,4 +71,4 @@ class Applications extends Component {
 
 const mapStateToProps = ({ trainees: { profiles }, user }) => ({ profiles, user });
 
-export default connect(mapStateToProps, { getProfiles })(Applications);
+export default connect(mapStateToProps, { getProfiles, setStaffStatus })(Applications);
