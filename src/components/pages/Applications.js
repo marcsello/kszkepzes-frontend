@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { Container, Table, Icon, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
@@ -15,7 +14,7 @@ class Applications extends Component {
     { return (
       <Table.Row>
         <Table.Cell>
-          <Link to={`profile/${profile.id}`}>
+          <Link to={`applicant/${profile.id}`}>
             {profile.full_name}
           </Link>
         </Table.Cell>
