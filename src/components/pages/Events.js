@@ -3,12 +3,12 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { Container, Table, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { getEvents, deleteEvent } from '../../actions/statistics';
+import { getStaffEvents, deleteEvent } from '../../actions/statistics';
 import AddEventForm from '../forms/AddEventForm';
 
 class Events extends Component {
   componentWillMount() {
-    this.props.getEvents();
+    this.props.getStaffEvents();
   }
 
   renderEvents() {
@@ -62,4 +62,4 @@ class Events extends Component {
 
 const mapStateToProps = ({ events: { events }, user }) => ({ events, user });
 
-export default connect(mapStateToProps, { getEvents, deleteEvent })(Events);
+export default connect(mapStateToProps, { getStaffEvents, deleteEvent })(Events);
