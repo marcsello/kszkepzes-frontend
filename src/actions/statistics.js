@@ -136,12 +136,11 @@ export const getProfiles = () => (
   }
 );
 
-export const setStaffStatus = id => (
+export const setStatus = (id, status) => (
   async (dispatch) => {
     try {
       const response = await axios.patch(`/api/v1/profiles/${id}/`, {
-        signed: true,
-        role: 'Staff',
+        role: status,
       });
       if (response.data.id) {
       }
