@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Container, Header, Item, Button } from 'semantic-ui-react';
+import { Container, Header, Item, Button, Label } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { getSelectedProfile } from '../../actions/statistics';
+import { getSelectedProfile, setStatus } from '../../actions/statistics';
+import ConfirmModal from '../forms/ConfirmModal';
 
 class ApplicantProfile extends Component {
   componentWillMount() {
@@ -9,7 +10,7 @@ class ApplicantProfile extends Component {
   }
 
   render() {
-    const { full_name, nick, motivation_about, motivation_exercise, motivation_profession }
+    const { id, signed, role, full_name, nick, motivation_about, motivation_exercise, motivation_profession }
     = this.props.selectedProfile;
     return (
       <Container style={{ padding: '60px' }}>
@@ -28,26 +29,67 @@ class ApplicantProfile extends Component {
                 <Header as='h3'>Feladatok megoldása:</Header>
                 <p>{motivation_exercise}</p>
               </Container>
+              <Container textAlign='center' style={{ padding: '20px' }}>
+                <Header as='h3'>Státusz:</Header>
+                { signed ?
+                  <div>
+                    { role === 'Student' ?
+                      <Label color='green' size='huge'>Elfogadva</Label>
+                        :
+                        null
+                      }
+                    { role === 'Staff' ?
+                      <Label color='blue' size='huge'>Staff</Label>
+                        :
+                        null
+                      }
+                    { role === 'Applicant' ?
+                      <Label color='orange' size='huge'>Jelentkezett</Label>
+                        :
+                        null
+                      }
+                    { role === 'Denied' ?
+                      <Label color='red' size='huge'>Elutasítva</Label>
+                        :
+                        null
+                      }
+                  </div>
+                  :
+                  <Label color='red' size='huge'>Nem jelentkezett</Label>
+                }
+              </Container>
             </Item.Description>
           </Item.Content>
         </Item>
-        <Container textAlign='center'>
-          <Button
-            color='green'
-          >
-          Jelentkezés elfogadása
-          </Button>
-          <Button
-            color='red'
-          >
-          Jelentkezés elutasítása
-          </Button>
-        </Container>
+        { signed && role !== 'Staff' ?
+          <Container textAlign='center'>
+            <ConfirmModal
+              button={
+                <Button
+                  color='green'
+                >Jelentkezés elfogadása
+                </Button>}
+              text='elfogadod a jelentkezést'
+              onAccept={() => this.props.setStatus(id, 'Student')}
+            />
+            <ConfirmModal
+              button={
+                <Button
+                  color='red'
+                >Jelentkezés elutasítása
+                </Button>}
+              text='elutasítod a jelentkezést'
+              onAccept={() => this.props.setStatus(id, 'Denied')}
+            />
+          </Container>
+          :
+          null
+        }
       </Container>
-    )
+    );
   }
 }
 
 const mapStateToProps = ({ trainees: { selectedProfile } }) => ({ selectedProfile });
 
-export default connect(mapStateToProps, { getSelectedProfile })(ApplicantProfile);
+export default connect(mapStateToProps, { getSelectedProfile, setStatus })(ApplicantProfile);

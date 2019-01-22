@@ -30,8 +30,8 @@ class Applications extends Component {
               :
               null
             }
-            { profile.role === 'Apllicant' ?
-              <Label color='yellow'>Jelentkezett</Label>
+            { profile.role === 'Applicant' ?
+              <Label color='orange'>Jelentkezett</Label>
               :
               null
             }
