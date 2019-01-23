@@ -24,6 +24,20 @@ export const getEvents = () => (
   }
 );
 
+export const getStudentEvents = () => (
+  async (dispatch) => {
+    try {
+      const response = await axios.get('/api/v1/student_events/');
+      dispatch({
+        type: GET_EVENTS,
+        payload: response.data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
 export const getEventById = id => (
   async (dispatch) => {
     try {

@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { Container, Accordion, Icon } from 'semantic-ui-react';
+import { Container, Accordion, Icon, Grid } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { getEvents } from '../../actions/statistics';
+import { getStudentEvents } from '../../actions/statistics';
 
 class Schedule extends Component {
   state = { activeIndex: 0 }
 
   componentWillMount() {
-    this.props.getEvents();
+      this.props.getStudentEvents();
   }
 
   handleClick = (e, titleProps) => {
@@ -31,14 +31,19 @@ class Schedule extends Component {
           onClick={this.handleClick}
         >
           <h2>
-           <Icon name='transgender' color='blue' />
-           {event.name} {moment(event.date).format('LLL')}
+             <Grid>
+              <Grid.Column floated='left' width={5} textAlign='left'>
+                 <Icon name='quidditch' color='blue' />{event.name}
+              </Grid.Column>
+              <Grid.Column floated='right' width={8} textAlign='right'>
+                {moment(event.date).format('LLL')}
+              </Grid.Column>
+            </Grid>
           </h2>
          </Accordion.Title>
          <Accordion.Content active={activeIndex === event.id}>
            <p>
-             A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can
-             be found as a welcome guest in many households across the world.
+             {event.description}
            </p>
          </Accordion.Content>
         </>
@@ -69,4 +74,4 @@ class Schedule extends Component {
 
 const mapStateToProps = ({ events: { events }, user }) => ({ events, user });
 
-export default connect(mapStateToProps, { getEvents })(Schedule);
+export default connect(mapStateToProps, { getStudentEvents })(Schedule);
