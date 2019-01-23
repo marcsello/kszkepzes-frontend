@@ -43,7 +43,12 @@ const menuItems = [
     prefix: '',
     permissionLevel: 3,
   },
-];
+  {
+    text: 'Jelentkezések',
+    to: '/applications',
+    prefix: '',
+  },
+]
 
 const FixedMenu = ({ user }) => (
   <Menu fixed='top' size='large' pointing>
