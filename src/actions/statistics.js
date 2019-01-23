@@ -10,10 +10,10 @@ import {
   GET_TRAINEE_BY_ID,
 } from './types';
 
-export const getEvents = () => (
+export const getStaffEvents = () => (
   async (dispatch) => {
     try {
-      const response = await axios.get('/api/v1/events/');
+      const response = await axios.get('/api/v1/staff_events/');
       dispatch({
         type: GET_EVENTS,
         payload: response.data,
@@ -41,7 +41,7 @@ export const getStudentEvents = () => (
 export const getEventById = id => (
   async (dispatch) => {
     try {
-      const response = await axios.get(`/api/v1/events/${id}`);
+      const response = await axios.get(`/api/v1/staff_events/${id}`);
       dispatch({
         type: GET_EVENT_BY_ID,
         payload: response.data,
