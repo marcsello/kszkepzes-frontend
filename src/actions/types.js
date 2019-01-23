@@ -27,5 +27,5 @@ export const CLEAR_NOTE = 'clear_note';
 export const ADD_EVENT_NOTE = 'add_note';
 
 export const GET_PROFILES = 'get_profiles';
-export const SET_STAFF = 'set_staff';
+export const SET_STATUS = 'set_status';
 export const GET_SELECTED_PROFILE = 'get_selected_profile';

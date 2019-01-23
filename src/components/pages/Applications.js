@@ -72,7 +72,7 @@ class Applications extends Component {
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Jelentkezettek</Table.HeaderCell>
-              <Table.HeaderCell>Jelentkezés elfogadva:</Table.HeaderCell>
+              <Table.HeaderCell textAlign='center'>Jelentkezés státusza:</Table.HeaderCell>
               <Table.HeaderCell />
             </Table.Row>
           </Table.Header>

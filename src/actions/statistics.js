@@ -8,7 +8,8 @@ import {
   ADD_EVENT,
   DELETE_EVENT,
   GET_PROFILES,
-  GET_SELECTED_PROFILE
+  GET_SELECTED_PROFILE,
+  SET_STATUS,
 } from './types';
 
 export const getEvents = () => (
@@ -143,6 +144,10 @@ export const setStatus = (id, status) => (
         role: status,
       });
       if (response.data.id) {
+        dispatch({
+          type: SET_STATUS,
+          payload: response.data,
+        });
       }
     } catch (e) {
       console.log(e);
