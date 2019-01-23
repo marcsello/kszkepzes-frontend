@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Container, Table, Label, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { getProfiles, setStatus } from '../../actions/statistics';
+import ConfirmModal from '../forms/ConfirmModal';
 
 class Applications extends Component {
   componentWillMount() {
@@ -47,13 +48,16 @@ class Applications extends Component {
           </Table.Cell>
         }
         <Table.Cell>
-          <Button
-            onClick={() => this.props.setStatus(profile.id, 'Staff')}
+        <ConfirmModal
+          button = {<Button
             color='blue'
             size='tiny'
           >
           ADD STAFF STATUS
-          </Button>
+        </Button>}
+        text='staff jogot adsz neki'
+        onAccept={() => this.props.setStatus(profile.id, 'Staff')}
+        />
         </Table.Cell>
       </Table.Row>
     );

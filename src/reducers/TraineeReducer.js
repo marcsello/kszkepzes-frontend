@@ -14,7 +14,7 @@ export default (state = INITIAL_STATE, action) => {
       const index = state.profiles.findIndex(item => item.id === action.payload.id);
       state.profiles.splice(index, 1, action.payload);
       if (action.payload.id === state.selectedProfile.id) {
-        return { ...state, selectedProfile: action.payload };
+        return { ...state, profiles: [...state.profiles], selectedProfile: action.payload };
       }
       return { ...state, profiles: [...state.profiles] }
     default:
