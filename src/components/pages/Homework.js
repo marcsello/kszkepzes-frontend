@@ -6,10 +6,13 @@ import {
   Table,
   Icon,
   Message,
+  Button,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { getHomeworks, getSolutions } from '../../actions/homework';
+import { getTasks, getSolutions, addTask, addDocument } from '../../actions/homework';
+import AddTaskForm from '../forms/AddTaskForm';
+import AddSolutionForm from '../forms/AddSolutionForm';
 
 const displayTypes = {
   can_submit: {
@@ -51,7 +54,7 @@ const emptyMessage = (header, text, marginBottom) => (
 
 class Homework extends Component {
   componentDidMount() {
-    this.props.getHomeworks();
+    this.props.getTasks();
     this.props.getSolutions();
   }
 
@@ -60,7 +63,7 @@ class Homework extends Component {
       solution.task === task.id);
 
     if (taskSolutions.length === 0) {
-      if (this.isTaskActive(task)) {
+      if (moment().isBefore(task.deadline)) {
         return 'can_submit';
       }
 
@@ -76,10 +79,6 @@ class Homework extends Component {
     }
 
     return 'accepted';
-  }
-
-  isTaskActive(task) {
-    return moment().isBefore(task.deadline);
   }
 
   renderTaskList(active) {
@@ -99,11 +98,10 @@ class Homework extends Component {
           }
         >
           <Table.Cell>
-            {task.title} <Icon name='external' />
+            <AddSolutionForm taskid={task.id} tasktitle={task.title}/>
           </Table.Cell>
           <Table.Cell>
-            {moment(task.deadline).format('YYYY. MM. DD. hh:mm')}{' '}
-            {this.props.homeworks.id}
+            {moment(task.deadline).format('YYYY. MM. DD. HH:mm')}
           </Table.Cell>
           <Table.Cell>
             <Icon name={displayTypes[this.getTaskDisplayStyle(task)].icon} />{' '}
@@ -173,11 +171,11 @@ class Homework extends Component {
             dividing
             content={headerText}
             style={{
-              fontSize: '3em',
-              fontWeight: 'normal',
-              marginBottom: 0,
-              marginTop: '0.5em',
-            }}
+                fontSize: '3em',
+                fontWeight: 'normal',
+                marginBottom: 0,
+                marginTop: '0.5em',
+              }}
           />
           {empty
             ? emptyMessage(emptyHeaderText, emptyText, marginBottom)
@@ -190,6 +188,24 @@ class Homework extends Component {
   render() {
     return (
       <div>
+        <Segment style={{ padding: '0 0 2em 0' }} vertical basic>
+          <Container>
+            <Header
+              as='h1'
+              dividing
+              content='Házi feladat hozzáadása, módosítása vagy törlése'
+              style={{
+                  fontSize: '3em',
+                  fontWeight: 'normal',
+                  marginBottom: '0.5em',
+                  marginTop: '0.5em',
+                }}
+            />
+            <Button.Group>
+              <AddTaskForm />
+            </Button.Group>
+          </Container>
+        </Segment>
         {this.renderHomeworks(true)}
         {this.renderHomeworks(false)}
       </div>
@@ -201,5 +217,10 @@ const mapStateToProps = ({ homeworks, user }) => ({ homeworks, user });
 
 export default connect(
   mapStateToProps,
-  { getHomeworks, getSolutions },
+  {
+    getTasks,
+    getSolutions,
+    addTask,
+    addDocument,
+  },
 )(Homework);

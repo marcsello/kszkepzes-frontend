@@ -11,5 +11,12 @@ export const DELETE_NEWS = 'delete_news';
 export const EDIT_NEWS = 'edit_news';
 export const SELECT_NEWS = 'select_news';
 
-export const GET_HOMEWORKS = 'get_homeworks';
+export const GET_TASKS = 'get_homeworks';
+export const ADD_TASK = 'add_task';
+export const WRITE_TASK = 'write_task';
+export const WRITE_SOLUTION = 'write_solution';
+export const WRITE_SOLUTION_FILE = 'write_solution_file';
+export const WRITE_TASK_DEADLINE = 'write_task_deadline';
 export const GET_SOLUTIONS = 'get_solutions';
+export const ADD_SOLUTION = 'add_solution';
+export const ADD_DOCUMENT = 'add_document';
