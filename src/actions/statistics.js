@@ -112,7 +112,7 @@ export const eventDate = (name, value) => (
 export const addEvent = ({ name, date }) => (
   async (dispatch) => {
     try {
-      const response = await axios.post('/api/v1/events/', {
+      const response = await axios.post('/api/v1/staff_events/', {
         name,
         date,
       });
@@ -134,7 +134,7 @@ export const addEvent = ({ name, date }) => (
 export const deleteEvent = event => (
   async (dispatch) => {
     try {
-      const response = await axios.delete(`/api/v1/events/${event.id}/`);
+      const response = await axios.delete(`/api/v1/staff_events/${event.id}/`);
       if (!response.data.id) {
         alert('Sikeres törlés!');
         dispatch({

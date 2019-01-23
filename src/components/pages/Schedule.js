@@ -36,7 +36,7 @@ class Schedule extends Component {
                  <Icon name='quidditch' color='blue' />{event.name}
               </Grid.Column>
               <Grid.Column floated='right' width={8} textAlign='right'>
-                {moment(event.date).format('LLL')}
+                {moment(event.date).locale('hu').format('LLLL')}
               </Grid.Column>
             </Grid>
           </h2>
