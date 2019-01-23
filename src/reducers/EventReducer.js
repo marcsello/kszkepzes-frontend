@@ -7,7 +7,7 @@ import {
   DELETE_EVENT,
 } from '../actions/types';
 
-const INITIAL_STATE = { newEvent: {} };
+const INITIAL_STATE = { events: [], newEvent: {} };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
