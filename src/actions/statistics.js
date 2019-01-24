@@ -10,6 +10,8 @@ import {
   GET_PROFILES,
   GET_SELECTED_PROFILE,
   SET_STATUS,
+  ABSENT_CHANGE,
+  CHANGE_NO,
 } from './types';
 
 export const getStaffEvents = () => (
@@ -68,14 +70,22 @@ export const getTrainees = () => (
   }
 );
 
-export const visitorChange = ({ id }) => {
-  return (dispatch => (dispatch({ type: VISITOR_CHANGE, payload: id })));
+export const visitorChange = ({ id, value }) => {
+  switch (value){
+    case 'Visitor':
+      return (dispatch => (dispatch({ type: VISITOR_CHANGE, payload: id })));
+    case 'Absent':
+      return (dispatch => (dispatch({ type: ABSENT_CHANGE, payload: id })));
+    case 'No':
+      return (dispatch => (dispatch({ type: CHANGE_NO, payload: id })));
+    default:
+  }
 };
 
 export const submitVisitors = ({ id, visitors }) => (
   async () => {
     try {
-      const response = await axios.patch(`/api/v1/events/${id}/`, {
+      const response = await axios.patch(`/api/v1/staff_events/${id}/`, {
         visitors
       });
     } catch (e) {
@@ -97,12 +107,14 @@ export const eventDate = (name, value) => (
   }
 );
 
-export const addEvent = ({ name, date }) => (
+export const addEvent = ({ name, date, description }) => (
   async (dispatch) => {
     try {
       const response = await axios.post('/api/v1/staff_events/', {
         name,
         date,
+        description,
+        absent: [],
       });
       if (response.data.id) {
         alert('Sikeres mentés!');

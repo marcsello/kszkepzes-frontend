@@ -16,6 +16,8 @@ export const GET_EVENT_BY_ID = 'get_event_by_id';
 
 export const GET_TRAINEES = 'get_trainees';
 export const VISITOR_CHANGE = 'visitor_change';
+export const ABSENT_CHANGE = 'absent_change';
+export const CHANGE_NO = 'change_no';
 
 export const GET_NOTES_BY_EVENT = 'get_notes_by_event';
 export const WRITE_EVENT = 'write_event';

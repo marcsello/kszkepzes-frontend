@@ -47,6 +47,7 @@ const menuItems = [
     text: 'Jelentkezések',
     to: '/applications',
     prefix: '',
+    permissionLevel: 3,
   },
 ]
 

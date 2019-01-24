@@ -3,6 +3,7 @@ import { Modal, Button, Form, Input, TextArea, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { DateTimeInput } from 'semantic-ui-calendar-react';
 import { writeEvent, eventDate, addEvent } from '../../actions/statistics'
+import { clearWrite } from '../../actions/news'
 
 class AddEventForm extends Component {
   constructor(props) {
@@ -24,7 +25,7 @@ class AddEventForm extends Component {
   }
 
   render() {
-    const { name, date } = this.props.newEvent;
+    const { name, date, description } = this.props.newEvent;
     return (
       <Modal
         open={this.state.showModal}
@@ -39,7 +40,7 @@ class AddEventForm extends Component {
         <Modal.Header>Új alkalom:</Modal.Header>
         <Modal.Content
           style={{
-            paddingTop: '50px',
+            paddingTop: '20px',
           }}
         >
           <Form>
@@ -50,9 +51,16 @@ class AddEventForm extends Component {
               onChange={e => this.props.writeEvent(e)}
               value={name}
               style={{
-                marginBottom: '50px',
+                marginBottom: '20px',
               }}
               placeholder='Title'
+            />
+            <Form.TextArea
+              name='description'
+              label='Leírás:'
+              placeholder='Rövid leírás'
+              value={description}
+              onChange={e => this.props.writeEvent(e)}
             />
             <DateTimeInput
               name="date"
@@ -69,7 +77,8 @@ class AddEventForm extends Component {
           <Button
             inverted
             color='red'
-            onClick={() => { this.setState({ showModal: false }); }}
+            onClick={() => { this.setState({ showModal: false });
+                             this.props.clearWrite();}}
           >
             <Icon name='remove' />
             Cancel
@@ -92,4 +101,4 @@ class AddEventForm extends Component {
 
 const mapStateToProps = ({ events: { newEvent } }) => ({ newEvent });
 
-export default connect(mapStateToProps, { writeEvent, addEvent, eventDate })(AddEventForm);
+export default connect(mapStateToProps, { writeEvent, addEvent, eventDate, clearWrite })(AddEventForm);
