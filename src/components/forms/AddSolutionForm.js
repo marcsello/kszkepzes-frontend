@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form, Input, TextArea, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { addSolution, writeSolution, writeSolutionFile, addDocument } from '../../actions/homework';
+import { addSolution, writeSolution, writeSolutionFile, addDocument, clearWrite } from '../../actions/homework';
 
 class AddSolutionForm extends Component {
   constructor(props) {
@@ -19,9 +19,9 @@ class AddSolutionForm extends Component {
     const corrected = false;
     const accepted = false;
     const note = '';
-    // const solution = (this.props.homeworks.solutions[this.props.homeworks.solutions.length - 1]).id;
-    // TODO: undefined
-    const solution = 1;
+    let solution = 1;
+    if((this.props.homeworks.solutions[this.props.homeworks.solutions.length - 1]) !== undefined)
+      solution = (this.props.homeworks.solutions[this.props.homeworks.solutions.length - 1]).id;
     return (
       <Modal
         open={this.state.showModal}
@@ -93,4 +93,5 @@ export default connect(mapStateToProps, {
   writeSolution,
   writeSolutionFile,
   addDocument,
+  clearWrite,
 })(AddSolutionForm);

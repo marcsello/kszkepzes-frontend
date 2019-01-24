@@ -1,4 +1,4 @@
-import { WRITE_SOLUTION, WRITE_SOLUTION_FILE, GET_SOLUTIONS } from '../actions/types';
+import { WRITE_SOLUTION, WRITE_SOLUTION_FILE, GET_SOLUTIONS, CLEAR_WRITE } from '../actions/types';
 
 const INITIAL_STATE = {
   task: '',
@@ -16,6 +16,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, [action.target]: action.payload };
     case GET_SOLUTIONS:
       return { ...state, solutions: action.payload };
+    case CLEAR_WRITE:
+      return INITIAL_STATE;
     default:
       return state;
   }

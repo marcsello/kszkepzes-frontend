@@ -77,8 +77,6 @@ export const addSolution = ({
           type: ADD_SOLUTION,
           payload: response.data,
         });
-      } else {
-        alert('Mentés nem sikerült!');
       }
     } catch (e) {
       console.log(e);
@@ -103,13 +101,10 @@ export const addDocument = ({
       };
       const response = await axios.post('/api/v1/documents/', formData, config);
       if (response.data.id) {
-        alert('Sikeres mentés!');
         dispatch({
           type: ADD_DOCUMENT,
           payload: response.data,
         });
-      } else {
-        alert('Mentés nem sikerült!');
       }
     } catch (e) {
       console.log(e);
