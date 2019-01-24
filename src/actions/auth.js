@@ -1,12 +1,6 @@
-// TODO: Separate actions
+import axios from './session';
+import { GET_USERDATA, PROFILE_CHANGE, GROUP_CHANGE } from './types';
 
-import ax from 'axios';
-import { GET_USERDATA, PROFILE_CHANGE, GROUP_CHANGE, GET_NEWS } from './types';
-
-export const axios = ax.create({
-  xsrfCookieName: 'csrftoken',
-  xsrfHeaderName: 'X-CSRFToken',
-});
 
 export const getUserData = () => (
   async (dispatch) => {
@@ -21,26 +15,29 @@ export const getUserData = () => (
         motivation_exercise: motivationExercise,
         signed,
         groups,
+        role,
       } = user.data;
+      let permission;
+      switch (role) {
+        case 'Applicant':
+          permission=1;
+          break;
+        case 'Student':
+          permission=2;
+          break;
+        case 'Staff':
+          permission=3;
+          break;
+        default:
+          permission=0;
+          break;
+      }
+
       dispatch({
         type: GET_USERDATA,
         payload: {
-          id, joinDate, nick, motivationAbout, motivationProfession, motivationExercise, signed, groups,
+          id, joinDate, nick, motivationAbout, motivationProfession, motivationExercise, signed, groups, role, permission
         },
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  }
-);
-
-export const getNews = () => (
-  async (dispatch) => {
-    try {
-      const response = await axios.get('/api/v1/news');
-      dispatch({
-        type: GET_NEWS,
-        payload: response.data,
       });
     } catch (e) {
       console.log(e);
