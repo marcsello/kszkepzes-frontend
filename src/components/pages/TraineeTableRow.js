@@ -30,7 +30,7 @@ class TraineeTableRow extends Component {
   }
 
   render() {
-    const { trainee, edit, actualNote, selectedEvent, notes } = this.props;
+    const { trainee, edit, selectedEvent, notes } = this.props;
     const isVisitor = selectedEvent.visitors.includes(trainee.id);
     const isAbsent = selectedEvent.absent.includes(trainee.id);
     return (

@@ -89,6 +89,9 @@ export const submitVisitors = ({ id, visitors, absent }) => (
         visitors,
         absent,
       });
+      if (response.data.id) {
+        alert('Sikeres mentés!');
+      }
     } catch (e) {
       console.log(e);
     }

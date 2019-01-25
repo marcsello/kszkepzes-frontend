@@ -7,10 +7,6 @@ import {
   Form,
   Header,
   Table,
-  Icon,
-  Checkbox,
-  Popup,
-  Grid,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import moment from 'moment';
