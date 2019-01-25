@@ -59,7 +59,7 @@ export const getEventById = id => (
 export const getTrainees = () => (
   async (dispatch) => {
     try {
-      const response = await axios.get('/api/v1/profiles/');
+      const response = await axios.get('/api/v1/profiles/', { params: { role: 'Student' } });
       dispatch({
         type: GET_TRAINEES,
         payload: response.data,
@@ -82,11 +82,12 @@ export const visitorChange = ({ id, value }) => {
   }
 };
 
-export const submitVisitors = ({ id, visitors }) => (
+export const submitVisitors = ({ id, visitors, absent }) => (
   async () => {
     try {
       const response = await axios.patch(`/api/v1/staff_events/${id}/`, {
-        visitors
+        visitors,
+        absent,
       });
     } catch (e) {
       console.log(e);

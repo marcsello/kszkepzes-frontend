@@ -64,11 +64,23 @@ class TraineeTableRow extends Component {
           </Table.Cell>
           :
           <Table.Cell textAlign='center'>
-            <Dropdown
-              defaultValue={isVisitor ? 'Visitor' : isAbsent ? 'Absent' : 'No'}
-              selection
-              options={visitStates}
-              onChange={(_, v) => this.props.visitorChange({ id : trainee.id, value: v.value })}
+            <Button
+              compact
+              icon={<Icon color='green' name='checkmark' />}
+              color={isVisitor ? 'blue' : 'lightgrey'}
+              onClick={() => this.props.visitorChange({ id : trainee.id, value: 'Visitor' })}
+            />
+            <Button
+              compact
+              icon={<Icon color='orange' name='minus' />}
+              color={isAbsent ? 'blue' : 'lightgrey'}
+              onClick={() => this.props.visitorChange({ id : trainee.id, value: 'Absent' })}
+            />
+            <Button
+              compact
+              icon={<Icon color='red' name='cancel' />}
+              color={!isVisitor && !isAbsent ? 'blue' : 'lightgrey'}
+              onClick={() => this.props.visitorChange({ id : trainee.id, value: 'No' })}
             />
           </Table.Cell>
         }
