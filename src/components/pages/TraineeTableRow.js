@@ -7,50 +7,38 @@ import {
   Grid,
   Button,
   Form,
-  Dropdown,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { visitorChange, submitVisitors } from '../../actions/statistics';
+import { visitorChange } from '../../actions/statistics';
 import { writeNote, clearWrite, postEventNote } from '../../actions/notes';
 
-const visitStates = [
-  {
-    text: 'Igen',
-    value: 'Visitor',
-  },
-  {
-    text: 'Szólt h nem',
-    value: 'Absent',
-  },
-  {
-    text: 'Nem',
-    value: 'No',
-  }
-]
 
 class TraineeTableRow extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showAddPopup: false,
-      showMorePopup: false,
-    };
+      note: '',
+    }
   }
 
-  triggerAdd = () => this.setState({ ...this.state, showAddPopup: !this.state.showAddPopup})
-  triggerMore = () => this.setState({ ...this.state, showMorePopup: !this.state.showMorePopup })
+  handleWrite = (e) => {
+    this.setState({ ...this.state, note: e.target.value });
+  }
+
+  clearWrite = () => {
+    this.setState({ ...this.state, note: '' });
+  }
 
   render() {
-    const note = this.props.actualNote;
     const { trainee, edit, actualNote, selectedEvent, notes } = this.props;
     const isVisitor = selectedEvent.visitors.includes(trainee.id);
     const isAbsent = selectedEvent.absent.includes(trainee.id);
     return (
-      <Table.Row>
+      <Table.Row key={trainee.id}>
         <Table.Cell>
           {trainee.full_name}
         </Table.Cell>
-        {!this.props.edit ?
+        {!edit ?
           <Table.Cell textAlign='center'>
             {
                 isVisitor ?
@@ -68,19 +56,19 @@ class TraineeTableRow extends Component {
               compact
               icon={<Icon color='green' name='checkmark' />}
               color={isVisitor ? 'blue' : 'lightgrey'}
-              onClick={() => this.props.visitorChange({ id : trainee.id, value: 'Visitor' })}
+              onClick={() => this.props.visitorChange({ id: trainee.id, value: 'Visitor' })}
             />
             <Button
               compact
               icon={<Icon color='orange' name='minus' />}
               color={isAbsent ? 'blue' : 'lightgrey'}
-              onClick={() => this.props.visitorChange({ id : trainee.id, value: 'Absent' })}
+              onClick={() => this.props.visitorChange({ id: trainee.id, value: 'Absent' })}
             />
             <Button
               compact
               icon={<Icon color='red' name='cancel' />}
               color={!isVisitor && !isAbsent ? 'blue' : 'lightgrey'}
-              onClick={() => this.props.visitorChange({ id : trainee.id, value: 'No' })}
+              onClick={() => this.props.visitorChange({ id: trainee.id, value: 'No' })}
             />
           </Table.Cell>
         }
@@ -104,11 +92,11 @@ class TraineeTableRow extends Component {
                   null
                  }
               </Grid.Column>
-              <Grid.Column floated='right' width={3} textAlign='right'>
+              <Grid.Column floated='right' width={4} textAlign='right'>
                 {notes.length > 0 ?
                   <Popup
-                    basic
-                    open={this.state.showMorePopup}
+                    on='click'
+                    position='bottom left'
                     trigger={<Button icon='comment alternate outline' onClick={this.triggerMore} />}
                     content={notes.map((note) => {
                          return (
@@ -125,20 +113,20 @@ class TraineeTableRow extends Component {
              null}
                 <Popup
                   trigger={<Button icon='plus' onClick={this.triggerAdd}/>}
-                  basic
-                  open={this.state.showAddPopup}
+                  on='click'
+                  position='bottom left'
                   content={
                     <Form reply>
                       <Form.TextArea
-                        value={note.note}
-                        onChange={e => this.props.writeNote(e)}
+                        value={this.state.note}
+                        onChange={e => this.handleWrite(e)}
                       />
                       <Button
                         onClick={() => {
                                         this.props.postEventNote({ eventid:selectedEvent.id,
                                                                   userid: trainee.id,
-                                                                  note: note.note });
-                                        this.props.clearWrite();
+                                                                  note: this.state.note });
+                                        this.clearWrite();
                                       }
                                 }
                         content='Megjegyzés hozzáadása'
@@ -157,6 +145,5 @@ class TraineeTableRow extends Component {
     );
   }
 }
-const mapStateToProps = ({ notes: { actualNote } }) => ({ actualNote })
 
-export default connect(mapStateToProps, { writeNote, clearWrite, postEventNote, visitorChange})(TraineeTableRow)
+export default connect(() => {}, { writeNote, clearWrite, postEventNote, visitorChange})(TraineeTableRow)

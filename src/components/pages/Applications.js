@@ -44,7 +44,11 @@ class Applications extends Component {
           </Table.Cell>
           :
           <Table.Cell textAlign='center'>
-            <Label color='red'>Nem jelentkezett</Label>
+            { profile.role === 'Staff' ?
+              <Label color='blue'>Staff</Label>
+              :
+              <Label color='red'>Nem jelentkezett</Label>
+            }
           </Table.Cell>
         }
         <Table.Cell>

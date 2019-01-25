@@ -36,7 +36,6 @@ class EventDetail extends Component {
 
   renderTrainees() {
     const event = this.props.selectedEvent;
-    const note = this.props.actualNote;
     return this.props.trainees.map((item) => {
       const notes = this.props.eventNotes.filter(note => note.profile === item.id);
       return (
