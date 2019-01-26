@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import { Modal, Button, Form, Input, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { DateTimeInput } from 'semantic-ui-calendar-react';
-import { writeEvent, addEvent } from '../../actions/statistics'
+import {
+  writeEditEvent,
+  editEvent,
+} from '../../actions/statistics'
 import { clearWrite } from '../../actions/news'
 
-class AddEventForm extends Component {
+class EditEventForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,30 +17,32 @@ class AddEventForm extends Component {
     };
   }
 
-
   // Handling change in redux action creator throws an exception
   // Temporal solotion using the components state to display, instead redux state
   handleChange = (event, {name, value}) => {
     if (this.state.hasOwnProperty(name)) {
       this.setState({ [name]: value });
     }
-    this.props.writeEvent({ target: {name, value} });
+    this.props.writeEditEvent({target: {name: name, value: value}})
   }
 
   render() {
-    const { name, date, description } = this.props.newEvent;
+    const { name, date, description } = this.props.editedEvent;
     return (
       <Modal
         open={this.state.showModal}
         trigger={
           <Button
-            size='big'
-            onClick={() => { this.setState({ showModal: true }); }}
-          >Alkalom hozzáadása
+            compact
+            onClick={() => { this.props.onClick();
+                             this.setState({ showModal: true }); }}
+            size='mini'
+          >
+            Szerkeszt
           </Button>
         }
       >
-        <Modal.Header>Új alkalom:</Modal.Header>
+        <Modal.Header>Alkalom szerkesztése:</Modal.Header>
         <Modal.Content
           style={{
             paddingTop: '20px',
@@ -48,7 +53,7 @@ class AddEventForm extends Component {
               control={Input}
               label='Név'
               name='name'
-              onChange={e => this.props.writeEvent(e)}
+              onChange={e => this.props.writeEditEvent(e)}
               value={name}
               style={{
                 marginBottom: '20px',
@@ -60,7 +65,7 @@ class AddEventForm extends Component {
               label='Leírás:'
               placeholder='Rövid leírás'
               value={description}
-              onChange={e => this.props.writeEvent(e)}
+              onChange={e => this.props.writeEditEvent(e)}
             />
             <DateTimeInput
               name="date"
@@ -78,7 +83,8 @@ class AddEventForm extends Component {
             inverted
             color='red'
             onClick={() => { this.setState({ showModal: false });
-                             this.props.clearWrite();}}
+                             this.props.clearWrite();
+                             }}
           >
             <Icon name='remove' />
             Mégse
@@ -87,12 +93,12 @@ class AddEventForm extends Component {
             inverted
             color='green'
             onClick={() => {
-                    this.props.addEvent(this.props.newEvent);
+                    this.props.editEvent(this.props.editedEvent);
                     this.setState({ showModal: false, date: '' });
                     this.props.clearWrite();
                     }}
           >
-            <Icon name='checkmark' /> Hozzáad
+            <Icon name='checkmark' /> Szerkeszt
           </Button>
         </Modal.Actions>
       </Modal>
@@ -100,6 +106,6 @@ class AddEventForm extends Component {
   }
 }
 
-const mapStateToProps = ({ events: { newEvent } }) => ({ newEvent });
+const mapStateToProps = ({ events: { editedEvent } }) => ({ editedEvent });
 
-export default connect(mapStateToProps, { writeEvent, addEvent, clearWrite })(AddEventForm);
+export default connect(mapStateToProps, { writeEditEvent, editEvent, clearWrite })(EditEventForm);

@@ -3,8 +3,9 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { Container, Table, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { getStaffEvents, deleteEvent } from '../../actions/statistics';
+import { getStaffEvents, deleteEvent, selectEventForEdit } from '../../actions/statistics';
 import AddEventForm from '../forms/AddEventForm';
+import EditEventForm from '../forms/EditEventForm';
 import ConfirmModal from '../forms/ConfirmModal';
 
 class Events extends Component {
@@ -37,6 +38,7 @@ class Events extends Component {
                }
             onAccept={() => this.props.deleteEvent(event)}
           />
+          <EditEventForm onClick={() => this.props.selectEventForEdit(event)} />
         </Table.Cell>
       </Table.Row>
     );
@@ -68,4 +70,4 @@ class Events extends Component {
 
 const mapStateToProps = ({ events: { events }, user }) => ({ events, user });
 
-export default connect(mapStateToProps, { getStaffEvents, deleteEvent })(Events);
+export default connect(mapStateToProps, { getStaffEvents, selectEventForEdit, deleteEvent })(Events);

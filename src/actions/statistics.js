@@ -12,6 +12,9 @@ import {
   SET_STATUS,
   ABSENT_CHANGE,
   CHANGE_NO,
+  EDIT_EVENT,
+  WRITE_EDITED_EVENT,
+  SELECT_EVENT_FOR_EDIT,
 } from './types';
 
 export const getStaffEvents = () => (
@@ -104,10 +107,39 @@ export const writeEvent = ({ target: { name, value } }) => (
   }
 );
 
-
-export const eventDate = (name, value) => (
+export const selectEventForEdit = editEvent => (
   (dispatch) => {
-    dispatch({ type: WRITE_EVENT, payload: value, target: name });
+    dispatch({ type: SELECT_EVENT_FOR_EDIT, payload: editEvent });
+  }
+);
+
+export const writeEditEvent = ({ target: { name, value } }) => (
+  (dispatch) => {
+    dispatch({ type: WRITE_EDITED_EVENT, payload: value, target: name });
+  }
+);
+
+export const editEvent = ({ id, name, description, date }) => (
+  async (dispatch) => {
+    try {
+      const response = await axios.patch(`/api/v1/staff_events/${id}/`, {
+        name,
+        description,
+        date,
+      });
+      if (response.data.id) {
+        alert('Sikeres mentés!');
+        dispatch({
+          type: EDIT_EVENT,
+          payload: response.data,
+
+        });
+      } else {
+        alert('Mentés nem sikerült!');
+      }
+    } catch (e) {
+      console.log(e);
+    }
   }
 );
 

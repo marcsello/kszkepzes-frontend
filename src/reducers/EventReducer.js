@@ -8,9 +8,12 @@ import {
   CLEAR_WRITE,
   ABSENT_CHANGE,
   CHANGE_NO,
+  SELECT_EVENT_FOR_EDIT,
+  EDIT_EVENT,
+  WRITE_EDITED_EVENT,
 } from '../actions/types';
 
-const INITIAL_STATE = { events: [], newEvent: {} };
+const INITIAL_STATE = { events: [], newEvent: {}, editedEvent: {} };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -75,8 +78,16 @@ export default (state = INITIAL_STATE, action) => {
     case DELETE_EVENT:
       state.events.splice(state.events.indexOf(action.payload), 1);
       return { ...state, events: [...state.events] };
+    case SELECT_EVENT_FOR_EDIT:
+      return { ...state, editedEvent: action.payload }
+    case WRITE_EDITED_EVENT:
+      return { ...state, editedEvent: { ...state.editedEvent, [action.target]: action.payload } };
+    case EDIT_EVENT:
+      const index = state.events.findIndex(item => item.id === action.payload.id);
+      state.events.splice(index, 1, action.payload);
+      return { ...state, events: [...state.events] };
     case CLEAR_WRITE:
-      return { ...state, newEvent: {} };
+      return { ...state, newEvent: {}, editedEvent: {} };
     default:
       return state;
   }
