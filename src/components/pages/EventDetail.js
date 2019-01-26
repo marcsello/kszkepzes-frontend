@@ -11,9 +11,9 @@ import {
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { getEventById, getTrainees, visitorChange, submitVisitors } from '../../actions/statistics';
-import { getNotesByEvent, writeNote, clearWrite, postEventNote } from '../../actions/notes';
+import { getNotesByEvent, writeNote, clearWrite, postEventNote, deleteNote } from '../../actions/notes';
 import TraineeTableRow from './TraineeTableRow';
-
+import ConfirmModal from '../forms/ConfirmModal';
 
 class EventDetail extends Component {
   constructor(props) {
@@ -74,6 +74,19 @@ class EventDetail extends Component {
                 {note.note}
               </Comment.Text>
             </Comment.Content>
+            <ConfirmModal
+              text='törölni akarod a megjegyzést'
+              button={
+                <Button
+                  compact
+                  color='red'
+                  size='mini'
+                >
+                  Delete
+                </Button>
+              }
+              onAccept={() => this.props.deleteNote(note)}
+            />
           </Comment>);
       }
       return '';
@@ -177,4 +190,5 @@ export default connect(mapStateToProps, {
   writeNote,
   clearWrite,
   postEventNote,
+  deleteNote,
 })(EventDetail);

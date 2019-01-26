@@ -10,8 +10,8 @@ import {
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { visitorChange } from '../../actions/statistics';
-import { writeNote, clearWrite, postEventNote } from '../../actions/notes';
-
+import { writeNote, clearWrite, postEventNote, deleteNote } from '../../actions/notes';
+import CommentModal from './CommentModal'
 
 class TraineeTableRow extends Component {
   constructor(props) {
@@ -94,21 +94,7 @@ class TraineeTableRow extends Component {
               </Grid.Column>
               <Grid.Column floated='right' width={4} textAlign='right'>
                 {notes.length > 0 ?
-                  <Popup
-                    on='click'
-                    position='bottom left'
-                    trigger={<Button icon='comment alternate outline' onClick={this.triggerMore} />}
-                    content={notes.map((note) => {
-                         return (
-                           <Comment.Content>
-                             <Comment.Author>{note.created_by_name}</Comment.Author>
-                             <Comment.Text>
-                               {note.note}
-                             </Comment.Text>
-                           </Comment.Content>
-                         );
-                        })}
-                  />
+                  <CommentModal notes={notes} />
              :
              null}
                 <Popup
@@ -146,4 +132,4 @@ class TraineeTableRow extends Component {
   }
 }
 
-export default connect(() => {}, { writeNote, clearWrite, postEventNote, visitorChange})(TraineeTableRow)
+export default connect(() => ({}), { writeNote, clearWrite, postEventNote, visitorChange, deleteNote })(TraineeTableRow)
