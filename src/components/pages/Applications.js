@@ -52,16 +52,16 @@ class Applications extends Component {
           </Table.Cell>
         }
         <Table.Cell>
-        <ConfirmModal
-          button = {<Button
-            color='blue'
-            size='tiny'
-          >
-          ADD STAFF STATUS
-        </Button>}
-        text='staff jogot adsz neki'
-        onAccept={() => this.props.setStatus(profile.id, 'Staff')}
-        />
+          <ConfirmModal
+            button = {<Button
+              color='blue'
+              size='tiny'
+            >
+            Staff jog adás
+          </Button>}
+          text='staff jogot adsz neki'
+          onAccept={() => this.props.setStatus(profile.id, 'Staff')}
+          />
         </Table.Cell>
       </Table.Row>
     );

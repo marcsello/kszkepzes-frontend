@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container, Segment, Item, Button, Grid } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import ConfirmModal from '../forms/ConfirmModal';
 
 import AddNewsForm from '../forms/AddNewsForm';
 import EditNewsForm from '../forms/EditNewsForm';
@@ -31,14 +32,19 @@ class News extends Component {
                 <EditNewsForm
                   onClick={() => this.props.setSelectedNews(item)}
                 />
-                <Button
-                  compact
-                  color='red'
-                  size='mini'
-                  onClick={() => this.props.deleteNews(item)}
-                >
-                  Delete
-                </Button>
+                <ConfirmModal
+                  text={`törölni akarod a következő hírt: ${item.title}`}
+                  button={
+                    <Button
+                      compact
+                      color='red'
+                      size='mini'
+                    >
+                    Törlés
+                    </Button>
+                     }
+                  onAccept={() => this.props.deleteNews(item)}
+                />
               </Grid.Column>
               : null }
             </Grid>

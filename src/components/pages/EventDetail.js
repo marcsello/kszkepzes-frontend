@@ -128,7 +128,7 @@ class EventDetail extends Component {
           <Button
             onClick={() => this.setState({ edit: true })}
           >
-          Edit
+          Szerkeszt
           </Button>
           { this.state.edit ?
             <Button
@@ -137,7 +137,7 @@ class EventDetail extends Component {
                               this.props.submitVisitors(this.props.selectedEvent);
                             }
                       }
-            >Save
+            >Mentés
             </Button>
             :
             ''

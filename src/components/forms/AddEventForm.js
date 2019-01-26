@@ -53,7 +53,7 @@ class AddEventForm extends Component {
               style={{
                 marginBottom: '20px',
               }}
-              placeholder='Title'
+              placeholder='Név'
             />
             <Form.TextArea
               name='description'
@@ -66,7 +66,7 @@ class AddEventForm extends Component {
               name="date"
               label="Dátum:"
               dateFormat='YYYY-MM-DD'
-              placeholder="Date"
+              placeholder="Dátum"
               value={date}
               iconPosition="left"
               onChange={this.handleChange}
@@ -81,7 +81,7 @@ class AddEventForm extends Component {
                              this.props.clearWrite();}}
           >
             <Icon name='remove' />
-            Cancel
+            Mégse
           </Button>
           <Button
             inverted
@@ -91,7 +91,7 @@ class AddEventForm extends Component {
                     this.setState({ showModal: false, date: '' });
                     }}
           >
-            <Icon name='checkmark' /> Add
+            <Icon name='checkmark' /> Hozzáad
           </Button>
         </Modal.Actions>
       </Modal>

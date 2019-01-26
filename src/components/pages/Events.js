@@ -5,6 +5,7 @@ import { Container, Table, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { getStaffEvents, deleteEvent } from '../../actions/statistics';
 import AddEventForm from '../forms/AddEventForm';
+import ConfirmModal from '../forms/ConfirmModal';
 
 class Events extends Component {
   componentWillMount() {
@@ -23,14 +24,19 @@ class Events extends Component {
         <Table.Cell>{moment(event.date).format('LL')}</Table.Cell>
         <Table.Cell>{event.visitor_number}</Table.Cell>
         <Table.Cell>
-          <Button
-            onClick={() => this.props.deleteEvent(event)}
-            color='red'
-            compact
-            size='small'
-          >
-          Delete
-          </Button>
+          <ConfirmModal
+            text={`törölni akarod a következő alkalmat:${event.name}`}
+            button={
+              <Button
+                compact
+                color='red'
+                size='mini'
+              >
+              Törlés
+              </Button>
+               }
+            onAccept={() => this.props.deleteEvent(event)}
+          />
         </Table.Cell>
       </Table.Row>
     );

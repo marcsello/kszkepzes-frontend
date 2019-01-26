@@ -25,7 +25,7 @@ class EditNewsForm extends Component {
             onClick={() => { this.setState({ showModal: true }); }}
             size='mini'
           >
-            Edit
+            Szerkeszt
           </Button>
         }
       >
@@ -34,19 +34,19 @@ class EditNewsForm extends Component {
           <Form>
             <Form.Field
               control={Input}
-              label='Title'
+              label='Cím'
               name='title'
               onChange={e => this.props.writeNews(e)}
               value={title}
-              placeholder='Title'
+              placeholder='Cím'
             />
             <Form.Field
               control={TextArea}
-              label='Text'
+              label='Szöveg'
               name='text'
               onChange={e => this.props.writeNews(e)}
               value={text}
-              placeholder='Tell us what you want...'
+              placeholder='Szöveg'
             />
           </Form>
         </Modal.Content>
@@ -56,7 +56,7 @@ class EditNewsForm extends Component {
             color='red'
             onClick={() => { this.setState({ showModal: false }); }}
           >
-            <Icon name='remove' /> Cancel
+            <Icon name='remove' /> Mégse
           </Button>
           <Button
             inverted
@@ -69,7 +69,7 @@ class EditNewsForm extends Component {
                     this.props.clearWrite();
                     }}
           >
-            <Icon name='checkmark' /> Edit
+            <Icon name='checkmark' /> Szerkeszt
           </Button>
         </Modal.Actions>
       </Modal>
