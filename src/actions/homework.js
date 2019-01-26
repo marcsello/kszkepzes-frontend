@@ -1,4 +1,4 @@
-import { axios } from './auth';
+import axios from './session';
 import { GET_TASKS,
   GET_SOLUTIONS,
   ADD_TASK,
