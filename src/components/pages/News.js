@@ -26,6 +26,7 @@ class News extends Component {
               <Grid.Column floated='center' width={12}>
                 {item.title}
               </Grid.Column>
+              { this.props.user.role === 'Staff' ?
               <Grid.Column floated='right' width={4}>
                 <EditNewsForm
                   onClick={() => this.props.setSelectedNews(item)}
@@ -39,6 +40,7 @@ class News extends Component {
                   Delete
                 </Button>
               </Grid.Column>
+              : null }
             </Grid>
           </Item.Header>
           <Item.Description className='news-text' style={{ fontSize: '1.33em' }}>
@@ -75,7 +77,10 @@ class News extends Component {
         <Segment style={{ padding: '3em 3em' }} vertical>
           {/*  { this.props.user.is_superuser ? <AddNewsForm /> : ''} */}
           <Container text textAlign='center'>
-            <AddNewsForm />
+            {this.props.user.role === 'Staff' ?
+              <AddNewsForm />
+              :
+              null}
             <Item.Group divided>
               {this.renderNews()}
             </Item.Group>

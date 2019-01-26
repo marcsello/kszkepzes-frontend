@@ -20,3 +20,24 @@ export const WRITE_TASK_DEADLINE = 'write_task_deadline';
 export const GET_SOLUTIONS = 'get_solutions';
 export const ADD_SOLUTION = 'add_solution';
 export const ADD_DOCUMENT = 'add_document';
+
+export const GET_EVENTS = 'get_events';
+export const GET_EVENT_BY_ID = 'get_event_by_id';
+
+export const GET_TRAINEES = 'get_trainees';
+export const VISITOR_CHANGE = 'visitor_change';
+export const ABSENT_CHANGE = 'absent_change';
+export const CHANGE_NO = 'change_no';
+
+export const GET_NOTES_BY_EVENT = 'get_notes_by_event';
+export const WRITE_EVENT = 'write_event';
+export const ADD_EVENT = 'add_event';
+export const DELETE_EVENT = 'delete_event';
+
+export const WRITE_NOTE = 'write_note';
+export const CLEAR_NOTE = 'clear_note';
+export const ADD_EVENT_NOTE = 'add_note';
+
+export const GET_PROFILES = 'get_profiles';
+export const SET_STATUS = 'set_status';
+export const GET_SELECTED_PROFILE = 'get_selected_profile';
