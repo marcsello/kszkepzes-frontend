@@ -26,7 +26,7 @@ class ConfirmModal extends Component {
         size='small'
         basic
       >
-        <Header icon='question' content='Confirm' />
+        <Header icon='question' content='Megerősítés' />
         <Modal.Content>
           <p>
             Biztos hogy {text}?
@@ -37,10 +37,9 @@ class ConfirmModal extends Component {
             basic
             color='red'
             inverted
-            inverted
             onClick={() => this.close()}
           >
-            <Icon name='remove' /> No
+            <Icon name='remove' /> Nem
           </Button>
           <Button
             color='green'
@@ -50,7 +49,7 @@ class ConfirmModal extends Component {
                            }
                     }
           >
-            <Icon name='checkmark' /> Yes
+            <Icon name='checkmark' /> Igen
           </Button>
         </Modal.Actions>
       </Modal>

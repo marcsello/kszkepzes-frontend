@@ -24,29 +24,31 @@ class Schedule extends Component {
 
     const events = this.props.events;
     const panels = events.map(event => (
-      <>
+      <div>
         <Accordion.Title
           active={activeIndex === event.id}
           index={event.id}
           onClick={this.handleClick}
         >
-          <h2>
+          <h3>
              <Grid>
               <Grid.Column floated='left' width={5} textAlign='left'>
-                 <Icon name='quidditch' color='blue' />{event.name}
+                 <Icon name='angle right' color='blue' />{event.name}
               </Grid.Column>
               <Grid.Column floated='right' width={8} textAlign='right'>
                 {moment(event.date).locale('hu').format('LLLL')}
               </Grid.Column>
             </Grid>
-          </h2>
+          </h3>
          </Accordion.Title>
          <Accordion.Content active={activeIndex === event.id}>
+           <Container text textAlign='left'>
            <p>
              {event.description}
            </p>
+           </Container>
          </Accordion.Content>
-        </>
+       </div>
        ));
 
     return (

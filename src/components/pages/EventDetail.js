@@ -7,17 +7,13 @@ import {
   Form,
   Header,
   Table,
-  Icon,
-  Checkbox,
-  Popup,
-  Grid,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { getEventById, getTrainees, visitorChange, submitVisitors } from '../../actions/statistics';
-import { getNotesByEvent, writeNote, clearWrite, postEventNote } from '../../actions/notes';
+import { getNotesByEvent, writeNote, clearWrite, postEventNote, deleteNote } from '../../actions/notes';
 import TraineeTableRow from './TraineeTableRow';
-
+import ConfirmModal from '../forms/ConfirmModal';
 
 class EventDetail extends Component {
   constructor(props) {
@@ -36,7 +32,6 @@ class EventDetail extends Component {
 
   renderTrainees() {
     const event = this.props.selectedEvent;
-    const note = this.props.actualNote;
     return this.props.trainees.map((item) => {
       const notes = this.props.eventNotes.filter(note => note.profile === item.id);
       return (
@@ -79,6 +74,19 @@ class EventDetail extends Component {
                 {note.note}
               </Comment.Text>
             </Comment.Content>
+            <ConfirmModal
+              text='törölni akarod a megjegyzést'
+              button={
+                <Button
+                  compact
+                  color='red'
+                  size='mini'
+                >
+                  Delete
+                </Button>
+              }
+              onAccept={() => this.props.deleteNote(note)}
+            />
           </Comment>);
       }
       return '';
@@ -120,7 +128,7 @@ class EventDetail extends Component {
           <Button
             onClick={() => this.setState({ edit: true })}
           >
-          Edit
+          Szerkeszt
           </Button>
           { this.state.edit ?
             <Button
@@ -129,7 +137,7 @@ class EventDetail extends Component {
                               this.props.submitVisitors(this.props.selectedEvent);
                             }
                       }
-            >Save
+            >Mentés
             </Button>
             :
             ''
@@ -182,4 +190,5 @@ export default connect(mapStateToProps, {
   writeNote,
   clearWrite,
   postEventNote,
+  deleteNote,
 })(EventDetail);

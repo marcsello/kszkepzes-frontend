@@ -19,7 +19,11 @@ class Trainees extends Component {
       }
       return (
         <Table.Cell textAlign='center'>
-          <Icon color='red' name='cancel' />
+          { event.absent.includes(trainee.id) ?
+            <Icon color='orange' name='minus' />
+            :
+            <Icon color='red' name='cancel' />
+          }
         </Table.Cell>);
     }));
   }

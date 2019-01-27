@@ -3,8 +3,10 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { Container, Table, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { getStaffEvents, deleteEvent } from '../../actions/statistics';
+import { getStaffEvents, deleteEvent, selectEventForEdit } from '../../actions/statistics';
 import AddEventForm from '../forms/AddEventForm';
+import EditEventForm from '../forms/EditEventForm';
+import ConfirmModal from '../forms/ConfirmModal';
 
 class Events extends Component {
   componentWillMount() {
@@ -23,14 +25,20 @@ class Events extends Component {
         <Table.Cell>{moment(event.date).format('LL')}</Table.Cell>
         <Table.Cell>{event.visitor_number}</Table.Cell>
         <Table.Cell>
-          <Button
-            onClick={() => this.props.deleteEvent(event)}
-            color='red'
-            compact
-            size='small'
-          >
-          Delete
-          </Button>
+          <ConfirmModal
+            text={`törölni akarod a következő alkalmat:${event.name}`}
+            button={
+              <Button
+                compact
+                color='red'
+                size='mini'
+              >
+              Törlés
+              </Button>
+               }
+            onAccept={() => this.props.deleteEvent(event)}
+          />
+          <EditEventForm onClick={() => this.props.selectEventForEdit(event)} />
         </Table.Cell>
       </Table.Row>
     );
@@ -62,4 +70,4 @@ class Events extends Component {
 
 const mapStateToProps = ({ events: { events }, user }) => ({ events, user });
 
-export default connect(mapStateToProps, { getStaffEvents, deleteEvent })(Events);
+export default connect(mapStateToProps, { getStaffEvents, selectEventForEdit, deleteEvent })(Events);

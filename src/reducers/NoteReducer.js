@@ -3,6 +3,7 @@ import {
   WRITE_NOTE,
   ADD_EVENT_NOTE,
   CLEAR_WRITE,
+  DELETE_NOTE,
 } from '../actions/types';
 
 const INITIAL_STATE = { eventNotes: [], actualNote: {} };
@@ -17,6 +18,9 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, eventNotes: [...state.eventNotes, action.payload] };
     case CLEAR_WRITE:
       return { ...state, actualNote: { note: '' } };
+    case DELETE_NOTE:
+      state.eventNotes.splice(state.eventNotes.indexOf(action.payload), 1);
+      return { ...state, eventNotes: [...state.eventNotes] };
     default:
       return state;
   }
