@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form, Input, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { DateTimeInput } from 'semantic-ui-calendar-react';
 import {
   writeEditEvent,
@@ -72,7 +73,7 @@ class EditEventForm extends Component {
               label="Dátum:"
               dateFormat='YYYY-MM-DD'
               placeholder="Dátum"
-              value={date}
+              value={moment(date).format('YYYY-MM-DD hh:mm')}
               iconPosition="left"
               onChange={this.handleChange}
             />
