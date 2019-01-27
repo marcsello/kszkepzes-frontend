@@ -10,9 +10,10 @@ import {
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { getTasks, getSolutions, addTask, addDocument } from '../../actions/homework';
+import { getTasks, getSolutions, addTask, addDocument, getProfiles } from '../../actions/homework';
 import AddTaskForm from '../forms/AddTaskForm';
 import AddSolutionForm from '../forms/AddSolutionForm';
+import CorrectSolutionForm from '../forms/CorrectSolutionForm';
 
 const displayTypes = {
   can_submit: {
@@ -55,7 +56,8 @@ const emptyMessage = (header, text, marginBottom) => (
 class Homework extends Component {
   componentDidMount() {
     this.props.getTasks();
-    this.props.getSolutions();
+    this.props.getSolutions(this.props.user.id);
+    this.props.getProfiles();
   }
 
   getTaskDisplayStyle(task) {
@@ -81,24 +83,33 @@ class Homework extends Component {
     return 'accepted';
   }
 
-  renderTaskList(active) {
+  renderTaskList(active, staff) {
+    if (!staff) {
+      return this.props.homeworks.tasks
+        .filter(task => moment().isBefore(task.deadline) === active)
+          }
+            positive={
+            negative={
+            displayTypes[this.getTaskDisplayStyle(task)].rowstyle.negative
+            <Table.Cell>
+              <AddSolutionForm taskid={task.id} tasktitle={task.title} taskdesc={task.text} />
     return this.props.homeworks.tasks
       .filter(task => moment().isBefore(task.deadline) === active)
       .map(task => (
         <Table.Row
           key={task.id}
           warning={
-            displayTypes[this.getTaskDisplayStyle(task)].rowstyle.warning
-          }
+          displayTypes[this.getTaskDisplayStyle(task)].rowstyle.warning
+        }
           positive={
-            displayTypes[this.getTaskDisplayStyle(task)].rowstyle.positive
-          }
+          displayTypes[this.getTaskDisplayStyle(task)].rowstyle.positive
+        }
           negative={
-            displayTypes[this.getTaskDisplayStyle(task)].rowstyle.negative
-          }
+          displayTypes[this.getTaskDisplayStyle(task)].rowstyle.negative
+        }
         >
           <Table.Cell>
-            <AddSolutionForm taskid={task.id} tasktitle={task.title}/>
+            <CorrectSolutionForm taskid={task.id} tasktitle={task.title} taskdesc={task.text} />
           </Table.Cell>
           <Table.Cell>
             {moment(task.deadline).format('YYYY. MM. DD. HH:mm')}
@@ -111,7 +122,7 @@ class Homework extends Component {
       ));
   }
 
-  renderHomeworksTable(active) {
+  renderHomeworksTable(active, staff) {
     let tableColor = 'green';
     let marginBottom = '0em';
 
@@ -138,17 +149,21 @@ class Homework extends Component {
             </Table.HeaderCell>
           </Table.Row>
         </Table.Header>
-        <Table.Body>{this.renderTaskList(active)}</Table.Body>
+        <Table.Body>{this.renderTaskList(active, staff)}</Table.Body>
       </Table>
     );
   }
 
-  renderHomeworks(active) {
+  renderHomeworks(active, staff) {
     let empty = false;
     let emptyText = 'Jelenleg nincs egyetlen beadható feladat sem. ';
     let marginBottom = '0em';
     const emptyHeaderText = 'Nincs feladat.';
     let headerText = 'Aktív feladatok';
+
+    if (staff) {
+      headerText = 'Aktív feladatok kijavítása';
+    }
 
     if (
       this.props.homeworks.tasks.filter(task =>
@@ -158,7 +173,11 @@ class Homework extends Component {
     }
 
     if (!active) {
-      headerText = 'Lejárt határidejű feladatok';
+      if (staff) {
+        headerText = 'Lejárt határidejű feladatok kijavítása';
+      } else {
+        headerText = 'Lejárt határidejű feladatok';
+      }
       emptyText = 'Jelenleg nincs egyetlen lejárt határidejű feladat sem.';
       marginBottom = '3em';
     }
@@ -179,37 +198,47 @@ class Homework extends Component {
           />
           {empty
             ? emptyMessage(emptyHeaderText, emptyText, marginBottom)
-            : this.renderHomeworksTable(active)}
+            : this.renderHomeworksTable(active, staff)}
         </Container>
       </Segment>
     );
   }
 
   render() {
-    return (
-      <div>
-        <Segment style={{ padding: '0 0 2em 0' }} vertical basic>
-          <Container>
-            <Header
-              as='h1'
-              dividing
-              content='Házi feladat hozzáadása, módosítása vagy törlése'
-              style={{
-                  fontSize: '3em',
-                  fontWeight: 'normal',
-                  marginBottom: '0.5em',
-                  marginTop: '0.5em',
-                }}
-            />
-            <Button.Group>
-              <AddTaskForm />
-            </Button.Group>
-          </Container>
-        </Segment>
-        {this.renderHomeworks(true)}
-        {this.renderHomeworks(false)}
-      </div>
-    );
+    if (this.props.user.role === 'Student') {
+      return (
+        <div>
+          {this.renderHomeworks(true, false)}
+          {this.renderHomeworks(false, false)}
+        </div>
+      );
+    } else if (this.props.user.role === 'Staff') {
+      return (
+        <div>
+          <Segment style={{ padding: '0 0 2em 0' }} vertical basic>
+            <Container>
+              <Header
+                as='h1'
+                dividing
+                content='Házi feladat hozzáadása, módosítása vagy törlése'
+                style={{
+                      fontSize: '3em',
+                      fontWeight: 'normal',
+                      marginBottom: '0.5em',
+                      marginTop: '0.5em',
+                    }}
+              />
+              <Button.Group>
+                <AddTaskForm />
+              </Button.Group>
+            </Container>
+          </Segment>
+          {this.renderHomeworks(true, true)}
+          {this.renderHomeworks(false, true)}
+        </div>
+      );
+    }
+    return null;
   }
 }
 
@@ -222,5 +251,6 @@ export default connect(
     getSolutions,
     addTask,
     addDocument,
+    getProfiles,
   },
 )(Homework);

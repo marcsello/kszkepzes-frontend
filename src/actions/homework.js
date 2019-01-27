@@ -7,6 +7,7 @@ import { GET_TASKS,
   ADD_SOLUTION,
   WRITE_SOLUTION,
   WRITE_SOLUTION_FILE,
+  GET_PROFILES,
   ADD_DOCUMENT } from './types';
 
 export const getTasks = () => (
@@ -23,10 +24,10 @@ export const getTasks = () => (
   }
 );
 
-export const getSolutions = () => (
+export const getSolutions = id => (
   async (dispatch) => {
     try {
-      const response = await axios.get('/api/v1/homework/solutions/');
+      const response = await axios.get('/api/v1/homework/solutions/', { params: { profileID: id } });
       dispatch({
         type: GET_SOLUTIONS,
         payload: response.data,
@@ -72,7 +73,6 @@ export const addSolution = ({
         note,
       });
       if (response.data.id) {
-        alert('Sikeres mentés!');
         dispatch({
           type: ADD_SOLUTION,
           payload: response.data,
@@ -120,7 +120,7 @@ export const writeSolution = ({ target: { name, value } }) => (
 
 export const writeSolutionFile = ({ target: { files } }) => (
   (dispatch) => {
-    dispatch({ type: WRITE_SOLUTION, payload: files[0], target: 'file' });
+    dispatch({ type: WRITE_SOLUTION_FILE, payload: files[0], target: 'file' });
   }
 );
 
@@ -139,5 +139,19 @@ export const writeTaskDeadline = ({ name, value }) => (
 export const clearWrite = () => (
   (dispatch) => {
     dispatch({ type: CLEAR_WRITE });
+  }
+);
+
+export const getProfiles = () => (
+  async (dispatch) => {
+    try {
+      const response = await axios.get('/api/v1/profiles/');
+      dispatch({
+        type: GET_PROFILES,
+        payload: response.data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
 );

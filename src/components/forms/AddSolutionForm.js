@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Button, Form, Input, TextArea, Icon } from 'semantic-ui-react';
+import { Modal, Button, Form, Input, TextArea, Icon, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { addSolution, writeSolution, writeSolutionFile, addDocument, clearWrite } from '../../actions/homework';
 
@@ -13,15 +13,18 @@ class AddSolutionForm extends Component {
 
   render() {
     const {
-      name, description, file
+      name, description, file,
     } = this.props.newSolution;
     const task = this.props.taskid;
     const corrected = false;
     const accepted = false;
+    const sentences = this.props.taskdesc.split('\n');
     const note = '';
     let solution = 1;
-    if((this.props.homeworks.solutions[this.props.homeworks.solutions.length - 1]) !== undefined)
+    if ((this.props.homeworks.solutions[this.props.homeworks.solutions.length - 1])
+    !== undefined) {
       solution = (this.props.homeworks.solutions[this.props.homeworks.solutions.length - 1]).id;
+    }
     return (
       <Modal
         open={this.state.showModal}
@@ -32,20 +35,26 @@ class AddSolutionForm extends Component {
           </Button>
         }
       >
-        <Modal.Header>Új megoldás beadása a {this.props.tasktitle} nevű feladathoz:</Modal.Header>
+        <Modal.Header>
+          Új megoldás beadása a(z) {this.props.tasktitle} nevű feladathoz:
+        </Modal.Header>
         <Modal.Content>
+          <Modal.Description style={{ marginBottom: '2em' }}>
+            <Header as='h5'>Feladat leírása:</Header>
+            {sentences.map(s => (<p>{s}</p>))}
+          </Modal.Description>
           <Form>
             <Form.Field
               control={Input}
-              label='Cím:'
+              label='Megoldás címe:'
               name='name'
               onChange={e => this.props.writeSolution(e)}
               value={name}
-              placeholder='Add meg a dokumentum címét'
+              placeholder='Adj meg egy címet a beadandó megoldásodnak...'
             />
             <Form.Field
               control={TextArea}
-              label='Leírás:'
+              label='Megoldás leírása:'
               name='description'
               onChange={e => this.props.writeSolution(e)}
               value={description}
@@ -74,7 +83,9 @@ class AddSolutionForm extends Component {
               this.props.addSolution({
                  task, accepted, corrected, note,
                });
-              this.props.addDocument({ name, description, file, solution });
+              this.props.addDocument({
+ name, description, file, solution,
+});
               this.setState({ showModal: false });
               }}
           >
