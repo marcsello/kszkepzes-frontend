@@ -67,7 +67,6 @@ class Schedule extends Component {
         >
         {panels}
       </Accordion>
-      <h2>Tábor:</h2>
       </Container>
     );
   }

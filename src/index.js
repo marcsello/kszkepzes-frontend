@@ -8,7 +8,6 @@ import 'semantic-ui-css/semantic.min.css';
 import moment from 'moment';
 import configureStore from './configureStore';
 import App from './components/App';
-import registerServiceWorker from './registerServiceWorker';
 
 
 moment.locale();
@@ -23,5 +22,3 @@ render(
   </Provider>,
   document.getElementById('root'),
 );
-
-registerServiceWorker();

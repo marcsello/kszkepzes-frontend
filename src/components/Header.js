@@ -53,6 +53,7 @@ const menuItems = [
     text: 'Házi feladatok',
     to: '/homework',
     prefix: '',
+    permissionLevel: 2,
   },
 ]
 
