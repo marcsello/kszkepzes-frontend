@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Container, Table, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { getTrainees, getEvents } from '../../actions/statistics';
+import { getTrainees, getStaffEvents } from '../../actions/statistics';
 
 class Trainees extends Component {
   componentWillMount() {
     this.props.getTrainees();
-    this.props.getEvents();
+    this.props.getStaffEvents();
   }
 
   renderVisitedStatus(trainee) {
@@ -19,7 +19,11 @@ class Trainees extends Component {
       }
       return (
         <Table.Cell textAlign='center'>
-          <Icon color='red' name='cancel' />
+          { event.absent.includes(trainee.id) ?
+            <Icon color='orange' name='minus' />
+            :
+            <Icon color='red' name='cancel' />
+          }
         </Table.Cell>);
     }));
   }
@@ -66,4 +70,4 @@ class Trainees extends Component {
 
 const mapStateToProps = ({ trainees: { trainees }, events: { events }, user }) => ({ trainees, events, user });
 
-export default connect(mapStateToProps, { getTrainees, getEvents })(Trainees);
+export default connect(mapStateToProps, { getTrainees, getStaffEvents })(Trainees);

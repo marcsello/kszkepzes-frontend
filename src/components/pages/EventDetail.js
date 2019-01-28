@@ -7,14 +7,13 @@ import {
   Form,
   Header,
   Table,
-  Icon,
-  Checkbox,
-  Popup,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { getEventById, getTrainees, visitorChange, submitVisitors } from '../../actions/statistics';
-import { getNotesByEvent, writeNote, clearWrite, postEventNote } from '../../actions/notes';
+import { getNotesByEvent, writeNote, clearWrite, postEventNote, deleteNote } from '../../actions/notes';
+import TraineeTableRow from './TraineeTableRow';
+import ConfirmModal from '../forms/ConfirmModal';
 
 class EventDetail extends Component {
   constructor(props) {
@@ -32,61 +31,30 @@ class EventDetail extends Component {
 
 
   renderTrainees() {
+    const event = this.props.selectedEvent;
     return this.props.trainees.map((item) => {
-      const isVisitor = this.props.selectedEvent.visitors.includes(item.id);
+      const notes = this.props.eventNotes.filter(note => note.profile === item.id);
       return (
-        <Table.Row>
-          <Table.Cell>
-            {item.full_name}
-          </Table.Cell>
-          {!this.state.edit ?
-            <Table.Cell textAlign='center'>
-              {
-                  isVisitor ?
-                    <Icon color='green' name='checkmark' />
-                  :
-                    <Icon color='red' name='cancel' />
-                }
-            </Table.Cell>
-            :
-            <Table.Cell textAlign='center'>
-              <Checkbox
-                defaultChecked={isVisitor ? true : false}
-                onChange={() => this.props.visitorChange(item)}
-              />
-            </Table.Cell>
-          }
-          <Table.Cell>
-            <Popup
-              trigger={<Button icon='add' />}
-              content={this.props.eventNotes.map((note) => {
-                  if (note.profile === item.id) {
-                    return (
-                      <Comment.Content>
-                        <Comment.Author>{note.created_by_name}</Comment.Author>
-                        <Comment.Text>
-                          {note.note}
-                        </Comment.Text>
-                      </Comment.Content>
-                    );
-                }
-                return ('');
-                })
-              }
-              basic
-            />
-          </Table.Cell>
-        </Table.Row>
+        <TraineeTableRow
+          selectedEvent={event}
+          notes={notes}
+          trainee={item}
+          edit={this.state.edit}
+        />
       );
     });
   }
 
   renderEvent() {
-    const { name, date } = this.props.selectedEvent;
+    const { name, date, description } = this.props.selectedEvent;
     return (
       <Item>
         <Item.Header as='h2'>{name}</Item.Header>
         <Item.Header as='h3'>Dátum: {moment(date).format('LL')}</Item.Header>
+        <Container textAlign='justified'>
+          <Item.Header as='h3'>Leírás</Item.Header>
+          <Item.Content>{description}</Item.Content>
+        </Container>
       </Item>
     );
   }
@@ -106,6 +74,19 @@ class EventDetail extends Component {
                 {note.note}
               </Comment.Text>
             </Comment.Content>
+            <ConfirmModal
+              text='törölni akarod a megjegyzést'
+              button={
+                <Button
+                  compact
+                  color='red'
+                  size='mini'
+                >
+                  Delete
+                </Button>
+              }
+              onAccept={() => this.props.deleteNote(note)}
+            />
           </Comment>);
       }
       return '';
@@ -116,7 +97,11 @@ class EventDetail extends Component {
     const event = this.props.selectedEvent;
     const note = this.props.actualNote;
     return (
-      <Container>
+      <Container
+        style={{
+          padding: '80px'
+        }}
+      >
         <Container textAlign='center'>
           { this.props.selectedEvent && this.props.trainees ?
             this.renderEvent()
@@ -124,11 +109,6 @@ class EventDetail extends Component {
             ''
         }
         </Container>
-        <Container
-          style={{
-            padding: '80px',
-          }}
-        >
           <Table celled centered>
             <Table.Header>
               <Table.Row>
@@ -138,8 +118,7 @@ class EventDetail extends Component {
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              { this.props.trainees &&
-                this.props.selectedEvent ?
+              { this.props.selectedEvent ?
                 this.renderTrainees()
                 :
                 ''
@@ -149,7 +128,7 @@ class EventDetail extends Component {
           <Button
             onClick={() => this.setState({ edit: true })}
           >
-          Edit
+          Szerkeszt
           </Button>
           { this.state.edit ?
             <Button
@@ -158,7 +137,7 @@ class EventDetail extends Component {
                               this.props.submitVisitors(this.props.selectedEvent);
                             }
                       }
-            >Save
+            >Mentés
             </Button>
             :
             ''
@@ -191,7 +170,6 @@ class EventDetail extends Component {
               />
             </Form>
           </Comment.Group>
-        </Container>
       </Container>
     );
   }
@@ -212,4 +190,5 @@ export default connect(mapStateToProps, {
   writeNote,
   clearWrite,
   postEventNote,
+  deleteNote,
 })(EventDetail);

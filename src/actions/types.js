@@ -15,14 +15,23 @@ export const GET_EVENTS = 'get_events';
 export const GET_EVENT_BY_ID = 'get_event_by_id';
 
 export const GET_TRAINEES = 'get_trainees';
-export const GET_TRAINEE_BY_ID = 'get_trainee_by_id';
 export const VISITOR_CHANGE = 'visitor_change';
+export const ABSENT_CHANGE = 'absent_change';
+export const CHANGE_NO = 'change_no';
 
 export const GET_NOTES_BY_EVENT = 'get_notes_by_event';
 export const WRITE_EVENT = 'write_event';
+export const WRITE_EDITED_EVENT = 'write_selected_event';
 export const ADD_EVENT = 'add_event';
+export const SELECT_EVENT_FOR_EDIT = 'select_event_for_edit';
+export const EDIT_EVENT = 'edit_event';
 export const DELETE_EVENT = 'delete_event';
 
 export const WRITE_NOTE = 'write_note';
 export const CLEAR_NOTE = 'clear_note';
 export const ADD_EVENT_NOTE = 'add_note';
+export const DELETE_NOTE = 'delete_note';
+
+export const GET_PROFILES = 'get_profiles';
+export const SET_STATUS = 'set_status';
+export const GET_SELECTED_PROFILE = 'get_selected_profile';

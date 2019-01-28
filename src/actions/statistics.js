@@ -7,13 +7,34 @@ import {
   WRITE_EVENT,
   ADD_EVENT,
   DELETE_EVENT,
-  GET_TRAINEE_BY_ID,
+  GET_PROFILES,
+  GET_SELECTED_PROFILE,
+  SET_STATUS,
+  ABSENT_CHANGE,
+  CHANGE_NO,
+  EDIT_EVENT,
+  WRITE_EDITED_EVENT,
+  SELECT_EVENT_FOR_EDIT,
 } from './types';
 
-export const getEvents = () => (
+export const getStaffEvents = () => (
   async (dispatch) => {
     try {
-      const response = await axios.get('/api/v1/events/');
+      const response = await axios.get('/api/v1/staff_events/');
+      dispatch({
+        type: GET_EVENTS,
+        payload: response.data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
+export const getStudentEvents = () => (
+  async (dispatch) => {
+    try {
+      const response = await axios.get('/api/v1/student_events/');
       dispatch({
         type: GET_EVENTS,
         payload: response.data,
@@ -27,23 +48,9 @@ export const getEvents = () => (
 export const getEventById = id => (
   async (dispatch) => {
     try {
-      const response = await axios.get(`/api/v1/events/${id}`);
+      const response = await axios.get(`/api/v1/staff_events/${id}`);
       dispatch({
         type: GET_EVENT_BY_ID,
-        payload: response.data,
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  }
-);
-
-export const getTraineeById = id => (
-  async (dispatch) => {
-    try {
-      const response = await axios.get(`/api/v1/profiles/${id}`);
-      dispatch({
-        type: GET_TRAINEE_BY_ID,
         payload: response.data,
       });
     } catch (e) {
@@ -55,7 +62,7 @@ export const getTraineeById = id => (
 export const getTrainees = () => (
   async (dispatch) => {
     try {
-      const response = await axios.get('/api/v1/profiles/');
+      const response = await axios.get('/api/v1/profiles/', { params: { role: 'Student' } });
       dispatch({
         type: GET_TRAINEES,
         payload: response.data,
@@ -66,16 +73,28 @@ export const getTrainees = () => (
   }
 );
 
-export const visitorChange = ({ id }) => {
-  return (dispatch => (dispatch({ type: VISITOR_CHANGE, payload: id })));
+export const visitorChange = ({ id, value }) => {
+  switch (value){
+    case 'Visitor':
+      return (dispatch => (dispatch({ type: VISITOR_CHANGE, payload: id })));
+    case 'Absent':
+      return (dispatch => (dispatch({ type: ABSENT_CHANGE, payload: id })));
+    case 'No':
+      return (dispatch => (dispatch({ type: CHANGE_NO, payload: id })));
+    default:
+  }
 };
 
-export const submitVisitors = ({ id, visitors }) => (
+export const submitVisitors = ({ id, visitors, absent }) => (
   async () => {
     try {
-      const response = await axios.patch(`/api/v1/events/${id}/`, {
-        visitors
+      const response = await axios.patch(`/api/v1/staff_events/${id}/`, {
+        visitors,
+        absent,
       });
+      if (response.data.id) {
+        alert('Sikeres mentés!');
+      }
     } catch (e) {
       console.log(e);
     }
@@ -88,19 +107,50 @@ export const writeEvent = ({ target: { name, value } }) => (
   }
 );
 
-
-export const eventDate = (name, value) => (
+export const selectEventForEdit = editEvent => (
   (dispatch) => {
-    dispatch({ type: WRITE_EVENT, payload: value, target: name });
+    dispatch({ type: SELECT_EVENT_FOR_EDIT, payload: editEvent });
   }
 );
 
-export const addEvent = ({ name, date }) => (
+export const writeEditEvent = ({ target: { name, value } }) => (
+  (dispatch) => {
+    dispatch({ type: WRITE_EDITED_EVENT, payload: value, target: name });
+  }
+);
+
+export const editEvent = ({ id, name, description, date }) => (
   async (dispatch) => {
     try {
-      const response = await axios.post('/api/v1/events/', {
+      const response = await axios.patch(`/api/v1/staff_events/${id}/`, {
+        name,
+        description,
+        date,
+      });
+      if (response.data.id) {
+        alert('Sikeres mentés!');
+        dispatch({
+          type: EDIT_EVENT,
+          payload: response.data,
+
+        });
+      } else {
+        alert('Mentés nem sikerült!');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
+export const addEvent = ({ name, date, description }) => (
+  async (dispatch) => {
+    try {
+      const response = await axios.post('/api/v1/staff_events/', {
         name,
         date,
+        description,
+        absent: [],
       });
       if (response.data.id) {
         alert('Sikeres mentés!');
@@ -120,7 +170,7 @@ export const addEvent = ({ name, date }) => (
 export const deleteEvent = event => (
   async (dispatch) => {
     try {
-      const response = await axios.delete(`/api/v1/events/${event.id}/`);
+      const response = await axios.delete(`/api/v1/staff_events/${event.id}/`);
       if (!response.data.id) {
         alert('Sikeres törlés!');
         dispatch({
@@ -134,3 +184,49 @@ export const deleteEvent = event => (
       console.log(e);
     }
   });
+
+export const getProfiles = () => (
+  async (dispatch) => {
+    try {
+      const response = await axios.get('/api/v1/profiles/');
+      dispatch({
+        type: GET_PROFILES,
+        payload: response.data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
+export const setStatus = (id, status) => (
+  async (dispatch) => {
+    try {
+      const response = await axios.patch(`/api/v1/profiles/${id}/`, {
+        role: status,
+      });
+      if (response.data.id) {
+        dispatch({
+          type: SET_STATUS,
+          payload: response.data,
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
+export const getSelectedProfile = id => (
+  async (dispatch) => {
+    try {
+      const response = await axios.get(`/api/v1/profiles/${id}/`);
+      dispatch({
+        type: GET_SELECTED_PROFILE,
+        payload: response.data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
