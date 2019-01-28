@@ -13,7 +13,7 @@ import moment from 'moment';
 import { getTasks, getSolutions, addTask, addDocument, getProfiles } from '../../actions/homework';
 import AddTaskForm from '../forms/AddTaskForm';
 import AddSolutionForm from '../forms/AddSolutionForm';
-import CorrectSolutionForm from '../forms/CorrectSolutionForm';
+import SolutionDetailsForm from '../forms/SolutionDetailsForm';
 
 const displayTypes = {
   can_submit: {
@@ -43,7 +43,7 @@ const displayTypes = {
   },
 };
 
-const emptyMessage = (header, text, marginBottom) => (
+export const emptyMessage = (header, text, marginBottom) => (
   <Message
     style={{ marginBottom }}
     icon='info'
@@ -62,7 +62,9 @@ class Homework extends Component {
 
   getTaskDisplayStyle(task) {
     const taskSolutions = this.props.homeworks.solutions.filter(solution =>
-      solution.task === task.id);
+      solution.task === task.id)
+      .filter(solution =>
+        solution.created_by === this.props.user.id);
 
     if (taskSolutions.length === 0) {
       if (moment().isBefore(task.deadline)) {
@@ -87,12 +89,33 @@ class Homework extends Component {
     if (!staff) {
       return this.props.homeworks.tasks
         .filter(task => moment().isBefore(task.deadline) === active)
+        .map(task => (
+          <Table.Row
+            key={task.id}
+            warning={
+            displayTypes[this.getTaskDisplayStyle(task)].rowstyle.warning
           }
             positive={
+            displayTypes[this.getTaskDisplayStyle(task)].rowstyle.positive
+          }
             negative={
             displayTypes[this.getTaskDisplayStyle(task)].rowstyle.negative
+          }
+          >
             <Table.Cell>
               <AddSolutionForm taskid={task.id} tasktitle={task.title} taskdesc={task.text} />
+            </Table.Cell>
+            <Table.Cell>
+              {moment(task.deadline).format('YYYY. MM. DD. HH:mm')}
+            </Table.Cell>
+            <Table.Cell>
+              <Icon name={displayTypes[this.getTaskDisplayStyle(task)].icon} />{' '}
+              {displayTypes[this.getTaskDisplayStyle(task)].text}
+            </Table.Cell>
+          </Table.Row>
+        ));
+    }
+
     return this.props.homeworks.tasks
       .filter(task => moment().isBefore(task.deadline) === active)
       .map(task => (
@@ -109,7 +132,7 @@ class Homework extends Component {
         }
         >
           <Table.Cell>
-            <CorrectSolutionForm taskid={task.id} tasktitle={task.title} taskdesc={task.text} />
+            <SolutionDetailsForm taskid={task.id} tasktitle={task.title} taskdesc={task.text} />
           </Table.Cell>
           <Table.Cell>
             {moment(task.deadline).format('YYYY. MM. DD. HH:mm')}
