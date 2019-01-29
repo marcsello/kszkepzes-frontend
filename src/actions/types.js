@@ -13,6 +13,7 @@ export const SELECT_NEWS = 'select_news';
 
 export const GET_TASKS = 'get_homeworks';
 export const ADD_TASK = 'add_task';
+export const DELETE_TASK = 'delete_task';
 export const WRITE_TASK = 'write_task';
 export const WRITE_SOLUTION = 'write_solution';
 export const WRITE_SOLUTION_FILE = 'write_solution_file';

@@ -10,10 +10,11 @@ import {
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { getTasks, getSolutions, addTask, addDocument, getProfiles, getDocuments } from '../../actions/homework';
+import { getTasks, getSolutions, addTask, deleteTask, addDocument, getProfiles, getDocuments } from '../../actions/homework';
 import AddTaskForm from '../forms/AddTaskForm';
 import AddSolutionForm from '../forms/AddSolutionForm';
 import SolutionDetailsForm from '../forms/SolutionDetailsForm';
+import ConfirmModal from '../forms/ConfirmModal';
 
 const displayTypes = {
   can_submit: {
@@ -117,6 +118,16 @@ class Homework extends Component {
         ));
     }
 
+    const deleteButton = (
+      <Button
+        inverted
+        style={{ marginRight: '2em' }}
+        color='red'
+      >
+        <Icon name='x' /> Törlés
+      </Button>
+    );
+
     return this.props.homeworks.tasks
       .filter(task => moment().isBefore(task.deadline) === active)
       .map(task => (
@@ -139,8 +150,11 @@ class Homework extends Component {
             {moment(task.deadline).format('YYYY. MM. DD. HH:mm')}
           </Table.Cell>
           <Table.Cell>
-            <Icon name={displayTypes[this.getTaskDisplayStyle(task)].icon} />{' '}
-            {displayTypes[this.getTaskDisplayStyle(task)].text}
+            <ConfirmModal
+              button={deleteButton}
+              text='törlöd a kiválaszott feladatot a már beadott megoldásokkal együtt'
+              onAccept={() => this.props.deleteTask(task)}
+            />
           </Table.Cell>
         </Table.Row>
       ));
@@ -155,21 +169,44 @@ class Homework extends Component {
       marginBottom = '3em';
     }
 
+    if (!staff) {
+      return (
+        <Table color={tableColor} fixed style={{ marginBottom }}>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>
+                <Icon circular name='home' />
+              Feladat megnevezése / beadása
+              </Table.HeaderCell>
+              <Table.HeaderCell>
+                <Icon circular name='calendar' />
+              Beadási határidő
+              </Table.HeaderCell>
+              <Table.HeaderCell>
+                <Icon circular name='tasks' />
+              Állapot
+              </Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>{this.renderTaskList(active, staff)}</Table.Body>
+        </Table>
+      );
+    }
     return (
       <Table color={tableColor} fixed style={{ marginBottom }}>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>
               <Icon circular name='home' />
-              Feladat megnevezése
+              Feladat megnevezése / Beadások állapota
             </Table.HeaderCell>
             <Table.HeaderCell>
               <Icon circular name='calendar' />
               Beadási határidő
             </Table.HeaderCell>
             <Table.HeaderCell>
-              <Icon circular name='tasks' />
-              Állapot
+              <Icon circular name='edit' />
+              Módosítás / Törlés
             </Table.HeaderCell>
           </Table.Row>
         </Table.Header>
@@ -186,7 +223,7 @@ class Homework extends Component {
     let headerText = 'Aktív feladatok';
 
     if (staff) {
-      headerText = 'Aktív feladatok kijavítása';
+      headerText = 'Aktív feladatok kijavítása, módosítása vagy törlése';
     }
 
     if (
@@ -198,7 +235,7 @@ class Homework extends Component {
 
     if (!active) {
       if (staff) {
-        headerText = 'Lejárt határidejű feladatok kijavítása';
+        headerText = 'Lejárt határidejű feladatok kijavítása, módosítása vagy törlése';
       } else {
         headerText = 'Lejárt határidejű feladatok';
       }
@@ -214,7 +251,7 @@ class Homework extends Component {
             dividing
             content={headerText}
             style={{
-                fontSize: '3em',
+                fontSize: '2em',
                 fontWeight: 'normal',
                 marginBottom: 0,
                 marginTop: '0.5em',
@@ -244,9 +281,9 @@ class Homework extends Component {
               <Header
                 as='h1'
                 dividing
-                content='Házi feladat hozzáadása, módosítása vagy törlése'
+                content='Új házi feladat létrehozása'
                 style={{
-                      fontSize: '3em',
+                      fontSize: '2em',
                       fontWeight: 'normal',
                       marginBottom: '0.5em',
                       marginTop: '0.5em',
@@ -274,6 +311,7 @@ export default connect(
     getTasks,
     getSolutions,
     addTask,
+    deleteTask,
     addDocument,
     getProfiles,
     getDocuments,

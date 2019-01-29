@@ -2,6 +2,7 @@ import axios from './session';
 import { GET_TASKS,
   GET_SOLUTIONS,
   ADD_TASK,
+  DELETE_TASK,
   WRITE_TASK,
   CLEAR_WRITE,
   ADD_SOLUTION,
@@ -50,19 +51,31 @@ export const addTask = ({ title, text, deadline }) => (
         deadline,
       });
       if (response.data.id) {
-        alert('Sikeres mentés!');
         dispatch({
           type: ADD_TASK,
           payload: response.data,
         });
-      } else {
-        alert('Mentés nem sikerült!');
       }
     } catch (e) {
       console.log(e);
     }
   }
 );
+
+export const deleteTask = task => (
+  async (dispatch) => {
+    try {
+      const response = await axios.delete(`/api/v1/homework/tasks/${task.id}/`);
+      if (!response.data.id) {
+        dispatch({
+          type: DELETE_TASK,
+          payload: task,
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  });
 
 export const addDocument = ({
   name, description, file, solution,
