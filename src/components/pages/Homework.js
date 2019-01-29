@@ -10,10 +10,20 @@ import {
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { getTasks, getSolutions, addTask, deleteTask, addDocument, getProfiles, getDocuments } from '../../actions/homework';
+import {
+  getTasks,
+  getSolutions,
+  addTask,
+  setSelectedTask,
+  deleteTask,
+  addDocument,
+  getProfiles,
+  getDocuments,
+} from '../../actions/homework';
 import AddTaskForm from '../forms/AddTaskForm';
 import AddSolutionForm from '../forms/AddSolutionForm';
 import SolutionDetailsForm from '../forms/SolutionDetailsForm';
+import EditTaskForm from '../forms/EditTaskForm';
 import ConfirmModal from '../forms/ConfirmModal';
 
 const displayTypes = {
@@ -150,6 +160,7 @@ class Homework extends Component {
             {moment(task.deadline).format('YYYY. MM. DD. HH:mm')}
           </Table.Cell>
           <Table.Cell>
+            <EditTaskForm onClick={() => this.props.setSelectedTask(task)} />
             <ConfirmModal
               button={deleteButton}
               text='törlöd a kiválaszott feladatot a már beadott megoldásokkal együtt'
@@ -303,12 +314,13 @@ class Homework extends Component {
   }
 }
 
-const mapStateToProps = ({ homeworks, user }) => ({ homeworks, user });
+const mapStateToProps = ({ selectedTask, homeworks, user }) => ({ selectedTask, homeworks, user });
 
 export default connect(
   mapStateToProps,
   {
     getTasks,
+    setSelectedTask,
     getSolutions,
     addTask,
     deleteTask,

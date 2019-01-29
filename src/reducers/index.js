@@ -10,6 +10,7 @@ import EventReducer from './EventReducer';
 import TraineeReducer from './TraineeReducer';
 import NoteReducer from './NoteReducer';
 import CorrectSolutionReducer from './CorrectSolutionReducer';
+import EditTaskReducer from './EditTaskReducer';
 
 const rootReducer = combineReducers({
   user: UserReducer,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   homeworks: HomeworksReducer,
   correction: CorrectSolutionReducer,
   newTask: AddTaskReducer,
+  selectedTask: EditTaskReducer,
   newSolution: AddSolutionReducer,
   events: EventReducer,
   trainees: TraineeReducer,

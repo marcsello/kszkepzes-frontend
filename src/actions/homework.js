@@ -4,6 +4,8 @@ import { GET_TASKS,
   ADD_TASK,
   DELETE_TASK,
   WRITE_TASK,
+  EDIT_TASK,
+  SELECT_TASK,
   CLEAR_WRITE,
   ADD_SOLUTION,
   WRITE_SOLUTION,
@@ -62,6 +64,32 @@ export const addTask = ({ title, text, deadline }) => (
   }
 );
 
+export const editTask = ({
+  id,
+  title,
+  text,
+  deadline,
+}) => (
+  async (dispatch) => {
+    try {
+      const response = await axios.patch(`/api/v1/homework/tasks/${id}/`, {
+        title,
+        text,
+        deadline,
+      });
+      if (response.data.id) {
+        dispatch({
+          type: EDIT_TASK,
+          payload: response.data,
+
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
 export const deleteTask = task => (
   async (dispatch) => {
     try {
@@ -76,6 +104,12 @@ export const deleteTask = task => (
       console.log(e);
     }
   });
+
+export const setSelectedTask = task => (
+  (dispatch) => {
+    dispatch({ type: SELECT_TASK, payload: task });
+  }
+);
 
 export const addDocument = ({
   name, description, file, solution,
@@ -117,7 +151,7 @@ export const addSolution = ({
         note,
       });
       if (response.data.id) {
-        console.log(response.data.id)
+        console.log(response.data.id);
         dispatch({
           type: ADD_SOLUTION,
           payload: response.data,
