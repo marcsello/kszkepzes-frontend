@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Modal, Button, Form, Input, TextArea, Icon, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { addSolution, writeSolution, writeSolutionFile, addDocument, clearWrite } from '../../actions/homework';
+import './Forms.css';
 
 class AddSolutionForm extends Component {
   constructor(props) {
@@ -24,10 +25,10 @@ class AddSolutionForm extends Component {
       <Modal
         open={this.state.showModal}
         trigger={
-          <Button basic color='blue' onClick={() => { this.setState({ showModal: true }); }}>
+          <button id='task' onClick={() => { this.setState({ showModal: true }); }}>
             <Icon name='external' />
             {this.props.tasktitle}
-          </Button>
+          </button>
         }
       >
         <Modal.Header>

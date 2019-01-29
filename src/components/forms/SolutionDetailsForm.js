@@ -3,6 +3,7 @@ import { Modal, Button, Header, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import CorrectSolutionForm from './CorrectSolutionForm';
 import { emptyMessage } from '../pages/Homework';
+import './Forms.css';
 
 class SolutionDetailsForm extends Component {
   constructor(props) {
@@ -42,10 +43,10 @@ class SolutionDetailsForm extends Component {
       <Modal
         open={this.state.showModal}
         trigger={
-          <Button basic color='blue' onClick={() => { this.setState({ showModal: true }); }}>
+          <button id='task' onClick={() => { this.setState({ showModal: true }); }}>
             <Icon name='external' />
             {this.props.tasktitle}
-          </Button>
+          </button>
         }
       >
         <Modal.Header>
