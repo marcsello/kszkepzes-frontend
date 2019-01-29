@@ -9,6 +9,7 @@ import AddSolutionReducer from './AddSolutionReducer';
 import EventReducer from './EventReducer';
 import NoteReducer from './NoteReducer';
 import TraineeReducer from './TraineeReducer';
+import CorrectSolutionReducer from './CorrectSolutionReducer';
 
 const rootReducer = combineReducers({
   user: UserReducer,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   homeworks: HomeworksReducer,
   newTask: AddTaskReducer,
   newSolution: AddSolutionReducer,
+  correction: CorrectSolutionReducer,
 });
 
 export default rootReducer;

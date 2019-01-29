@@ -8,7 +8,7 @@ const App = () => (
     <header id='header' >
       <Header />
     </header>
-    <main id='main'>
+    <main id='main' style={{ minHeight: '100%', position: 'relative' }}>
       <Main />
     </main>
     <footer id='footer' style={{ position: 'absolute', width: '100%', bottom: '0' }}>

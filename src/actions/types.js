@@ -11,6 +11,19 @@ export const DELETE_NEWS = 'delete_news';
 export const EDIT_NEWS = 'edit_news';
 export const SELECT_NEWS = 'select_news';
 
+export const GET_TASKS = 'get_homeworks';
+export const ADD_TASK = 'add_task';
+export const WRITE_TASK = 'write_task';
+export const WRITE_SOLUTION = 'write_solution';
+export const WRITE_SOLUTION_FILE = 'write_solution_file';
+export const WRITE_TASK_DEADLINE = 'write_task_deadline';
+export const GET_SOLUTIONS = 'get_solutions';
+export const ADD_SOLUTION = 'add_solution';
+export const ADD_DOCUMENT = 'add_document';
+export const GET_DOCUMENTS = 'get_documents';
+export const CORRECT_SOLUTION = 'correct_solution';
+export const CHECK = 'check';
+
 export const GET_EVENTS = 'get_events';
 export const GET_EVENT_BY_ID = 'get_event_by_id';
 
@@ -35,12 +48,3 @@ export const DELETE_NOTE = 'delete_note';
 export const GET_PROFILES = 'get_profiles';
 export const SET_STATUS = 'set_status';
 export const GET_SELECTED_PROFILE = 'get_selected_profile';
-export const GET_TASKS = 'get_homeworks';
-export const ADD_TASK = 'add_task';
-export const WRITE_TASK = 'write_task';
-export const WRITE_SOLUTION = 'write_solution';
-export const WRITE_SOLUTION_FILE = 'write_solution_file';
-export const WRITE_TASK_DEADLINE = 'write_task_deadline';
-export const GET_SOLUTIONS = 'get_solutions';
-export const ADD_SOLUTION = 'add_solution';
-export const ADD_DOCUMENT = 'add_document';
