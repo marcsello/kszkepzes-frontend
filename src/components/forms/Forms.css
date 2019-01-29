@@ -6,4 +6,5 @@
 
 #task:hover {
   color: red;
+  cursor: pointer;
 }
