@@ -42,18 +42,16 @@ class Schedule extends Component {
           </h3>
          </Accordion.Title>
          <Accordion.Content active={activeIndex === event.id}>
-           <Container text textAlign='left'>
            <p>
              {event.description}
            </p>
-           </Container>
          </Accordion.Content>
        </div>
        ));
 
     return (
       <Container
-        textAlign='center'
+        textAlign='left'
         style={{
           padding: '60px'
         }}
