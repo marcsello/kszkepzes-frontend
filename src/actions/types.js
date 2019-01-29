@@ -20,6 +20,9 @@ export const WRITE_TASK_DEADLINE = 'write_task_deadline';
 export const GET_SOLUTIONS = 'get_solutions';
 export const ADD_SOLUTION = 'add_solution';
 export const ADD_DOCUMENT = 'add_document';
+export const GET_DOCUMENTS = 'get_documents';
+export const CORRECT_SOLUTION = 'correct_solution';
+export const CHECK = 'check';
 
 export const GET_EVENTS = 'get_events';
 export const GET_EVENT_BY_ID = 'get_event_by_id';

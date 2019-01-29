@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Button, Header, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import CorrectSolutionForm from './CorrectSolutionForm';
 import { emptyMessage } from '../pages/Homework';
 
 class SolutionDetailsForm extends Component {
@@ -25,13 +26,13 @@ class SolutionDetailsForm extends Component {
         solution.created_by === this.props.homeworks.profiles[i].id);
 
       if (profileSolutions.length === 0) {
-        noSubmitStudents.push(this.props.homeworks.profiles[i].nick);
+        noSubmitStudents.push(this.props.homeworks.profiles[i]);
       } else if (taskSolutions[taskSolutions.length - 1].corrected === false) {
-        waitForCorrectionStudents.push(this.props.homeworks.profiles[i].nick);
+        waitForCorrectionStudents.push(this.props.homeworks.profiles[i]);
       } else if (taskSolutions[taskSolutions.length - 1].accepted === false) {
-        noAcceptStudents.push(this.props.homeworks.profiles[i].nick);
+        noAcceptStudents.push(this.props.homeworks.profiles[i]);
       } else {
-        acceptedStudents.push(this.props.homeworks.profiles[i].nick);
+        acceptedStudents.push(this.props.homeworks.profiles[i]);
       }
     }
 
@@ -54,49 +55,47 @@ class SolutionDetailsForm extends Component {
           <Header as='h3'>Nem érkezett még megoldás:</Header>
           {noSubmitStudents.length === 0 ?
               emptyMessage(emptyStudentText) :
-              noSubmitStudents.map(name => (
-                <Button color='blue' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{name}</Button>
+              noSubmitStudents.map(student => (
+                <Button color='blue' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{student.nick}</Button>
               ))
           }
           <Header as='h3'>Javításra vár (A névre kattintva kijavítható a megoldás):</Header>
           {waitForCorrectionStudents.length === 0 ?
             emptyMessage(emptyStudentText) :
-            waitForCorrectionStudents.map(name => (
-              <Button inverted color='orange' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{name}</Button>
+            waitForCorrectionStudents.map(student => (
+              <CorrectSolutionForm
+                studentName={student.nick}
+                studentFullName={student.full_name}
+                studentId={student.id}
+                taskTitle={this.props.tasktitle}
+                taskSolutions={taskSolutions}
+              />
             ))
           }
           <Header as='h3'>A megoldás nem elfogadható:</Header>
           {noAcceptStudents.length === 0 ?
             emptyMessage(emptyStudentText) :
-            noAcceptStudents.map(name => (
-              <Button color='red' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{name}</Button>
+            noAcceptStudents.map(student => (
+              <Button color='red' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{student.nick}</Button>
             ))
         }
           <Header as='h3'>Elfogadva:</Header>
           {acceptedStudents.length === 0 ?
             emptyMessage(emptyStudentText) :
-            acceptedStudents.map(name => (
-              <Button color='green' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{name}</Button>
+            acceptedStudents.map(student => (
+              <Button color='green' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{student.nick}</Button>
             ))
         }
         </Modal.Content>
         <Modal.Actions>
           <Button
             inverted
-            color='red'
-            onClick={() => {
-              this.setState({ showModal: false });
-            }}
-          >
-            <Icon name='remove' /> Mégse
-          </Button>
-          <Button
-            inverted
             color='green'
             onClick={() => {
+              this.setState({ showModal: false });
               }}
           >
-            <Icon name='checkmark' /> Beadás
+            <Icon name='checkmark' /> Kész
           </Button>
         </Modal.Actions>
       </Modal>

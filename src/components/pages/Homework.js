@@ -10,7 +10,7 @@ import {
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { getTasks, getSolutions, addTask, addDocument, getProfiles } from '../../actions/homework';
+import { getTasks, getSolutions, addTask, addDocument, getProfiles, getDocuments } from '../../actions/homework';
 import AddTaskForm from '../forms/AddTaskForm';
 import AddSolutionForm from '../forms/AddSolutionForm';
 import SolutionDetailsForm from '../forms/SolutionDetailsForm';
@@ -58,6 +58,7 @@ class Homework extends Component {
     this.props.getTasks();
     this.props.getSolutions(this.props.user.id);
     this.props.getProfiles();
+    this.props.getDocuments();
   }
 
   getTaskDisplayStyle(task) {
@@ -275,5 +276,6 @@ export default connect(
     addTask,
     addDocument,
     getProfiles,
+    getDocuments,
   },
 )(Homework);

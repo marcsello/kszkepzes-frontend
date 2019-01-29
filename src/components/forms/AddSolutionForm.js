@@ -20,11 +20,6 @@ class AddSolutionForm extends Component {
     const accepted = false;
     const sentences = this.props.taskdesc.split('\n');
     const note = '';
-    let solution = 1;
-    if ((this.props.homeworks.solutions[this.props.homeworks.solutions.length - 1])
-    !== undefined) {
-      solution = (this.props.homeworks.solutions[this.props.homeworks.solutions.length - 1]).id;
-    }
     return (
       <Modal
         open={this.state.showModal}
@@ -81,11 +76,8 @@ class AddSolutionForm extends Component {
             color='green'
             onClick={() => {
               this.props.addSolution({
-                 task, accepted, corrected, note,
+                 task, accepted, corrected, note, name, description, file,
                });
-              this.props.addDocument({
- name, description, file, solution,
-});
               this.setState({ showModal: false });
               }}
           >

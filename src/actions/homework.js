@@ -8,7 +8,10 @@ import { GET_TASKS,
   WRITE_SOLUTION,
   WRITE_SOLUTION_FILE,
   GET_PROFILES,
-  ADD_DOCUMENT } from './types';
+  ADD_DOCUMENT,
+  GET_DOCUMENTS,
+  CORRECT_SOLUTION,
+  CHECK } from './types';
 
 export const getTasks = () => (
   async (dispatch) => {
@@ -61,29 +64,6 @@ export const addTask = ({ title, text, deadline }) => (
   }
 );
 
-export const addSolution = ({
-  task, accepted, corrected, note,
-}) => (
-  async (dispatch) => {
-    try {
-      const response = await axios.post('/api/v1/homework/solutions/', {
-        task,
-        accepted,
-        corrected,
-        note,
-      });
-      if (response.data.id) {
-        dispatch({
-          type: ADD_SOLUTION,
-          payload: response.data,
-        });
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }
-);
-
 export const addDocument = ({
   name, description, file, solution,
 }) => (
@@ -106,6 +86,66 @@ export const addDocument = ({
           payload: response.data,
         });
       }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
+export const addSolution = ({
+  task, accepted, corrected, note, name, description, file,
+}) => (
+  async (dispatch) => {
+    try {
+      const response = await axios.post('/api/v1/homework/solutions/', {
+        task,
+        accepted,
+        corrected,
+        note,
+      });
+      if (response.data.id) {
+        console.log(response.data.id)
+        dispatch({
+          type: ADD_SOLUTION,
+          payload: response.data,
+        });
+      }
+
+      const solution = response.data.id;
+      console.log(solution);
+
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('description', description);
+      formData.append('file', file);
+      formData.append('solution', solution);
+      const config = {
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
+      };
+      const responsedoc = await axios.post('/api/v1/documents/', formData, config);
+      if (responsedoc.data.id) {
+        dispatch({
+          type: ADD_DOCUMENT,
+          payload: responsedoc.data,
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
+export const getDocuments = (id, solution) => (
+  async (dispatch) => {
+    try {
+      const response =
+      await axios.get('/api/v1/documents', { params: { profileID: id, solutionID: solution } });
+      dispatch({
+        type: GET_DOCUMENTS,
+        payload: response.data,
+      });
     } catch (e) {
       console.log(e);
     }
@@ -153,5 +193,35 @@ export const getProfiles = () => (
     } catch (e) {
       console.log(e);
     }
+  }
+);
+
+export const correctSolution = (id, corrected, accepted, note) => (
+  async (dispatch) => {
+    try {
+      const response = await axios.patch(`/api/v1/homework/solutions/${id}/`, {
+        corrected,
+        accepted,
+        note,
+      });
+      if (response.data.id) {
+        alert('Sikeres mentés!');
+        dispatch({
+          type: CORRECT_SOLUTION,
+          payload: response.data,
+
+        });
+      } else {
+        alert('Mentés nem sikerült!');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
+export const check = () => (
+  (dispatch) => {
+    dispatch({ type: CHECK });
   }
 );
