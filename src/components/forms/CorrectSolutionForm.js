@@ -13,7 +13,7 @@ class CorrectSolutionForm extends Component {
 
   render() {
     const {
-      studentName, studentFullName, studentId, taskTitle, taskSolutions,
+      studentFullName, studentId, taskTitle, taskSolutions,
     } = this.props;
     const taskSolutionsProfile =
     taskSolutions.filter(solution => solution.created_by === studentId);
@@ -42,16 +42,19 @@ class CorrectSolutionForm extends Component {
             style={{ marginRight: '1.5em', marginTop: '1.5em' }}
             onClick={() => { this.setState({ showModal: true }); }}
           >
-            {studentName}
+            {studentFullName}
           </Button>
         }
       >
         <Modal.Header>
-          A(z) {taskTitle} nevű feladat {studentName} által beadott megoldásának kijavítása:
+          A(z) {taskTitle} nevű feladat {studentFullName} által beadott megoldásának kijavítása:
         </Modal.Header>
         <Modal.Content>
           <Header as='h5'>A megoldás leírása:</Header>
-          {fileLink === null ? 'Nincs leírás.' : relevantDocument.description.split('\n')}
+          {(relevantDocument === undefined || relevantDocument === null)
+            && fileLink != null
+            ? 'Nincs leírás.'
+            : relevantDocument.description.split('\n')}
           <Header as='h5'>A beadott dokumentum:</Header>
           {fileLink === null ?
             <p>Nincs fájl.</p> :

@@ -57,7 +57,7 @@ class SolutionDetailsForm extends Component {
           {noSubmitStudents.length === 0 ?
               emptyMessage(emptyStudentText) :
               noSubmitStudents.map(student => (
-                <Button color='blue' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{student.nick}</Button>
+                <Button color='blue' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{student.full_name}</Button>
               ))
           }
           <Header as='h3'>Javításra vár (A névre kattintva kijavítható a megoldás):</Header>
@@ -77,14 +77,14 @@ class SolutionDetailsForm extends Component {
           {noAcceptStudents.length === 0 ?
             emptyMessage(emptyStudentText) :
             noAcceptStudents.map(student => (
-              <Button color='red' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{student.nick}</Button>
+              <Button color='red' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{student.full_name}</Button>
             ))
         }
           <Header as='h3'>Elfogadva:</Header>
           {acceptedStudents.length === 0 ?
             emptyMessage(emptyStudentText) :
             acceptedStudents.map(student => (
-              <Button color='green' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{student.nick}</Button>
+              <Button color='green' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{student.full_name}</Button>
             ))
         }
         </Modal.Content>
