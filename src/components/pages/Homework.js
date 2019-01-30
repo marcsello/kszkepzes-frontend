@@ -115,7 +115,12 @@ class Homework extends Component {
           }
           >
             <Table.Cell>
-              <AddSolutionForm taskid={task.id} tasktitle={task.title} taskdesc={task.text} />
+              <AddSolutionForm
+                taskid={task.id}
+                tasktitle={task.title}
+                taskdesc={task.text}
+                multiple={this.getTaskDisplayStyle(task) !== 'can_submit'}
+              />
             </Table.Cell>
             <Table.Cell>
               {moment(task.deadline).format('YYYY. MM. DD. HH:mm')}

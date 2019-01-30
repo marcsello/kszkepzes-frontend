@@ -3,6 +3,7 @@ import { Modal, Button, Form, Input, TextArea, Icon, Header } from 'semantic-ui-
 import { connect } from 'react-redux';
 import { addSolution, writeSolution, writeSolutionFile, addDocument, clearWrite } from '../../actions/homework';
 import './Forms.css';
+import ConfirmModal from '../forms/ConfirmModal';
 
 class AddSolutionForm extends Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class AddSolutionForm extends Component {
         }
       >
         <Modal.Header>
-          Új megoldás beadása a(z) {this.props.tasktitle} nevű feladathoz:
+          {this.props.multiple ? 'Másik' : 'Új'} megoldás beadása a(z) {this.props.tasktitle} nevű feladathoz:
         </Modal.Header>
         <Modal.Content>
           <Modal.Description style={{ marginBottom: '2em' }}>
@@ -72,18 +73,40 @@ class AddSolutionForm extends Component {
           >
             <Icon name='remove' /> Mégse
           </Button>
-          <Button
-            inverted
-            color='green'
-            onClick={() => {
-              this.props.addSolution({
-                 task, accepted, corrected, note, name, description, file,
-               });
-              this.setState({ showModal: false });
-              }}
-          >
-            <Icon name='checkmark' /> Beadás
-          </Button>
+          {this.props.multiple
+            ?
+              <ConfirmModal
+                button={
+                  <Button disabled={(name === '' || description === '')} inverted color='green'>
+                    <Icon name='checkmark' /> Beadás
+                  </Button>
+                    }
+                text='beadod az új megoldást, ami felülírja az előzőt'
+                onAccept={() => {
+                  this.props.addSolution({
+                    task, accepted, corrected, note, name, description, file,
+                    });
+                  this.setState({ showModal: false });
+                  }
+                }
+              />
+            :
+              <Button
+                inverted
+                color='green'
+                disabled={(name === '' || description === '')}
+                onClick={() => {
+                  console.log()
+                this.props.addSolution({
+                  task, accepted, corrected, note, name, description, file,
+                  });
+                this.setState({ showModal: false });
+                }
+              }
+              >
+                <Icon name='checkmark' /> Beadás
+              </Button>
+          }
         </Modal.Actions>
       </Modal>
     );
