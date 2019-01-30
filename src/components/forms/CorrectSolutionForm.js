@@ -23,9 +23,13 @@ class CorrectSolutionForm extends Component {
       document.uploaded_by_name === studentFullName);
     const relevantDocument = relevantDocuments[relevantDocuments.length - 1];
     let fileLink;
-    if (relevantDocument !== undefined || relevantDocument !== null) {
+    if (relevantDocument !== undefined && relevantDocument !== null &&
+    relevantDocument.file !== undefined && relevantDocument.file !== null) {
       fileLink = `/media${relevantDocument.file.split('media')[1]}`;
+    } else {
+      fileLink = null;
     }
+
 
     const { note } = this.props.correction;
     return (
@@ -47,9 +51,9 @@ class CorrectSolutionForm extends Component {
         </Modal.Header>
         <Modal.Content>
           <Header as='h5'>A megoldás leírása:</Header>
-          {relevantDocument === undefined ? 'Nincs leírás.' : relevantDocument.description.split('\n')}
+          {fileLink === null ? 'Nincs leírás.' : relevantDocument.description.split('\n')}
           <Header as='h5'>A beadott dokumentum:</Header>
-          {relevantDocument === undefined ?
+          {fileLink === null ?
             <p>Nincs fájl.</p> :
             <a href={fileLink}>Fájl letöltése</a>}
           <Header as='h5'>Elfogadás/Elutasítás:</Header>

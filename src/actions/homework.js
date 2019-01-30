@@ -151,7 +151,6 @@ export const addSolution = ({
         note,
       });
       if (response.data.id) {
-        console.log(response.data.id);
         dispatch({
           type: ADD_SOLUTION,
           payload: response.data,
@@ -159,7 +158,6 @@ export const addSolution = ({
       }
 
       const solution = response.data.id;
-      console.log(solution);
 
       const formData = new FormData();
       formData.append('name', name);
