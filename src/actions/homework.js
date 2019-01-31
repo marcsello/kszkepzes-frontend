@@ -250,14 +250,11 @@ export const correctSolution = (id, corrected, accepted, note) => (
         note,
       });
       if (response.data.id) {
-        alert('Sikeres mentés!');
         dispatch({
           type: CORRECT_SOLUTION,
           payload: response.data,
 
         });
-      } else {
-        alert('Mentés nem sikerült!');
       }
     } catch (e) {
       console.log(e);
