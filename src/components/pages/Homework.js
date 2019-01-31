@@ -120,6 +120,7 @@ class Homework extends Component {
                 tasktitle={task.title}
                 taskdesc={task.text}
                 multiple={this.getTaskDisplayStyle(task) !== 'can_submit'}
+                disabled={moment().isAfter(task.deadline)}
               />
             </Table.Cell>
             <Table.Cell>
