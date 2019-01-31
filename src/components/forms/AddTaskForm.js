@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Modal, Button, Form, Input, TextArea, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { DateTimeInput } from 'semantic-ui-calendar-react';
+import moment from 'moment';
 import { addTask, writeTask, writeTaskDeadline, clearWrite } from '../../actions/homework';
 
 class AddTaskForm extends Component {
@@ -49,7 +50,7 @@ class AddTaskForm extends Component {
             />
             <Form.Field
               control={DateTimeInput}
-              label='Beadási határidő:'
+              label='Beadási határidő (a jelenlegi időnél későbbi időpont):'
               name='deadline'
               placeholder='Beadási határidő'
               iconPosition='left'
@@ -75,6 +76,7 @@ class AddTaskForm extends Component {
           <Button
             inverted
             color='green'
+            disabled={(title === '' || text === '' || deadline === '' || moment().isAfter(deadline))}
             onClick={() => {
               this.props.addTask({ title, text, deadline });
               this.setState({ showModal: false });
