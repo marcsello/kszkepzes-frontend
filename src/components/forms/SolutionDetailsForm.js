@@ -26,14 +26,16 @@ class SolutionDetailsForm extends Component {
       const profileSolutions = taskSolutions.filter(solution =>
         solution.created_by === this.props.homeworks.profiles[i].id);
 
-      if (profileSolutions.length === 0) {
-        noSubmitStudents.push(this.props.homeworks.profiles[i]);
-      } else if (taskSolutions[taskSolutions.length - 1].corrected === false) {
-        waitForCorrectionStudents.push(this.props.homeworks.profiles[i]);
-      } else if (taskSolutions[taskSolutions.length - 1].accepted === false) {
-        noAcceptStudents.push(this.props.homeworks.profiles[i]);
-      } else {
-        acceptedStudents.push(this.props.homeworks.profiles[i]);
+      if (this.props.homeworks.profiles[i].role === 'Student') {
+        if (profileSolutions.length === 0) {
+          noSubmitStudents.push(this.props.homeworks.profiles[i]);
+        } else if (taskSolutions[taskSolutions.length - 1].corrected === false) {
+          waitForCorrectionStudents.push(this.props.homeworks.profiles[i]);
+        } else if (taskSolutions[taskSolutions.length - 1].accepted === false) {
+          noAcceptStudents.push(this.props.homeworks.profiles[i]);
+        } else {
+          acceptedStudents.push(this.props.homeworks.profiles[i]);
+        }
       }
     }
 
