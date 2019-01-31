@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Button, Icon, Checkbox, Form, TextArea, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { correctSolution, writeSolution, check } from '../../actions/homework';
+import { correctSolution, writeSolution, check, clearWrite } from '../../actions/homework';
 
 class CorrectSolutionForm extends Component {
   constructor(props) {
@@ -86,6 +86,7 @@ class CorrectSolutionForm extends Component {
             color='red'
             onClick={() => {
               this.setState({ showModal: false });
+              this.props.clearWrite();
             }}
           >
             <Icon name='remove' /> Mégse
@@ -101,6 +102,7 @@ class CorrectSolutionForm extends Component {
                 this.props.correction.note,
               );
               this.setState({ showModal: false });
+              this.props.clearWrite();
             }}
           >
             <Icon name='checkmark' /> Beadás
@@ -117,4 +119,5 @@ export default connect(mapStateToProps, {
   correctSolution,
   writeSolution,
   check,
+  clearWrite,
 })(CorrectSolutionForm);

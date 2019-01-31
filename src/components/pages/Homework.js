@@ -54,11 +54,12 @@ const displayTypes = {
   },
 };
 
-export const emptyMessage = (header, text, marginBottom) => (
+export const emptyMessage = (header, text, marginBottom, warning) => (
   <Message
     style={{ marginBottom }}
-    icon='info'
+    icon={warning ? 'warning' : 'info'}
     info
+    warning={warning}
     header={header}
     content={text}
   />
@@ -275,7 +276,7 @@ class Homework extends Component {
               }}
           />
           {empty
-            ? emptyMessage(emptyHeaderText, emptyText, marginBottom)
+            ? emptyMessage(emptyHeaderText, emptyText, marginBottom, false)
             : this.renderHomeworksTable(active, staff)}
         </Container>
       </Segment>

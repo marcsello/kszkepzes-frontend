@@ -77,6 +77,7 @@ class AddSolutionForm extends Component {
             color='red'
             onClick={() => {
               this.setState({ showModal: false });
+              this.props.clearWrite();
             }}
           >
             <Icon name='remove' /> Mégse
@@ -95,6 +96,7 @@ class AddSolutionForm extends Component {
                     task, accepted, corrected, note, name, description, file,
                     });
                   this.setState({ showModal: false });
+                  this.props.clearWrite();
                   }
                 }
               />
@@ -104,11 +106,11 @@ class AddSolutionForm extends Component {
                 color='green'
                 disabled={(name === '' || description === '')}
                 onClick={() => {
-                  console.log()
                 this.props.addSolution({
                   task, accepted, corrected, note, name, description, file,
                   });
                 this.setState({ showModal: false });
+                this.props.clearWrite();
                 }
               }
               >
