@@ -20,16 +20,16 @@ export const getUserData = () => (
       let permission;
       switch (role) {
         case 'Applicant':
-          permission=1;
+          permission = 1;
           break;
         case 'Student':
-          permission=2;
+          permission = 2;
           break;
         case 'Staff':
-          permission=3;
+          permission = 3;
           break;
         default:
-          permission=0;
+          permission = 0;
           break;
       }
 

@@ -51,10 +51,11 @@ class CorrectSolutionForm extends Component {
         </Modal.Header>
         <Modal.Content>
           <Header as='h5'>A megoldás leírása:</Header>
-          {(relevantDocument === undefined || relevantDocument === null)
-            && fileLink != null
-            ? 'Nincs leírás.'
-            : relevantDocument.description.split('\n')}
+          { (relevantDocument !== undefined && relevantDocument !== null &&
+          relevantDocument.description !== undefined && relevantDocument.description !== null
+          && relevantDocument.description !== '')
+            ? relevantDocument.description.split('\n')
+            : <p>Nincs leírás.</p>}
           <Header as='h5'>A beadott dokumentum:</Header>
           {fileLink === null ?
             <p>Nincs fájl.</p> :
