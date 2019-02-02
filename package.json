@@ -16,9 +16,9 @@
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
+    "semantic-ui-calendar-react": "^0.12.2",
     "semantic-ui-css": "^2.4.0",
     "semantic-ui-react": "^0.84.0",
-    "semantic-ui-calendar-react": "^0.12.2",
     "slick-carousel": "^1.8.1"
   },
   "scripts": {
