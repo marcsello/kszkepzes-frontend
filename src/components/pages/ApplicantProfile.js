@@ -1,16 +1,36 @@
 import React, { Component } from 'react';
-import { Container, Header, Item, Button, Label } from 'semantic-ui-react';
+import { Container, Header, Item, Button, Label, List } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { getSelectedProfile, setStatus } from '../../actions/statistics';
 import ConfirmModal from '../forms/ConfirmModal';
+
+const options = [
+  { key: 'DT', text: 'DevTeam' },
+  { key: 'NET', text: 'NETeam' },
+  { key: 'ST', text: 'SecurITeam' },
+  { key: 'SYS', text: 'SysAdmin' },
+  { key: 'HAT', text: 'Hallgatói Tudásbázis' },
+];
 
 class ApplicantProfile extends Component {
   componentWillMount() {
     this.props.getSelectedProfile(this.props.match.params.id);
   }
 
+  renderGroups() {
+    const { groups } = this.props.selectedProfile;
+    const groupNames = options.map(item => (groups.includes(item.key) ? item.text : null));
+    return groupNames.map(item => (
+      <List.Item>
+        <List.Content>
+          <List.Header>{item}</List.Header>
+        </List.Content>
+      </List.Item>
+    ));
+  }
+
   render() {
-    const { id, signed, role, full_name, nick, motivation_about, motivation_exercise, motivation_profession }
+    const { id, signed, groups, role, full_name, nick, motivation_about, motivation_exercise, motivation_profession }
     = this.props.selectedProfile;
     return (
       <Container style={{ padding: '60px' }}>
@@ -28,6 +48,14 @@ class ApplicantProfile extends Component {
                 <p>{motivation_profession}</p>
                 <Header as='h3'>Feladatok megoldása:</Header>
                 <p>{motivation_exercise}</p>
+                <Header as='h3'>Érdeklődés:</Header>
+                { groups ?
+                  <List horizontal>
+                    {this.renderGroups()}
+                  </List>
+                  :
+                  null
+                }
               </Container>
               <Container textAlign='center' style={{ padding: '20px' }}>
                 <Header as='h3'>Státusz:</Header>
