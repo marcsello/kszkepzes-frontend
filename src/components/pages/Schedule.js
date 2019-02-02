@@ -42,6 +42,7 @@ class Schedule extends Component {
           </h3>
          </Accordion.Title>
          <Accordion.Content active={activeIndex === event.id}>
+           <h4>Leírás:</h4>
            <p>
              {event.description}
            </p>
