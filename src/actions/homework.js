@@ -2,7 +2,10 @@ import axios from './session';
 import { GET_TASKS,
   GET_SOLUTIONS,
   ADD_TASK,
+  DELETE_TASK,
   WRITE_TASK,
+  EDIT_TASK,
+  SELECT_TASK,
   CLEAR_WRITE,
   ADD_SOLUTION,
   WRITE_SOLUTION,
@@ -50,17 +53,61 @@ export const addTask = ({ title, text, deadline }) => (
         deadline,
       });
       if (response.data.id) {
-        alert('Sikeres mentés!');
         dispatch({
           type: ADD_TASK,
           payload: response.data,
         });
-      } else {
-        alert('Mentés nem sikerült!');
       }
     } catch (e) {
       console.log(e);
     }
+  }
+);
+
+export const editTask = ({
+  id,
+  title,
+  text,
+  deadline,
+}) => (
+  async (dispatch) => {
+    try {
+      const response = await axios.patch(`/api/v1/homework/tasks/${id}/`, {
+        title,
+        text,
+        deadline,
+      });
+      if (response.data.id) {
+        dispatch({
+          type: EDIT_TASK,
+          payload: response.data,
+
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
+export const deleteTask = task => (
+  async (dispatch) => {
+    try {
+      const response = await axios.delete(`/api/v1/homework/tasks/${task.id}/`);
+      if (!response.data.id) {
+        dispatch({
+          type: DELETE_TASK,
+          payload: task,
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  });
+
+export const setSelectedTask = task => (
+  (dispatch) => {
+    dispatch({ type: SELECT_TASK, payload: task });
   }
 );
 
@@ -104,7 +151,6 @@ export const addSolution = ({
         note,
       });
       if (response.data.id) {
-        console.log(response.data.id)
         dispatch({
           type: ADD_SOLUTION,
           payload: response.data,
@@ -112,7 +158,6 @@ export const addSolution = ({
       }
 
       const solution = response.data.id;
-      console.log(solution);
 
       const formData = new FormData();
       formData.append('name', name);
@@ -205,14 +250,11 @@ export const correctSolution = (id, corrected, accepted, note) => (
         note,
       });
       if (response.data.id) {
-        alert('Sikeres mentés!');
         dispatch({
           type: CORRECT_SOLUTION,
           payload: response.data,
 
         });
-      } else {
-        alert('Mentés nem sikerült!');
       }
     } catch (e) {
       console.log(e);

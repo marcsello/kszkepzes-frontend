@@ -10,12 +10,14 @@ import EventReducer from './EventReducer';
 import NoteReducer from './NoteReducer';
 import TraineeReducer from './TraineeReducer';
 import CorrectSolutionReducer from './CorrectSolutionReducer';
+import EditTaskReducer from './EditTaskReducer';
 
 const rootReducer = combineReducers({
   user: UserReducer,
   news: NewsReducer,
   newNews: AddNewsReducer,
   selectedNews: EditNewsReducer,
+  selectedTask: EditTaskReducer,
   events: EventReducer,
   trainees: TraineeReducer,
   notes: NoteReducer,

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Button, Icon, Checkbox, Form, TextArea, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { correctSolution, writeSolution, check } from '../../actions/homework';
+import { correctSolution, writeSolution, check, clearWrite } from '../../actions/homework';
 
 class CorrectSolutionForm extends Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class CorrectSolutionForm extends Component {
 
   render() {
     const {
-      studentName, studentFullName, studentId, taskTitle, taskSolutions,
+      studentFullName, studentId, taskTitle, taskSolutions,
     } = this.props;
     const taskSolutionsProfile =
     taskSolutions.filter(solution => solution.created_by === studentId);
@@ -23,9 +23,13 @@ class CorrectSolutionForm extends Component {
       document.uploaded_by_name === studentFullName);
     const relevantDocument = relevantDocuments[relevantDocuments.length - 1];
     let fileLink;
-    if (relevantDocument !== undefined || relevantDocument !== null) {
+    if (relevantDocument !== undefined && relevantDocument !== null &&
+    relevantDocument.file !== undefined && relevantDocument.file !== null) {
       fileLink = `/media${relevantDocument.file.split('media')[1]}`;
+    } else {
+      fileLink = null;
     }
+
 
     const { note } = this.props.correction;
     return (
@@ -38,18 +42,22 @@ class CorrectSolutionForm extends Component {
             style={{ marginRight: '1.5em', marginTop: '1.5em' }}
             onClick={() => { this.setState({ showModal: true }); }}
           >
-            {studentName}
+            {studentFullName}
           </Button>
         }
       >
         <Modal.Header>
-          A(z) {taskTitle} nevű feladat {studentName} által beadott megoldásának kijavítása:
+          A(z) {taskTitle} nevű feladat {studentFullName} által beadott megoldásának kijavítása:
         </Modal.Header>
         <Modal.Content>
           <Header as='h5'>A megoldás leírása:</Header>
-          {relevantDocument === undefined ? 'Nincs leírás.' : relevantDocument.description.split('\n')}
+          { (relevantDocument !== undefined && relevantDocument !== null &&
+          relevantDocument.description !== undefined && relevantDocument.description !== null
+          && relevantDocument.description !== '')
+            ? relevantDocument.description.split('\n')
+            : <p>Nincs leírás.</p>}
           <Header as='h5'>A beadott dokumentum:</Header>
-          {relevantDocument === undefined ?
+          {fileLink === null ?
             <p>Nincs fájl.</p> :
             <a href={fileLink}>Fájl letöltése</a>}
           <Header as='h5'>Elfogadás/Elutasítás:</Header>
@@ -78,6 +86,7 @@ class CorrectSolutionForm extends Component {
             color='red'
             onClick={() => {
               this.setState({ showModal: false });
+              this.props.clearWrite();
             }}
           >
             <Icon name='remove' /> Mégse
@@ -93,6 +102,7 @@ class CorrectSolutionForm extends Component {
                 this.props.correction.note,
               );
               this.setState({ showModal: false });
+              this.props.clearWrite();
             }}
           >
             <Icon name='checkmark' /> Beadás
@@ -109,4 +119,5 @@ export default connect(mapStateToProps, {
   correctSolution,
   writeSolution,
   check,
+  clearWrite,
 })(CorrectSolutionForm);

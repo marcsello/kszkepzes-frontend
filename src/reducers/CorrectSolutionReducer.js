@@ -1,4 +1,4 @@
-import { WRITE_SOLUTION, CHECK } from '../actions/types';
+import { WRITE_SOLUTION, CHECK, CLEAR_WRITE } from '../actions/types';
 
 const INITIAL_STATE = {
   accepted: false,
@@ -11,6 +11,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, [action.target]: action.payload };
     case CHECK:
       return { ...state, accepted: !state.accepted };
+    case CLEAR_WRITE:
+      return INITIAL_STATE;
     default:
       return state;
   }

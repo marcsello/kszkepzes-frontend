@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Modal, Button, Header, Icon } from 'semantic-ui-react';
+import { Modal, Button, Header, Icon, Divider } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import CorrectSolutionForm from './CorrectSolutionForm';
 import { emptyMessage } from '../pages/Homework';
+import './Forms.css';
 
 class SolutionDetailsForm extends Component {
   constructor(props) {
@@ -25,14 +26,16 @@ class SolutionDetailsForm extends Component {
       const profileSolutions = taskSolutions.filter(solution =>
         solution.created_by === this.props.homeworks.profiles[i].id);
 
-      if (profileSolutions.length === 0) {
-        noSubmitStudents.push(this.props.homeworks.profiles[i]);
-      } else if (taskSolutions[taskSolutions.length - 1].corrected === false) {
-        waitForCorrectionStudents.push(this.props.homeworks.profiles[i]);
-      } else if (taskSolutions[taskSolutions.length - 1].accepted === false) {
-        noAcceptStudents.push(this.props.homeworks.profiles[i]);
-      } else {
-        acceptedStudents.push(this.props.homeworks.profiles[i]);
+      if (this.props.homeworks.profiles[i].role === 'Student') {
+        if (profileSolutions.length === 0) {
+          noSubmitStudents.push(this.props.homeworks.profiles[i]);
+        } else if (taskSolutions[taskSolutions.length - 1].corrected === false) {
+          waitForCorrectionStudents.push(this.props.homeworks.profiles[i]);
+        } else if (taskSolutions[taskSolutions.length - 1].accepted === false) {
+          noAcceptStudents.push(this.props.homeworks.profiles[i]);
+        } else {
+          acceptedStudents.push(this.props.homeworks.profiles[i]);
+        }
       }
     }
 
@@ -42,23 +45,27 @@ class SolutionDetailsForm extends Component {
       <Modal
         open={this.state.showModal}
         trigger={
-          <Button basic color='blue' onClick={() => { this.setState({ showModal: true }); }}>
+          <button id='task' onClick={() => { this.setState({ showModal: true }); }}>
             <Icon name='external' />
             {this.props.tasktitle}
-          </Button>
+          </button>
         }
       >
         <Modal.Header>
           A megoldások beadásának állapota a(z) {this.props.tasktitle} nevű feladatnál:
         </Modal.Header>
         <Modal.Content>
+          <Header as='h3'>A feladat leírása:</Header>
+          {this.props.taskdesc.split('\n').map(s => (<p>{s}</p>))}
+          <Divider />
           <Header as='h3'>Nem érkezett még megoldás:</Header>
           {noSubmitStudents.length === 0 ?
               emptyMessage(emptyStudentText) :
               noSubmitStudents.map(student => (
-                <Button color='blue' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{student.nick}</Button>
+                <Button color='blue' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{student.full_name}</Button>
               ))
           }
+          <Divider />
           <Header as='h3'>Javításra vár (A névre kattintva kijavítható a megoldás):</Header>
           {waitForCorrectionStudents.length === 0 ?
             emptyMessage(emptyStudentText) :
@@ -72,18 +79,20 @@ class SolutionDetailsForm extends Component {
               />
             ))
           }
+          <Divider />
           <Header as='h3'>A megoldás nem elfogadható:</Header>
           {noAcceptStudents.length === 0 ?
             emptyMessage(emptyStudentText) :
             noAcceptStudents.map(student => (
-              <Button color='red' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{student.nick}</Button>
+              <Button color='red' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{student.full_name}</Button>
             ))
         }
+          <Divider />
           <Header as='h3'>Elfogadva:</Header>
           {acceptedStudents.length === 0 ?
             emptyMessage(emptyStudentText) :
             acceptedStudents.map(student => (
-              <Button color='green' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{student.nick}</Button>
+              <Button color='green' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{student.full_name}</Button>
             ))
         }
         </Modal.Content>

@@ -10,10 +10,21 @@ import {
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { getTasks, getSolutions, addTask, addDocument, getProfiles, getDocuments } from '../../actions/homework';
+import {
+  getTasks,
+  getSolutions,
+  addTask,
+  setSelectedTask,
+  deleteTask,
+  addDocument,
+  getProfiles,
+  getDocuments,
+} from '../../actions/homework';
 import AddTaskForm from '../forms/AddTaskForm';
 import AddSolutionForm from '../forms/AddSolutionForm';
 import SolutionDetailsForm from '../forms/SolutionDetailsForm';
+import EditTaskForm from '../forms/EditTaskForm';
+import ConfirmModal from '../forms/ConfirmModal';
 
 const displayTypes = {
   can_submit: {
@@ -43,11 +54,12 @@ const displayTypes = {
   },
 };
 
-export const emptyMessage = (header, text, marginBottom) => (
+export const emptyMessage = (header, text, marginBottom, warning) => (
   <Message
     style={{ marginBottom }}
-    icon='info'
+    icon={warning ? 'warning' : 'info'}
     info
+    warning={warning}
     header={header}
     content={text}
   />
@@ -104,7 +116,13 @@ class Homework extends Component {
           }
           >
             <Table.Cell>
-              <AddSolutionForm taskid={task.id} tasktitle={task.title} taskdesc={task.text} />
+              <AddSolutionForm
+                taskid={task.id}
+                tasktitle={task.title}
+                taskdesc={task.text}
+                multiple={this.getTaskDisplayStyle(task) !== 'can_submit'}
+                disabled={moment().isAfter(task.deadline)}
+              />
             </Table.Cell>
             <Table.Cell>
               {moment(task.deadline).format('YYYY. MM. DD. HH:mm')}
@@ -116,6 +134,16 @@ class Homework extends Component {
           </Table.Row>
         ));
     }
+
+    const deleteButton = (
+      <Button
+        inverted
+        style={{ marginRight: '2em' }}
+        color='red'
+      >
+        <Icon name='x' /> Törlés
+      </Button>
+    );
 
     return this.props.homeworks.tasks
       .filter(task => moment().isBefore(task.deadline) === active)
@@ -139,8 +167,12 @@ class Homework extends Component {
             {moment(task.deadline).format('YYYY. MM. DD. HH:mm')}
           </Table.Cell>
           <Table.Cell>
-            <Icon name={displayTypes[this.getTaskDisplayStyle(task)].icon} />{' '}
-            {displayTypes[this.getTaskDisplayStyle(task)].text}
+            <EditTaskForm onClick={() => this.props.setSelectedTask(task)} />
+            <ConfirmModal
+              button={deleteButton}
+              text='törlöd a kiválaszott feladatot a már beadott megoldásokkal együtt'
+              onAccept={() => this.props.deleteTask(task)}
+            />
           </Table.Cell>
         </Table.Row>
       ));
@@ -155,21 +187,44 @@ class Homework extends Component {
       marginBottom = '3em';
     }
 
+    if (!staff) {
+      return (
+        <Table color={tableColor} fixed style={{ marginBottom }}>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>
+                <Icon circular name='home' />
+              Feladat megnevezése / beadása
+              </Table.HeaderCell>
+              <Table.HeaderCell>
+                <Icon circular name='calendar' />
+              Beadási határidő
+              </Table.HeaderCell>
+              <Table.HeaderCell>
+                <Icon circular name='tasks' />
+              Állapot
+              </Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>{this.renderTaskList(active, staff)}</Table.Body>
+        </Table>
+      );
+    }
     return (
       <Table color={tableColor} fixed style={{ marginBottom }}>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>
               <Icon circular name='home' />
-              Feladat megnevezése
+              Feladat megnevezése / Beadások állapota
             </Table.HeaderCell>
             <Table.HeaderCell>
               <Icon circular name='calendar' />
               Beadási határidő
             </Table.HeaderCell>
             <Table.HeaderCell>
-              <Icon circular name='tasks' />
-              Állapot
+              <Icon circular name='edit' />
+              Módosítás / Törlés
             </Table.HeaderCell>
           </Table.Row>
         </Table.Header>
@@ -186,7 +241,7 @@ class Homework extends Component {
     let headerText = 'Aktív feladatok';
 
     if (staff) {
-      headerText = 'Aktív feladatok kijavítása';
+      headerText = 'Aktív feladatok kijavítása, módosítása vagy törlése';
     }
 
     if (
@@ -198,7 +253,7 @@ class Homework extends Component {
 
     if (!active) {
       if (staff) {
-        headerText = 'Lejárt határidejű feladatok kijavítása';
+        headerText = 'Lejárt határidejű feladatok kijavítása, módosítása vagy törlése';
       } else {
         headerText = 'Lejárt határidejű feladatok';
       }
@@ -214,14 +269,14 @@ class Homework extends Component {
             dividing
             content={headerText}
             style={{
-                fontSize: '3em',
+                fontSize: '2em',
                 fontWeight: 'normal',
                 marginBottom: 0,
                 marginTop: '0.5em',
               }}
           />
           {empty
-            ? emptyMessage(emptyHeaderText, emptyText, marginBottom)
+            ? emptyMessage(emptyHeaderText, emptyText, marginBottom, false)
             : this.renderHomeworksTable(active, staff)}
         </Container>
       </Segment>
@@ -244,9 +299,9 @@ class Homework extends Component {
               <Header
                 as='h1'
                 dividing
-                content='Házi feladat hozzáadása, módosítása vagy törlése'
+                content='Új házi feladat létrehozása'
                 style={{
-                      fontSize: '3em',
+                      fontSize: '2em',
                       fontWeight: 'normal',
                       marginBottom: '0.5em',
                       marginTop: '0.5em',
@@ -266,14 +321,16 @@ class Homework extends Component {
   }
 }
 
-const mapStateToProps = ({ homeworks, user }) => ({ homeworks, user });
+const mapStateToProps = ({ selectedTask, homeworks, user }) => ({ selectedTask, homeworks, user });
 
 export default connect(
   mapStateToProps,
   {
     getTasks,
+    setSelectedTask,
     getSolutions,
     addTask,
+    deleteTask,
     addDocument,
     getProfiles,
     getDocuments,

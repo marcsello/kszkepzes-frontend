@@ -3,9 +3,9 @@ import { Modal, Button, Form, Input, TextArea, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { DateTimeInput } from 'semantic-ui-calendar-react';
 import moment from 'moment';
-import { addTask, writeTask, writeTaskDeadline, clearWrite } from '../../actions/homework';
+import { writeTask, writeTaskDeadline, editTask, clearWrite } from '../../actions/homework';
 
-class AddTaskForm extends Component {
+class EditTaskForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,22 +14,28 @@ class AddTaskForm extends Component {
   }
 
   render() {
-    const { title, text, deadline } = this.props.newTask;
+    const {
+      id,
+      title,
+      text,
+      deadline,
+    } = this.props.selectedTask;
     return (
       <Modal
         open={this.state.showModal}
+        onOpen={this.props.onClick}
         trigger={
           <Button
             inverted
             style={{ marginRight: '2em' }}
-            color='blue'
+            color='orange'
             onClick={() => { this.setState({ showModal: true }); }}
           >
-            <Icon name='plus' /> Új feladat hozzáadása
+            <Icon name='edit' /> Módosítás
           </Button>
         }
       >
-        <Modal.Header>Új feladat:</Modal.Header>
+        <Modal.Header>A {title} nevű feladat módosítása:</Modal.Header>
         <Modal.Content>
           <Form>
             <Form.Field
@@ -78,12 +84,17 @@ class AddTaskForm extends Component {
             color='green'
             disabled={(title === '' || text === '' || deadline === '' || moment().isAfter(deadline))}
             onClick={() => {
-              this.props.addTask({ title, text, deadline });
+              this.props.editTask({
+                id,
+                title,
+                text,
+                deadline,
+              });
               this.setState({ showModal: false });
               this.props.clearWrite();
               }}
           >
-            <Icon name='checkmark' /> Hozzáadás
+            <Icon name='checkmark' /> Módosítás
           </Button>
         </Modal.Actions>
       </Modal>
@@ -91,11 +102,11 @@ class AddTaskForm extends Component {
   }
 }
 
-const mapStateToProps = ({ newTask, user }) => ({ newTask, user });
+const mapStateToProps = ({ selectedTask, user }) => ({ selectedTask, user });
 
 export default connect(mapStateToProps, {
-  addTask,
   writeTask,
   writeTaskDeadline,
+  editTask,
   clearWrite,
-})(AddTaskForm);
+})(EditTaskForm);

@@ -55,7 +55,7 @@ const menuItems = [
     prefix: '',
     permissionLevel: 2,
   },
-]
+];
 
 const FixedMenu = ({ user }) => (
   <Menu fixed='top' size='large' pointing>
@@ -64,7 +64,7 @@ const FixedMenu = ({ user }) => (
         (user.permission >= item.permissionLevel ||
           (item.permissionLevel === 0)
           ?
-          <Menu.Item key={i} as={Link} to={item.to}>{item.text}</Menu.Item>
+            <Menu.Item key={i} as={Link} to={item.to}>{item.text}</Menu.Item>
           :
           null))}
 
@@ -105,7 +105,6 @@ class Header extends Component {
   }
 
 
-
   render() {
     const { visible } = this.state;
 
@@ -124,8 +123,8 @@ class Header extends Component {
                 {menuItems.map((item, i) =>
                   (this.props.user.permission >= item.permissionLevel ||
                     (item.permissionLevel === 0) ?
-                    <Menu.Item key={i} as={Link} to={item.to}>{item.prefix}{item.text}</Menu.Item>
-                    :
+                      <Menu.Item key={i} as={Link} to={item.to}>{item.prefix}{item.text}</Menu.Item>
+                      :
                     null))}
 
                 <Menu.Item position='right'>
