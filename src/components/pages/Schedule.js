@@ -32,7 +32,7 @@ class Schedule extends Component {
         >
           <h3>
              <Grid>
-              <Grid.Column floated='left' width={5} textAlign='left'>
+              <Grid.Column floated='left' width={8} textAlign='left'>
                  <Icon name='angle right' color='blue' />{event.name}
               </Grid.Column>
               <Grid.Column floated='right' width={8} textAlign='right'>
@@ -42,6 +42,7 @@ class Schedule extends Component {
           </h3>
          </Accordion.Title>
          <Accordion.Content active={activeIndex === event.id}>
+           <h4>Leírás:</h4>
            <p>
              {event.description}
            </p>
@@ -56,7 +57,7 @@ class Schedule extends Component {
           padding: '60px'
         }}
       >
-        <h2>Képzés alkalmak:</h2>
+        <h2>Képzésalkalmak:</h2>
         <Accordion
           fluid
           styled

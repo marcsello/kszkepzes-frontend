@@ -20,7 +20,7 @@ class Profile extends Component {
 
   render() {
     const {
-      nick, groups, motivationAbout, motivationProfession, motivationExercise, signed, id,
+      role, nick, groups, motivationAbout, motivationProfession, motivationExercise, signed, id,
     } = this.props;
     return (
       <Container
@@ -123,14 +123,18 @@ class Profile extends Component {
             defaultValue={groups}
           />
           <br />
-          <Form.Checkbox
-            name='signed'
-            label='Szeretnék jelentkezni a KSZKépzésre'
-            onChange={(_, v) =>
-              this.props.textChange({ target: { name: v.name, value: v.checked } })
-            }
-            checked={signed}
-          />
+          { role === 'Applicant' ?
+            <Form.Checkbox
+              name='signed'
+              label='Szeretnék jelentkezni a KSZKépzésre'
+              onChange={(_, v) =>
+                this.props.textChange({ target: { name: v.name, value: v.checked } })
+              }
+              checked={signed}
+            />
+            :
+            null
+        }
           <Form.Button
             primary
             style={{ marginBottom: '10em' }}
@@ -148,9 +152,10 @@ class Profile extends Component {
 
 const mapStateToProps = ({
   user: {
-    nick, groups, motivationAbout, motivationProfession, motivationExercise, signed, id,
+    role, nick, groups, motivationAbout, motivationProfession, motivationExercise, signed, id,
   },
 }) => ({
+  role,
   nick,
   groups,
   motivationAbout,

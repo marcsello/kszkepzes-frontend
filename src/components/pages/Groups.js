@@ -6,22 +6,6 @@ export default class Groups extends Component {
   render() {
     return (
       <div>
-        <Segment inverted textAlign='center' vertical>
-          <Container>
-            <Header
-              as='h1'
-              content='Köreink'
-              inverted
-              style={{
-                fontSize: '3em',
-                fontWeight: 'normal',
-                marginBottom: 0,
-                marginTop: '0.5em',
-              }}
-            />
-          </Container>
-        </Segment>
-
         <Segment style={{ padding: '8em 0em' }} vertical>
           <Container text>
             <Header as='h3' style={{ fontSize: '2em' }}>DevTeam</Header>

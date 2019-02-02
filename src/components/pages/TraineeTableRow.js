@@ -75,7 +75,7 @@ class TraineeTableRow extends Component {
         <Table.Cell>
           <Grid>
             <Grid.Row>
-              <Grid.Column floated='left' width={8} textAlign='left'>
+              <Grid.Column floated='left' width={11} textAlign='left'>
 
                 {notes.length > 0 ?
                   <Comment>
@@ -92,7 +92,7 @@ class TraineeTableRow extends Component {
                   null
                  }
               </Grid.Column>
-              <Grid.Column floated='right' width={4} textAlign='right'>
+              <Grid.Column floated='right' width={5} textAlign='right'>
                 {notes.length > 0 ?
                   <CommentModal notes={notes} />
              :
