@@ -34,11 +34,12 @@ class EditEventForm extends Component {
         open={this.state.showModal}
         trigger={
           <Button
-            compact
+            inverted
+            color='orange'
             onClick={() => { this.props.onClick();
                              this.setState({ showModal: true }); }}
-            size='mini'
           >
+            <Icon name='edit'/>
             Szerkeszt
           </Button>
         }

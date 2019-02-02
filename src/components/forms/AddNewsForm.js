@@ -20,9 +20,12 @@ class AddNewsForm extends Component {
         open={this.state.showModal}
         trigger={
           <Button
+            inverted
+            color='green'
             size='big'
             onClick={() => { this.setState({ showModal: true }); }}
-          >Hír hozzáadása
+          >
+            <Icon name='plus' />Hír hozzáadása
           </Button>
         }
       >

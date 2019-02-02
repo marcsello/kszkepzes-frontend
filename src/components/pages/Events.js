@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import { Container, Table, Button } from 'semantic-ui-react';
+import { Container, Table, Button, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { getStaffEvents, deleteEvent, selectEventForEdit } from '../../actions/statistics';
 import AddEventForm from '../forms/AddEventForm';
@@ -24,21 +24,21 @@ class Events extends Component {
         </Table.Cell>
         <Table.Cell>{moment(event.date).format('LL')}</Table.Cell>
         <Table.Cell>{event.visitor_number}</Table.Cell>
-        <Table.Cell>
+        <Table.Cell textAlign='center'>
+          <EditEventForm onClick={() => this.props.selectEventForEdit(event)} />
           <ConfirmModal
             text={`törölni akarod a következő alkalmat:${event.name}`}
             button={
               <Button
-                compact
+                inverted
                 color='red'
-                size='mini'
               >
-              Törlés
+                <Icon name='x' />
+                Törlés
               </Button>
                }
             onAccept={() => this.props.deleteEvent(event)}
           />
-          <EditEventForm onClick={() => this.props.selectEventForEdit(event)} />
         </Table.Cell>
       </Table.Row>
     );
@@ -48,7 +48,7 @@ class Events extends Component {
   render() {
     return (
       <Container textAlign='center'>
-        <Table color='blue' celled selectable compact>
+        <Table color='blue' selectable compact>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Alkalom neve</Table.HeaderCell>

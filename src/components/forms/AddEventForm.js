@@ -31,9 +31,12 @@ class AddEventForm extends Component {
         open={this.state.showModal}
         trigger={
           <Button
+            inverted
+            color='green'
             size='big'
             onClick={() => { this.setState({ showModal: true }); }}
-          >Alkalom hozzáadása
+          >
+            <Icon name='plus' />Alkalom hozzáadása
           </Button>
         }
       >

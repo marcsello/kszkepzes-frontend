@@ -43,7 +43,7 @@ class Trainees extends Component {
 
   renderTableHeader() {
     return (this.props.events.map(event => (
-      <Table.HeaderCell>
+      <Table.HeaderCell textAlign='center'>
         {event.name}
       </Table.HeaderCell>)));
   }
@@ -51,7 +51,7 @@ class Trainees extends Component {
   render() {
     return (
       <Container textAlign='center'>
-        <Table color='blue' celled selectable compact>
+        <Table color='blue' selectable compact>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Képződők</Table.HeaderCell>
