@@ -108,7 +108,19 @@ class MobileContainer extends Component {
           <Container>
           <Menu inverted secondary>
             <Menu.Item onClick={visible ? this.handleHideClick : this.handleShowClick}><Icon name='sidebar'/></Menu.Item>
-          </Menu>
+            <Image size='mini' src={KSZKlogo} style={{ marginRight: '1.5em' }} />
+            <Menu.Item position='right'>
+                {
+                  this.props.user.id ?
+                    <Button.Group>
+                      <Button inverted as={Link} to='/profile'>Profilom</Button>
+                      <Button as='a' href='/api/v1/logout/' icon='sign out' />
+                    </Button.Group>
+                  :
+                    <Button as='a' href='/api/v1/login/authsch/' inverted>Bejelentkezés</Button>
+                }
+              </Menu.Item>
+        </Menu>
           </Container>
         </Segment>
         <Sidebar.Pushable>
@@ -124,7 +136,7 @@ class MobileContainer extends Component {
           {menuItems.map((item, i) =>
             (this.props.user.permission >= item.permissionLevel ||
               (item.permissionLevel === 0) ?
-                <Menu.Item key={i} as={Link} to={item.to} onClick={this.handleSidebarHide}>{item.prefix}{item.text}</Menu.Item>
+                <Menu.Item key={i} as={Link} to={item.to} onClick={this.handleSidebarHide}>{item.text}</Menu.Item>
                 :
               null))}
           </Sidebar>
