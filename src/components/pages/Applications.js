@@ -79,7 +79,7 @@ class Applications extends Component {
           padding: '80px'
         }}
       >
-        <Table color='blue' celled selectable compact>
+        <Table color='blue' selectable compact>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Jelentkezettek</Table.HeaderCell>

@@ -109,11 +109,11 @@ class EventDetail extends Component {
             ''
         }
         </Container>
-          <Table celled centered>
+          <Table centered>
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell>Név</Table.HeaderCell>
-                <Table.HeaderCell>Jelen volt</Table.HeaderCell>
+                <Table.HeaderCell textAlign='center'>Jelen volt</Table.HeaderCell>
                 <Table.HeaderCell>Megjegyzések</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
@@ -126,12 +126,16 @@ class EventDetail extends Component {
             </Table.Body>
           </Table>
           <Button
+            inverted
+            color='orange'
             onClick={() => this.setState({ edit: true })}
           >
           Szerkeszt
           </Button>
           { this.state.edit ?
             <Button
+              inverted
+              color='blue'
               onClick={() => {
                               this.setState({ edit: false });
                               this.props.submitVisitors(this.props.selectedEvent);
