@@ -70,7 +70,7 @@ class News extends Component {
       <div>
         <Segment style={{ padding: '3em 3em' }} vertical>
           {/*  { this.props.user.is_superuser ? <AddNewsForm /> : ''} */}
-          <Container text textAlign='center'>
+          <Container text textAlign='center' style={{ marginBottom: '3em' }}>
             {this.props.user.role === 'Staff' ?
               <AddNewsForm />
               :
