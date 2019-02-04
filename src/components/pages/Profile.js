@@ -25,7 +25,6 @@ class Profile extends Component {
     return (
       <Container
         style={{
-          marginBottom: '0.5em',
           marginTop: '0.5em',
         }}
       >
@@ -72,14 +71,29 @@ class Profile extends Component {
             placeholder=''
             label={
               <div>
-                <b>Alább találsz néhány elgondolkodtató kérdést, megoldandó feladatot. A kérdések és feladatok elkészítése opcionális, nem titkolt célunk ezzel a lelkesedés felmérése. A válaszokat a kérdések alatti szövegdobozba várjuk.</b>
+                <b>Alább találsz néhány elgondolkodtató kérdést, megoldandó feladatot.
+                  A kérdések és feladatok elkészítése opcionális,
+                  nem titkolt célunk ezzel a lelkesedés felmérése.
+                  A válaszokat a kérdések alatti szövegdobozba várjuk.
+                </b>
                 <ol>
                   <li>
-                  Szeretnéd kedvenc tantárgyad vik.wiki oldalát elérni, de szomorúan látod, hogy az oldal nem jön be. A Steam pedig hibátlanul megy a háttérben és az emailek is megérkeznek... Szobatársadnak pont megvan a vik.wiki szerverének IP-címe. Csodálkozva látod, hogy a böngésző címsorába írva eléred a kiszolgáló webszervert. Mi lehet a baj?
+                  Szeretnéd kedvenc tantárgyad vik.wiki oldalát elérni,
+                  de szomorúan látod, hogy az oldal nem jön be.
+                  A Steam pedig hibátlanul megy a háttérben és az emailek is megérkeznek...
+                  Szobatársadnak pont megvan a vik.wiki szerverének IP-címe.
+                  Csodálkozva látod, hogy a böngésző címsorába írva eléred a kiszolgáló webszervert.
+                  Mi lehet a baj?
                   </li>
                   <br />
                   <li>
-                  Két előadás közti szünetben úgy döntesz, hogy laptopoddal az index.hu tech cikkeit fogod görgetni. Ám az oldal nem válaszol, a hiba okát megpróbálod kideríteni. Ekkor veszed észre, hogy az alábbiakat sem éred el: sze.hu, 444.hu, corvinus.hu, startlap.hu. Ugyanakkor a Facebook, a Gmail, a YouTube, de még az egyetemi oldalak többsége is működik. Szerinted mi lehet a hiba oka?
+                  Két előadás közti szünetben úgy döntesz,
+                  hogy laptopoddal az index.hu tech cikkeit fogod görgetni.
+                  Ám az oldal nem válaszol, a hiba okát megpróbálod kideríteni.
+                  Ekkor veszed észre, hogy az alábbiakat sem éred el:
+                  sze.hu, 444.hu, corvinus.hu, startlap.hu.
+                  Ugyanakkor a Facebook, a Gmail, a YouTube, de még az egyetemi
+                  oldalak többsége is működik. Szerinted mi lehet a hiba oka?
                   </li>
                   <br />
                   <li>
@@ -87,7 +101,10 @@ class Profile extends Component {
                   </li>
                   <br />
                   <li>
-                  A <b>kszkepzes18.sch.bme.hu</b> címen elérhető gépen fut egy szolgáltatás az alapértelmezett <b>5432</b> porton (használd az előző feladatban kapott adatokat). Belépés után keresd meg a feladat megoldását!
+                  A <b>kszkepzes18.sch.bme.hu</b> címen elérhető gépen
+                  fut egy szolgáltatás az alapértelmezett <b>5432</b> porton
+                  (használd az előző feladatban kapott adatokat).
+                  Belépés után keresd meg a feladat megoldását!
                   </li>
                 </ol>
               </div>
@@ -120,6 +137,7 @@ class Profile extends Component {
         }
           <Form.Button
             primary
+            style={{ marginBottom: '10em' }}
             onClick={() => this.props.submitRegistration({
               nick, motivationAbout, motivationProfession, motivationExercise, signed, groups, id,
             })}
