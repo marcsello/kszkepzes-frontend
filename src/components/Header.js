@@ -7,6 +7,9 @@ import {
   Segment,
   Visibility,
   Image,
+  Responsive,
+  Sidebar,
+  Icon
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { getUserData } from '../actions';
@@ -35,7 +38,7 @@ const menuItems = [
     text: 'Ütemterv',
     to: '/schedule',
     prefix: '',
-    permissionLevel: 1,
+    permissionLevel: 2,
   },
   {
     text: 'Statisztika',
@@ -85,7 +88,60 @@ const FixedMenu = ({ user }) => (
   </Menu>
 );
 
-class Header extends Component {
+class MobileContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      sidebarVisible: false,
+    };
+  }
+  componentWillMount() {
+    this.props.getUserData();
+  }
+
+  render() {
+    const visible = this.state.sidebarVisible;
+    const { children, user } = this.props;
+    return(
+      <Responsive {...Responsive.onlyMobile}>
+        <Segment inverted textAlign='center' vertical>
+          <Container>
+          <Menu inverted secondary>
+            <Menu.Item onClick={visible ? this.handleHideClick : this.handleShowClick}><Icon name='sidebar'/></Menu.Item>
+          </Menu>
+          </Container>
+        </Segment>
+        <Sidebar.Pushable>
+          <Sidebar
+            as={Menu}
+            animation='overlay'
+            icon='labeled'
+            inverted
+            vertical
+            visible={visible}
+            width='thin'
+          >
+          {menuItems.map((item, i) =>
+            (this.props.user.permission >= item.permissionLevel ||
+              (item.permissionLevel === 0) ?
+                <Menu.Item key={i} as={Link} to={item.to} onClick={this.handleSidebarHide}>{item.prefix}{item.text}</Menu.Item>
+                :
+              null))}
+          </Sidebar>
+            <Sidebar.Pusher onClick={this.handleSidebarHide}>
+            {children}
+          </Sidebar.Pusher>
+        </Sidebar.Pushable>
+    </Responsive>);
+  }
+
+  handleShowClick = () => this.setState({ sidebarVisible: true })
+  handleHideClick = () => this.setState({ sidebarVisible: false })
+  handleSidebarHide = () => this.setState({ sidebarVisible: false })
+}
+
+
+class DesktopContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -104,12 +160,11 @@ class Header extends Component {
     this.setState({ visible: true });
   }
 
-
   render() {
-    const { visible } = this.state;
-
+    const { visible } = this.state.visible;
+    const { children, user } = this.props;
     return (
-      <div>
+      <Responsive {...Responsive.onlyComputer}>
         {visible ? <FixedMenu user={this.props.user} /> : null}
         <Visibility
           onBottomPassed={() => this.showFixedMenu()}
@@ -118,7 +173,7 @@ class Header extends Component {
         >
           <Segment inverted textAlign='center' vertical>
             <Container>
-              <Menu inverted secondary size='large'>
+              <Menu inverted secondary stackable size='large'>
 
                 {menuItems.map((item, i) =>
                   (this.props.user.permission >= item.permissionLevel ||
@@ -143,10 +198,18 @@ class Header extends Component {
             </Container>
           </Segment>
         </Visibility>
-      </div>
+        {children}
+      </Responsive>
     );
   }
 }
+
+const Header = ({ children, user, getUserData }) => (
+  <div>
+    <DesktopContainer user={user} getUserData={getUserData}>{children}</DesktopContainer>
+    <MobileContainer user={user} getUserData={getUserData}>{children}</MobileContainer>
+  </div>
+)
 
 const mapStateToProps = ({ user }) => ({
   user,
