@@ -6,8 +6,10 @@
   "dependencies": {
     "axios": "^0.18.0",
     "moment": "^2.23.0",
+    "npm": "^6.7.0",
     "prop-types": "^15.6.0",
     "react": "^16.7.0",
+    "react-datepicker": "^2.0.0",
     "react-dom": "^16.7.0",
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",
@@ -16,9 +18,9 @@
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
+    "semantic-ui-calendar-react": "^0.12.2",
     "semantic-ui-css": "^2.4.0",
     "semantic-ui-react": "^0.84.0",
-    "semantic-ui-calendar-react": "^0.12.2",
     "slick-carousel": "^1.8.1"
   },
   "scripts": {

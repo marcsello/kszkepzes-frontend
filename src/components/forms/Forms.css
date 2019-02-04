@@ -1,0 +1,10 @@
+#task {
+  border: none;
+  background-color: inherit;
+  color: teal;
+}
+
+#task:hover {
+  color: red;
+  cursor: pointer;
+}

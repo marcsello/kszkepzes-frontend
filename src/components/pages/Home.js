@@ -138,12 +138,12 @@ class Home extends Component {
             </Segment>
           </div>
         </div>
-        <Segment style={{ padding: '8em 0em' }} vertical>
+        <Segment style={{ padding: '8em 0em', fontFamily: 'Arial' }} vertical>
           <Container text>
-            <Header as='h3' style={{ fontSize: '2em' }}>
+            <Header as='h3' style={{ fontSize: '2em', fontFamily: 'Arial' }}>
               Kik is vagyunk mi?
             </Header>
-            <p style={{ fontSize: '1.33em' }}>
+            <p style={{ fontSize: '1.33em', fontFamily: 'Arial' }}>
               A Kollégiumi Számítástechnikai Kör az Egyetem legrégebben működő
               és legnagyobb aktív, informatikával foglalkozó öntevékeny
               csoportosulása, idén ünnepeljük 42. születésnapunkat. A patinás
@@ -156,10 +156,10 @@ class Home extends Component {
               Ismerd meg a köreinket! <Icon name='right arrow' />
             </Button>
             <Divider as='h4' className='header' style={{ margin: '3em 0em' }} />
-            <Header as='h3' style={{ fontSize: '2em' }}>
+            <Header as='h3' style={{ fontSize: '2em', fontFamily: 'Arial' }}>
               Lehetőségek
             </Header>
-            <p style={{ fontSize: '1.33em' }}>
+            <p style={{ fontSize: '1.33em', fontFamily: 'Arial' }}>
               A KSZK a lehetőségek tárháza, a hely ahol Te – leendő mérnök –
               minden területen kipróbálhatod, továbbképezheted magad. Nálunk
               kibontakoztathatod kreativitásod, tapasztalatot, mérnöki
@@ -170,10 +170,10 @@ class Home extends Component {
               foglalkoznak a fejlesztés és üzemeltetés területén.
             </p>
             <Divider as='h4' className='header' style={{ margin: '3em 0em' }} />
-            <Header as='h3' style={{ fontSize: '2em' }}>
+            <Header as='h3' style={{ fontSize: '2em', fontFamily: 'Arial' }}>
               Képzésünk
             </Header>
-            <p style={{ fontSize: '1.33em' }}>
+            <p style={{ fontSize: '1.33em', fontFamily: 'Arial' }}>
               Kilenc alkalmas képzésünk végén Te is igazi KSZK-ssá válhatsz,
               hiszen rengeteg szakmai tudást igyekszünk átadni nektek. A
               képzésalkalmak rendkívül jó hangulatban telnek, és a szociális
@@ -185,16 +185,22 @@ class Home extends Component {
             </p>
             <Divider as='h4' className='header' style={{ margin: '3em 0em' }} />
             <Segment inverted color='red' tertiary>
-              <Header as='h3' style={{ fontSize: '2em' }}>
+              <Header as='h3' style={{ fontSize: '2em', fontFamily: 'Arial' }}>
                 Korlátos férőhely
               </Header>
-              <p style={{ fontSize: '1.33em' }}>
-                Általánosságban elmondható, hogy a KSZK tagjai rengeteg dologgal foglalkoznak a hétköznapjaik során, hogy minden informatikai rendszer úgy működjön a kollégiumban, ahogy kell. Így van ez velünk képzőkkel is, emiatt hetente csak egy képzésalkalmat tudunk tartani. Mivel az oktatóterem férőhelyében korlátozott, ezért a képzésre maximum 35 embert tudunk befogadni.
+              <p style={{ fontSize: '1.33em', fontFamily: 'Arial' }}>
+                Általánosságban elmondható, hogy a KSZK tagjai rengeteg dologgal foglalkoznak
+                a hétköznapjaik során, hogy minden informatikai rendszer úgy működjön
+                a kollégiumban, ahogy kell. Így van ez velünk képzőkkel is, emiatt
+                hetente csak egy képzésalkalmat tudunk tartani. Mivel az oktatóterem
+                férőhelyében korlátozott, ezért a képzésre maximum 35 embert tudunk befogadni.
               </p>
-              <p style={{ fontSize: '1.33em' }}>
-                Sajnos előfordulhat olyan eset, hogy valaki már nem fér be a képzésre, ezért kérünk titeket, hogy ennek tudatában jelentkezzetek majd. Ilyen esetben reméljük ez nem szegi kedveteket és jövőre újra próbálkoztok majd!
+              <p style={{ fontSize: '1.33em', fontFamily: 'Arial' }}>
+                Sajnos előfordulhat olyan eset, hogy valaki már nem fér be a képzésre,
+                ezért kérünk titeket, hogy ennek tudatában jelentkezzetek majd.
+                Ilyen esetben reméljük ez nem szegi kedveteket és jövőre újra próbálkoztok majd!
               </p>
-          </Segment>
+            </Segment>
           </Container>
         </Segment>
       </div>
