@@ -52,16 +52,19 @@ class Applications extends Component {
           </Table.Cell>
         }
         <Table.Cell>
-          <ConfirmModal
-            button = {<Button
-              color='blue'
-              size='tiny'
-            >
-            Staff jog adás
-          </Button>}
-          text='staff jogot adsz neki'
-          onAccept={() => this.props.setStatus(profile.id, 'Staff')}
-          />
+          { profile.role !== 'Staff' ?
+            <ConfirmModal
+              button={<Button
+                color='blue'
+                size='tiny'
+              >
+              Staff jog adás
+            </Button>}
+            text='staff jogot adsz neki'
+            onAccept={() => this.props.setStatus(profile.id, 'Staff')}
+            />
+          :
+          null }
         </Table.Cell>
       </Table.Row>
     );
@@ -76,7 +79,7 @@ class Applications extends Component {
           padding: '80px'
         }}
       >
-        <Table color='blue' celled selectable compact>
+        <Table color='blue' selectable compact>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Jelentkezettek</Table.HeaderCell>

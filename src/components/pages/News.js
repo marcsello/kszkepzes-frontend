@@ -25,7 +25,10 @@ class News extends Component {
               style={{ fontSize: '2em', width: '100%' }}
             >
               <Grid>
-                <Grid.Column floated='left' width={8}>
+                <Grid.Column
+                  floated='left'
+                  width={this.props.user.role === 'Staff' ? 12 : 16}
+                >
                   {item.title}
                 </Grid.Column>
                 { this.props.user.role === 'Staff' ?

@@ -9,9 +9,9 @@ class CommentModal extends Component {
     const { notes, user } = this.props;
     return notes.map((note) => {
       return (
-        <Comment key={note.id}>
+        <Comment style={{ padding: '1em' }} stylekey={note.id}>
           <Comment.Content>
-            <Comment.Author>{note.created_by_name}</Comment.Author>
+            <Comment.Author><strong>{note.created_by_name}</strong></Comment.Author>
             <Comment.Text>
               {note.note}
             </Comment.Text>
