@@ -28,7 +28,7 @@ class MobileContainer extends Component {
     const visible = this.state.sidebarVisible;
     const { children, user, menuItems } = this.props;
     return(
-      <Responsive maxWidth={768}>
+      <Responsive maxWidth={767}>
         <Segment inverted textAlign='center' vertical>
           <Container>
           <Menu inverted secondary>
