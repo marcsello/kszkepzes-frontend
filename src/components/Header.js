@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import {
-  Menu,
-  Container,
-  Button,
-  Segment,
-  Visibility,
   Image,
   Responsive,
   Sidebar,
@@ -14,6 +8,10 @@ import {
 import { connect } from 'react-redux';
 import { getUserData } from '../actions';
 import KSZKlogo from './images/kszk_logo.svg';
+
+import MobileContainer from './menus/MobileContainer';
+import DesktopContainer from './menus/DesktopContainer';
+
 
 const menuItems = [
   {
@@ -59,162 +57,6 @@ const menuItems = [
     permissionLevel: 2,
   },
 ];
-
-const FixedMenu = ({ user }) => (
-  <Menu fixed='top' size='large' pointing>
-    <Container>
-      {menuItems.map((item, i) =>
-        (user.permission >= item.permissionLevel ||
-          (item.permissionLevel === 0)
-          ?
-            <Menu.Item key={i} as={Link} to={item.to}>{item.text}</Menu.Item>
-          :
-          null))}
-
-      <Menu.Menu position='right'>
-        <Menu.Item className='item'>
-          {
-            user.id ?
-              <Button.Group>
-                <Button primary as={Link} to='/profile'>Profilom</Button>
-                <Button as='a' href='/api/v1/logout/'icon='sign out' />
-              </Button.Group>
-            :
-              <Button as='a' href='/api/v1/login/authsch/' >Bejelentkezés</Button>
-          }
-        </Menu.Item>
-      </Menu.Menu>
-    </Container>
-  </Menu>
-);
-
-class MobileContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      sidebarVisible: false,
-    };
-  }
-  componentWillMount() {
-    this.props.getUserData();
-  }
-
-  render() {
-    const visible = this.state.sidebarVisible;
-    const { children, user } = this.props;
-    return(
-      <Responsive {...Responsive.onlyMobile}>
-        <Segment inverted textAlign='center' vertical>
-          <Container>
-          <Menu inverted secondary>
-            <Menu.Item onClick={visible ? this.handleHideClick : this.handleShowClick}><Icon name='sidebar'/></Menu.Item>
-            <Image size='mini' src={KSZKlogo} style={{ marginRight: '1.5em' }} />
-            <Menu.Item position='right'>
-                {
-                  this.props.user.id ?
-                    <Button.Group>
-                      <Button inverted as={Link} to='/profile'>Profilom</Button>
-                      <Button as='a' href='/api/v1/logout/' icon='sign out' />
-                    </Button.Group>
-                  :
-                    <Button as='a' href='/api/v1/login/authsch/' inverted>Bejelentkezés</Button>
-                }
-              </Menu.Item>
-        </Menu>
-          </Container>
-        </Segment>
-        <Sidebar.Pushable>
-          <Sidebar
-            as={Menu}
-            animation='overlay'
-            icon='labeled'
-            inverted
-            vertical
-            visible={visible}
-            width='thin'
-          >
-          {menuItems.map((item, i) =>
-            (this.props.user.permission >= item.permissionLevel ||
-              (item.permissionLevel === 0) ?
-                <Menu.Item key={i} as={Link} to={item.to} onClick={this.handleSidebarHide}>{item.text}</Menu.Item>
-                :
-              null))}
-          </Sidebar>
-            <Sidebar.Pusher onClick={this.handleSidebarHide}>
-            {children}
-          </Sidebar.Pusher>
-        </Sidebar.Pushable>
-    </Responsive>);
-  }
-
-  handleShowClick = () => this.setState({ sidebarVisible: true })
-  handleHideClick = () => this.setState({ sidebarVisible: false })
-  handleSidebarHide = () => this.setState({ sidebarVisible: false })
-}
-
-
-class DesktopContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      visible: false,
-    };
-  }
-  componentWillMount() {
-    this.props.getUserData();
-  }
-
-  hideFixedMenu() {
-    this.setState({ visible: false });
-  }
-
-  showFixedMenu() {
-    this.setState({ visible: true });
-  }
-
-  render() {
-    const { visible } = this.state.visible;
-    const { children, user } = this.props;
-    return (
-      <Responsive {...Responsive.onlyComputer}>
-        {visible ? <FixedMenu user={this.props.user} /> : null}
-        <Visibility
-          onBottomPassed={() => this.showFixedMenu()}
-          onBottomVisible={() => this.hideFixedMenu()}
-          once={false}
-        >
-          <Segment inverted textAlign='center' vertical>
-            <Container>
-              <Menu inverted secondary stackable size='large'>
-
-                {menuItems.map((item, i) =>
-                  (this.props.user.permission >= item.permissionLevel ||
-                    (item.permissionLevel === 0) ?
-                      <Menu.Item key={i} as={Link} to={item.to}>{item.prefix}{item.text}</Menu.Item>
-                      :
-                    null))}
-
-                <Menu.Item position='right'>
-                  {
-                    this.props.user.id ?
-                      <Button.Group>
-                        <Button inverted as={Link} to='/profile'>Profilom</Button>
-                        <Button as='a' href='/api/v1/logout/' icon='sign out' />
-                      </Button.Group>
-                    :
-                      <Button as='a' href='/api/v1/login/authsch/' inverted>Bejelentkezés</Button>
-                  }
-                </Menu.Item>
-
-              </Menu>
-            </Container>
-          </Segment>
-        </Visibility>
-        {children}
-      </Responsive>
-    );
-  }
-}
 
 const Header = ({ children, user, getUserData }) => (
   <div>

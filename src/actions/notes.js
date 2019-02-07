@@ -5,6 +5,8 @@ import {
   ADD_EVENT_NOTE,
   CLEAR_WRITE,
   DELETE_NOTE,
+  GET_NOTES_BY_PROFILE,
+  ADD_PROFILE_NOTE,
 } from './types';
 
 export const getNotesByEvent = id => (
@@ -21,11 +23,25 @@ export const getNotesByEvent = id => (
   }
 );
 
+export const getNotesByProfile = id => (
+  async (dispatch) => {
+    try {
+      const response = await axios.get('/api/v1/notes/', { params: { profileID: id } });
+      dispatch({
+        type: GET_NOTES_BY_PROFILE,
+        payload: response.data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
 export const writeNote = (event) => {
   return (dispatch => (dispatch({ type: WRITE_NOTE, payload: event.target.value })));
 };
 
-export const postEventNote = ({ eventid, userid, note }) => (
+export const postNote = ({ eventid, userid, note }) => (
   async (dispatch) => {
     try {
       const response = await axios.post('/api/v1/notes/', {
@@ -35,10 +51,18 @@ export const postEventNote = ({ eventid, userid, note }) => (
       });
       if (response.data.id) {
         alert('Sikeres mentés!');
-        dispatch({
-          type: ADD_EVENT_NOTE,
-          payload: response.data,
-        });
+        if (eventid) {
+          dispatch({
+            type: ADD_EVENT_NOTE,
+            payload: response.data,
+          });
+        }
+        if (userid) {
+          dispatch({
+            type: ADD_PROFILE_NOTE,
+            payload: response.data,
+          });
+        }
       }
     } catch (e) {
       console.log(e);

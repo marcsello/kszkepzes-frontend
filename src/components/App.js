@@ -5,7 +5,7 @@ import Footer from './Footer';
 
 const App = () => (
   <div style={{ minHeight: '100%', position: 'relative' }}>
-    <Header>
+    <Header className='header'>
       <main id='main' style={{ minHeight: '100%', position: 'relative' }}>
         <Main />
       </main>

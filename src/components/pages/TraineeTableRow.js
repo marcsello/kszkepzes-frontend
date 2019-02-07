@@ -10,7 +10,7 @@ import {
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { visitorChange } from '../../actions/statistics';
-import { writeNote, clearWrite, postEventNote, deleteNote } from '../../actions/notes';
+import { writeNote, clearWrite, postNote, deleteNote } from '../../actions/notes';
 import CommentModal from './CommentModal'
 
 class TraineeTableRow extends Component {
@@ -109,7 +109,7 @@ class TraineeTableRow extends Component {
                       />
                       <Button
                         onClick={() => {
-                                        this.props.postEventNote({ eventid:selectedEvent.id,
+                                        this.props.postNote({ eventid:selectedEvent.id,
                                                                   userid: trainee.id,
                                                                   note: this.state.note });
                                         this.clearWrite();
@@ -132,4 +132,4 @@ class TraineeTableRow extends Component {
   }
 }
 
-export default connect(() => ({}), { writeNote, clearWrite, postEventNote, visitorChange, deleteNote })(TraineeTableRow)
+export default connect(() => ({}), { writeNote, clearWrite, postNote, visitorChange, deleteNote })(TraineeTableRow)

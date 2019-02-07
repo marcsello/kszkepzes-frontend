@@ -58,7 +58,7 @@ class Home extends Component {
                 content='Üdvözlünk a'
                 inverted
                 style={{
-                  fontSize: '3vw',
+                  fontSize: '2vw',
                   fontWeight: 'normal',
                   marginBottom: 0,
                   marginTop: '0.5vw',
@@ -69,7 +69,7 @@ class Home extends Component {
                 content='Kollégiumi Számítástechnikai Kör'
                 inverted
                 style={{
-                  fontSize: '4vw',
+                  fontSize: '3vw',
                   fontWeight: 'bold',
                   marginBottom: '0.5vw',
                   marginTop: '0.5vw',
@@ -80,7 +80,7 @@ class Home extends Component {
                 content='újoncképzésének weboldalán!'
                 inverted
                 style={{
-                  fontSize: '3vw',
+                  fontSize: '2vw',
                   fontWeight: 'normal',
                   marginBottom: 0,
                   marginTop: '0.5vw',
@@ -89,14 +89,14 @@ class Home extends Component {
               <Image
                 verticalAlign='middle'
                 src={KSZKbiglogo}
-                style={{ marginTop: '4vw', width: '15%' }}
+                style={{ marginTop: '2vw', width: '12%' }}
               />
               <Header
                 as='h1'
                 content='Szeretettel várunk a KSZKépzésre!'
                 inverted
                 style={{
-                  fontSize: '3vw',
+                  fontSize: '2vw',
                   fontWeight: 'normal',
                   marginBottom: 0,
                   marginTop: '1vw',
@@ -130,7 +130,7 @@ class Home extends Component {
                         marginBottom: '1vw',
                       }}
                     >
-                      Bejelentkezés
+                      Jelentkezés
                       <Icon name='right arrow' />
                     </Button>
                 }
@@ -174,14 +174,7 @@ class Home extends Component {
               Képzésünk
             </Header>
             <p style={{ fontSize: '1.33em', fontFamily: 'Arial' }}>
-              Kilenc alkalmas képzésünk végén Te is igazi KSZK-ssá válhatsz,
-              hiszen rengeteg szakmai tudást igyekszünk átadni nektek. A
-              képzésalkalmak rendkívül jó hangulatban telnek, és a szociális
-              irányultságú foglalkozások alatt egy nagyon jó csapat kovácsolódik
-              az érdeklődőkből. Az első képzés időpontja február 19. hétfő
-              20:00, ettől kezdve pedig minden héten találkozunk ugyanabban az
-              időpontban. A képzés ideje alatt április 6-8 között rendezünk
-              tábort. Az alkalmakon és a táboron kötelező a részvétel.
+              Kilenc alkalmas képzésünk végén Te is igazi KSZK-ssá válhatsz, hiszen rengeteg szakmai tudást igyekszünk átadni nektek. A képzésalkalmak rendkívül jó hangulatban telnek, és a szociális irányultságú foglalkozások alatt egy nagyon jó csapat kovácsolódik az érdeklődőkből. Az első képzés időpontja február 17. vasárnap 18:50, ettől kezdve pedig minden héten találkozunk ugyanabban az időpontban. A képzés ideje alatt egy teljes hétvégés tábort is rendezünk majd (ennek időpontját az Újoncdélutánig tisztázzuk). Az alkalmakon és a táboron kötelező a részvétel.
             </p>
             <Divider as='h4' className='header' style={{ margin: '3em 0em' }} />
             <Segment inverted color='red' tertiary>
