@@ -57,11 +57,11 @@ class DesktopContainer extends Component {
   }
 
   render() {
-    const { visible } = this.state.visible;
+    const { visible } = this.state;
     const { children, user, menuItems } = this.props;
     return (
       <Responsive minWidth={768}>
-        {visible ? <FixedMenu user={this.props.user} /> : null}
+        {visible ? <FixedMenu user={this.props.user} menuItems={menuItems} /> : null}
         <Visibility
           onBottomPassed={() => this.showFixedMenu()}
           onBottomVisible={() => this.hideFixedMenu()}
