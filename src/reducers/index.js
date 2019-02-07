@@ -11,6 +11,7 @@ import NoteReducer from './NoteReducer';
 import TraineeReducer from './TraineeReducer';
 import CorrectSolutionReducer from './CorrectSolutionReducer';
 import EditTaskReducer from './EditTaskReducer';
+import MessageReducer from './MessageReducer';
 
 const rootReducer = combineReducers({
   user: UserReducer,
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   newTask: AddTaskReducer,
   newSolution: AddSolutionReducer,
   correction: CorrectSolutionReducer,
+  message: MessageReducer,
 });
 
 export default rootReducer;

@@ -53,3 +53,6 @@ export const GET_NOTES_BY_PROFILE = 'get_notes_by_profile';
 export const GET_PROFILES = 'get_profiles';
 export const SET_STATUS = 'set_status';
 export const GET_SELECTED_PROFILE = 'get_selected_profile';
+
+export const SHOW_MESSAGE = 'show_message';
+export const DISMISS_MESSAGE = 'dismiss_message';

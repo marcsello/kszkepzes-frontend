@@ -1,6 +1,6 @@
 import axios from './session';
 import { GET_USERDATA, PROFILE_CHANGE, GROUP_CHANGE } from './types';
-
+import { showMessage } from './messages';
 
 export const getUserData = () => (
   async (dispatch) => {
@@ -59,7 +59,7 @@ export const groupChange = groups => (
 export const submitRegistration = ({
   nick, groups, signed, motivationAbout, motivationProfession, motivationExercise, id,
 }) => (
-  async () => {
+  async (dispatch) => {
     try {
       const response = await axios.patch(`/api/v1/profiles/${id}/`, {
         nick,
@@ -70,12 +70,12 @@ export const submitRegistration = ({
         motivation_exercise: motivationExercise,
       });
       if (response.data.id === id) {
-        alert('Sikeres mentés!');
+        dispatch(showMessage('Sikeres mentés!', 'success'));
       } else {
-        alert('Mentés nem sikerült!');
+        dispatch(showMessage('A mentés nem sikerült!', 'error'));
       }
     } catch (e) {
-      console.log(e);
+      dispatch(showMessage('A mentés nem sikerült!', 'error'));
     }
   }
 );
