@@ -6,8 +6,11 @@ import {
   Button,
   Segment,
   Image,
+  Responsive,
+  Sidebar,
+  Icon,
 } from 'semantic-ui-react';
-import KSZKlogo from './images/kszk_logo.svg';
+import KSZKlogo from '../images/kszk_logo.svg';
 
 
 class MobileContainer extends Component {
@@ -23,7 +26,7 @@ class MobileContainer extends Component {
 
   render() {
     const visible = this.state.sidebarVisible;
-    const { children, user } = this.props;
+    const { children, user, menuItems } = this.props;
     return(
       <Responsive maxWidth={768}>
         <Segment inverted textAlign='center' vertical>
