@@ -16,6 +16,7 @@ import {
   WRITE_EDITED_EVENT,
   SELECT_EVENT_FOR_EDIT,
 } from './types';
+import { showMessage } from './messages';
 
 export const getStaffEvents = () => (
   async (dispatch) => {
@@ -86,17 +87,17 @@ export const visitorChange = ({ id, value }) => {
 };
 
 export const submitVisitors = ({ id, visitors, absent }) => (
-  async () => {
+  async (dispatch) => {
     try {
       const response = await axios.patch(`/api/v1/staff_events/${id}/`, {
         visitors,
         absent,
       });
       if (response.data.id) {
-        alert('Sikeres mentés!');
+        dispatch(showMessage('Sikeres változtatás!', 'success'));
       }
     } catch (e) {
-      console.log(e);
+      dispatch(showMessage('Nem sikerült a változtatás!', 'error'));
     }
   }
 );
@@ -128,14 +129,14 @@ export const editEvent = ({ id, name, description, date }) => (
         date,
       });
       if (response.data.id) {
-        alert('Sikeres mentés!');
+        dispatch(showMessage('Az alkalom módosítva!', 'success'));
         dispatch({
           type: EDIT_EVENT,
           payload: response.data,
 
         });
       } else {
-        alert('Mentés nem sikerült!');
+        dispatch(showMessage('A módosítás nem sikerült!', 'error'));
       }
     } catch (e) {
       console.log(e);
@@ -153,13 +154,13 @@ export const addEvent = ({ name, date, description }) => (
         absent: [],
       });
       if (response.data.id) {
-        alert('Sikeres mentés!');
+        dispatch(showMessage('Az alkalom hozzáadva!', 'success'));
         dispatch({
           type: ADD_EVENT,
           payload: response.data,
         });
       } else {
-        alert('Mentés nem sikerült!');
+        dispatch(showMessage('A hozzáadás nem sikerült!', 'error'));
       }
     } catch (e) {
       console.log(e);
@@ -172,13 +173,13 @@ export const deleteEvent = event => (
     try {
       const response = await axios.delete(`/api/v1/staff_events/${event.id}/`);
       if (!response.data.id) {
-        alert('Sikeres törlés!');
+      dispatch(showMessage('Az alkalom törölve!', 'success'));
         dispatch({
           type: DELETE_EVENT,
           payload: event,
         });
       } else {
-        alert('A törlés nem sikerült!');
+        dispatch(showMessage('A törlés nem sikerült!', 'error'));
       }
     } catch (e) {
       console.log(e);
@@ -206,10 +207,14 @@ export const setStatus = (id, status) => (
         role: status,
       });
       if (response.data.id) {
+        dispatch(showMessage('Státusz megváltoztatva!', 'success'));
         dispatch({
           type: SET_STATUS,
           payload: response.data,
         });
+      }
+      else {
+        dispatch(showMessage('A változtatás nem sikerült!', 'error'));
       }
     } catch (e) {
       console.log(e);

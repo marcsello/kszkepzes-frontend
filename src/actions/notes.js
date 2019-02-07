@@ -8,6 +8,7 @@ import {
   GET_NOTES_BY_PROFILE,
   ADD_PROFILE_NOTE,
 } from './types';
+import { showMessage } from './messages';
 
 export const getNotesByEvent = id => (
   async (dispatch) => {
@@ -50,7 +51,7 @@ export const postNote = ({ eventid, userid, note }) => (
         note,
       });
       if (response.data.id) {
-        alert('Sikeres mentés!');
+        dispatch(showMessage('A megjegyzés hozzáadva!', 'success'));
         if (eventid) {
           dispatch({
             type: ADD_EVENT_NOTE,
@@ -65,7 +66,7 @@ export const postNote = ({ eventid, userid, note }) => (
         }
       }
     } catch (e) {
-      console.log(e);
+      dispatch(showMessage('A hozzáadás nem sikerült!', 'error'));
     }
   });
 
@@ -80,13 +81,13 @@ export const deleteNote = note => (
     try {
       const response = await axios.delete(`/api/v1/notes/${note.id}/`);
       if (!response.data.id) {
-        alert('Sikeres törlés!');
+        dispatch(showMessage('Sikeres törlés!', 'success'));
         dispatch({
           type: DELETE_NOTE,
           payload: note,
         });
       } else {
-        alert('A törlés nem sikerült!');
+        dispatch(showMessage('A törlés nem sikerült!', 'error'));
       }
     } catch (e) {
       console.log(e);
