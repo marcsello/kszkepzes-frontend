@@ -47,6 +47,8 @@ export const WRITE_NOTE = 'write_note';
 export const CLEAR_NOTE = 'clear_note';
 export const ADD_EVENT_NOTE = 'add_note';
 export const DELETE_NOTE = 'delete_note';
+export const ADD_PROFILE_NOTE = 'add_profile_note';
+export const GET_NOTES_BY_PROFILE = 'get_notes_by_profile';
 
 export const GET_PROFILES = 'get_profiles';
 export const SET_STATUS = 'set_status';

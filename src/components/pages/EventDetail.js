@@ -11,7 +11,7 @@ import {
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { getEventById, getTrainees, visitorChange, submitVisitors } from '../../actions/statistics';
-import { getNotesByEvent, writeNote, clearWrite, postEventNote, deleteNote } from '../../actions/notes';
+import { getNotesByEvent, writeNote, clearWrite, postNote, deleteNote } from '../../actions/notes';
 import TraineeTableRow from './TraineeTableRow';
 import ConfirmModal from '../forms/ConfirmModal';
 
@@ -74,19 +74,22 @@ class EventDetail extends Component {
                 {note.note}
               </Comment.Text>
             </Comment.Content>
-            <ConfirmModal
-              text='törölni akarod a megjegyzést'
-              button={
-                <Button
-                  compact
-                  color='red'
-                  size='mini'
-                >
-                  Delete
-                </Button>
-              }
-              onAccept={() => this.props.deleteNote(note)}
-            />
+            { this.props.user.fullName === note.created_by_name ?
+              <ConfirmModal
+                text='törölni akarod a megjegyzést'
+                button={
+                  <Button
+                    compact
+                    color='red'
+                    size='mini'
+                  >
+                    Delete
+                  </Button>
+                }
+                onAccept={() => this.props.deleteNote(note)}
+              />
+            :
+            null }
           </Comment>);
       }
       return '';
@@ -162,7 +165,7 @@ class EventDetail extends Component {
               />
               <Button
                 onClick={() => {
-                                this.props.postEventNote({ eventid: event.id,
+                                this.props.postNote({ eventid: event.id,
                                                           note: note.note });
                                 this.props.clearWrite();
                               }
@@ -180,10 +183,11 @@ class EventDetail extends Component {
 }
 
 const mapStateToProps = ({
+  user,
   notes: { eventNotes, actualNote },
   events: { selectedEvent },
   trainees: { trainees }
-}) => ({ eventNotes, selectedEvent, trainees, actualNote });
+}) => ({ user, eventNotes, selectedEvent, trainees, actualNote });
 
 export default connect(mapStateToProps, {
   getEventById,
@@ -193,6 +197,6 @@ export default connect(mapStateToProps, {
   submitVisitors,
   writeNote,
   clearWrite,
-  postEventNote,
+  postNote,
   deleteNote,
 })(EventDetail);
