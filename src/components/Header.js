@@ -47,9 +47,13 @@ const menuItems = [
     prefix: '',
     permissionLevel: 3,
   },
-]
-
-
+  {
+    text: 'Házi feladatok',
+    to: '/homework',
+    prefix: '',
+    permissionLevel: 2,
+  },
+];
 
 const Header = ({ children, user, getUserData }) => (
   <div>
