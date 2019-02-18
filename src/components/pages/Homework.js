@@ -69,6 +69,7 @@ class Homework extends Component {
   componentDidMount() {
     this.props.getTasks();
     this.props.getProfiles();
+    this.props.getSolutions(this.props.user.id);
     this.props.getDocuments();
   }
 
