@@ -68,7 +68,6 @@ export const emptyMessage = (header, text, marginBottom, warning) => (
 class Homework extends Component {
   componentDidMount() {
     this.props.getTasks();
-    this.props.getSolutions(this.props.user.id);
     this.props.getProfiles();
     this.props.getDocuments();
   }
@@ -161,7 +160,11 @@ class Homework extends Component {
         }
         >
           <Table.Cell>
-            <SolutionDetailsForm taskid={task.id} tasktitle={task.title} taskdesc={task.text} />
+            <SolutionDetailsForm
+              taskid={task.id}
+              tasktitle={task.title}
+              taskdesc={task.text}
+            />
           </Table.Cell>
           <Table.Cell>
             {moment(task.deadline).format('YYYY. MM. DD. HH:mm')}
