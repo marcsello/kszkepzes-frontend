@@ -60,8 +60,8 @@ const menuItems = [
 
 const Header = ({ children, user, getUserData }) => (
   <div>
-    <DesktopContainer user={user} getUserData={getUserData}>{children}</DesktopContainer>
-    <MobileContainer user={user} getUserData={getUserData}>{children}</MobileContainer>
+    <DesktopContainer user={user} getUserData={getUserData} menuItems={menuItems}>{children}</DesktopContainer>
+    <MobileContainer user={user} getUserData={getUserData} menuItems={menuItems}>{children}</MobileContainer>
   </div>
 )
 

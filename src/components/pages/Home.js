@@ -102,39 +102,6 @@ class Home extends Component {
                   marginTop: '1vw',
                 }}
               />
-              <Container>
-                {
-                  this.props.user.id ?
-                    <Button
-                      as={Link}
-                      to='/profile'
-                      primary
-                      size='huge'
-                      style={{
-                        fontSize: '2vw',
-                        marginTop: '1vw',
-                        marginBottom: '1vw',
-                      }}
-                    >
-                      Jelentkezés
-                      <Icon name='right arrow' />
-                    </Button>
-                      :
-                    <Button
-                      href='/api/v1/login/authsch/'
-                      primary
-                      size='huge'
-                      style={{
-                        fontSize: '2vw',
-                        marginTop: '1vw',
-                        marginBottom: '1vw',
-                      }}
-                    >
-                      Jelentkezés
-                      <Icon name='right arrow' />
-                    </Button>
-                }
-              </Container>
             </Segment>
           </div>
         </div>
