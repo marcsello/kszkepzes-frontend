@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import CorrectSolutionForm from './CorrectSolutionForm';
 import { emptyMessage } from '../pages/Homework';
 import './Forms.css';
+import {
+  getSolutions,
+} from '../../actions/homework';
 
 class SolutionDetailsForm extends Component {
   constructor(props) {
@@ -45,7 +48,13 @@ class SolutionDetailsForm extends Component {
       <Modal
         open={this.state.showModal}
         trigger={
-          <button id='task' onClick={() => { this.setState({ showModal: true }); }}>
+          <button
+            id='task'
+            onClick={() => {
+              this.setState({ showModal: true });
+              this.props.getSolutions();
+            }}
+          >
             <Icon name='external' />
             {this.props.tasktitle}
           </button>
@@ -115,4 +124,5 @@ class SolutionDetailsForm extends Component {
 const mapStateToProps = ({ homeworks, user }) => ({ homeworks, user });
 
 export default connect(mapStateToProps, {
+  getSolutions,
 })(SolutionDetailsForm);
