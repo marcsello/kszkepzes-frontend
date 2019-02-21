@@ -30,7 +30,7 @@ class Profile extends Component {
       >
         <Segment inverted color='red' tertiary>
           <p style={{ fontSize: '1.33em' }}>
-            A profilod mentés után is módosítható a későbbiekben, egészen február 14. 23:59-ig.
+            A profilod mentés után is módosítható a későbbiekben, egészen február 13. 17:00-ig.
           </p>
         </Segment>
         <Form>

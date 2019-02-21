@@ -49,7 +49,7 @@ componentWillReceiveProps() {
     const { visible, messageType, text } = this.props.message;
     const messageProps = messages.find(item => item.type === messageType);
     return (
-      <Container style={{ margin: '1.5em', paddingLeft: '1.5em' }}>
+      <Container style={visible ? { padding: '1.5em', paddingBottom: '0.5em' } : { padding: '0em' }}>
         { messageProps ?
           <Message
             icon={messageProps.icon}

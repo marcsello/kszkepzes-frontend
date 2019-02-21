@@ -32,8 +32,10 @@ class MobileContainer extends Component {
         <Segment inverted textAlign='center' vertical>
           <Container>
           <Menu inverted secondary>
-            <Menu.Item onClick={visible ? this.handleHideClick : this.handleShowClick}><Icon name='sidebar'/></Menu.Item>
-            <Image size='mini' src={KSZKlogo} style={{ marginRight: '1.5em' }} />
+            <Menu.Item onClick={visible ? this.handleHideClick : this.handleShowClick}>
+              <Icon name='sidebar'/>
+              <Image size='mini' src={KSZKlogo} style={{ marginRight: '1.5em' }} />
+            </Menu.Item>
             <Menu.Item position='right'>
                 {
                   this.props.user.id ?
