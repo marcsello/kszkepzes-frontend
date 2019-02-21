@@ -25,22 +25,22 @@ class SolutionDetailsForm extends Component {
     const noAcceptStudents = [];
     const acceptedStudents = [];
 
-    for (let i = 0; i < this.props.homeworks.profiles.length; i += 1) {
+    this.props.homeworks.profiles.forEach(profile => {
       const profileSolutions = taskSolutions.filter(solution =>
-        solution.created_by === this.props.homeworks.profiles[i].id);
+        solution.created_by === profile.id);
 
-      if (this.props.homeworks.profiles[i].role === 'Student') {
+      if (profile.role === 'Student') {
         if (profileSolutions.length === 0) {
-          noSubmitStudents.push(this.props.homeworks.profiles[i]);
-        } else if (taskSolutions[taskSolutions.length - 1].corrected === false) {
-          waitForCorrectionStudents.push(this.props.homeworks.profiles[i]);
-        } else if (taskSolutions[taskSolutions.length - 1].accepted === false) {
-          noAcceptStudents.push(this.props.homeworks.profiles[i]);
+          noSubmitStudents.push(profile);
+        } else if (profileSolutions[profileSolutions.length - 1].corrected === false) {
+          waitForCorrectionStudents.push(profile);
+        } else if (profileSolutions[profileSolutions.length - 1].accepted === false) {
+          noAcceptStudents.push(profile);
         } else {
-          acceptedStudents.push(this.props.homeworks.profiles[i]);
+          acceptedStudents.push(profile);
         }
       }
-    }
+    });
 
     const emptyStudentText = 'Nincs ilyen képződő jelenleg.';
 
