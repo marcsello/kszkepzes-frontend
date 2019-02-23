@@ -18,7 +18,6 @@ import {
   deleteTask,
   addDocument,
   getProfiles,
-  getDocuments,
 } from '../../actions/homework';
 import AddTaskForm from '../forms/AddTaskForm';
 import AddSolutionForm from '../forms/AddSolutionForm';
@@ -70,7 +69,6 @@ class Homework extends Component {
     this.props.getTasks();
     this.props.getProfiles();
     this.props.getSolutions(this.props.user.id);
-    this.props.getDocuments();
   }
 
   getTaskDisplayStyle(task) {
@@ -337,6 +335,5 @@ export default connect(
     deleteTask,
     addDocument,
     getProfiles,
-    getDocuments,
   },
 )(Homework);
