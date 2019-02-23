@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { Modal, Button, Icon, Checkbox, Form, TextArea, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { correctSolution, writeSolution, check, clearWrite } from '../../actions/homework';
+import { correctSolution,
+  writeSolution,
+  check,
+  clearWrite,
+  getSolutions,
+  getDocuments } from '../../actions/homework';
 
 class CorrectSolutionForm extends Component {
   constructor(props) {
@@ -69,7 +74,7 @@ class CorrectSolutionForm extends Component {
               checked={this.props.correction.accepted}
             />
           </Button>
-          <Header as='h5'>Megjegyzés:</Header>
+          <Header as='h5'>A feladat megoldásának szöveges értékelése:</Header>
           <Form>
             <Form.Field
               control={TextArea}
@@ -120,4 +125,6 @@ export default connect(mapStateToProps, {
   writeSolution,
   check,
   clearWrite,
+  getSolutions,
+  getDocuments,
 })(CorrectSolutionForm);
