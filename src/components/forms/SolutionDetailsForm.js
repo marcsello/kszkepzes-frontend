@@ -83,6 +83,7 @@ class SolutionDetailsForm extends Component {
             waitForCorrectionStudents.map(student => (
               <CorrectSolutionForm
                 key={Math.random()}
+                color='orange'
                 studentName={student.nick}
                 studentFullName={student.full_name}
                 studentId={student.id}
@@ -92,19 +93,35 @@ class SolutionDetailsForm extends Component {
             ))
           }
           <Divider />
-          <Header as='h3'>A megoldás nem elfogadható:</Header>
+          <Header as='h3'>A megoldás nem elfogadható (A névre kattintva módosítható a javítás):</Header>
           {noAcceptStudents.length === 0 ?
             emptyMessage(emptyStudentText) :
             noAcceptStudents.map(student => (
-              <Button key={Math.random()} color='red' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{student.full_name}</Button>
+              <CorrectSolutionForm
+                key={Math.random()}
+                color='red'
+                studentName={student.nick}
+                studentFullName={student.full_name}
+                studentId={student.id}
+                taskTitle={this.props.tasktitle}
+                taskSolutions={taskSolutions}
+              />
             ))
         }
           <Divider />
-          <Header as='h3'>Elfogadva:</Header>
+          <Header as='h3'>Elfogadva (A névre kattintva módosítható a javítás):</Header>
           {acceptedStudents.length === 0 ?
             emptyMessage(emptyStudentText) :
             acceptedStudents.map(student => (
-              <Button key={Math.random()} color='green' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{student.full_name}</Button>
+              <CorrectSolutionForm
+                key={Math.random()}
+                color='green'
+                studentName={student.nick}
+                studentFullName={student.full_name}
+                studentId={student.id}
+                taskTitle={this.props.tasktitle}
+                taskSolutions={taskSolutions}
+              />
             ))
         }
         </Modal.Content>
