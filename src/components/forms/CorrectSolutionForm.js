@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { Modal, Button, Icon, Checkbox, Form, TextArea, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { correctSolution, writeSolution, check, clearWrite } from '../../actions/homework';
+import { correctSolution,
+  writeSolution,
+  check,
+  clearWrite,
+  getSolutions,
+  getDocuments,
+  selectSolution } from '../../actions/homework';
 
 class CorrectSolutionForm extends Component {
   constructor(props) {
@@ -29,18 +35,23 @@ class CorrectSolutionForm extends Component {
     } else {
       fileLink = null;
     }
-
-
-    const { note } = this.props.correction;
+    const {
+      corrected,
+      accepted,
+      note,
+    } = this.props.correction;
     return (
       <Modal
         open={this.state.showModal}
         trigger={
           <Button
             inverted
-            color='orange'
+            color={this.props.color}
             style={{ marginRight: '1.5em', marginTop: '1.5em' }}
-            onClick={() => { this.setState({ showModal: true }); }}
+            onClick={() => {
+              this.setState({ showModal: true });
+              this.props.selectSolution(relevantSolution);
+            }}
           >
             {studentFullName}
           </Button>
@@ -60,16 +71,39 @@ class CorrectSolutionForm extends Component {
           {fileLink === null ?
             <p>Nincs fájl.</p> :
             <a href={fileLink}>Fájl letöltése</a>}
-          <Header as='h5'>Elfogadás/Elutasítás:</Header>
-          <Button color={this.props.correction.accepted ? 'green' : 'red'} onClick={() => this.props.check()}>
+          <Header as='h5'>Kijavítás állapotának változtatása:</Header>
+          <Button
+            color='orange'
+            inverted={corrected}
+            onClick={() => this.props.check('corrected')}
+          >
             <Checkbox
-              label={this.props.correction.accepted
-                ? 'Elfogadható'
-                : 'Nem elfogadható'}
-              checked={this.props.correction.accepted}
+              label='Nincs kijavítva'
+              checked={!corrected}
             />
           </Button>
-          <Header as='h5'>Megjegyzés:</Header>
+          <Header as='h5'>Elfogadás/elutasítás:</Header>
+          <Button
+            color='green'
+            inverted={!accepted}
+            onClick={() => this.props.check('accepted')}
+          >
+            <Checkbox
+              label='Elfogadható'
+              checked={accepted}
+            />
+          </Button>
+          <Button
+            color='red'
+            inverted={accepted}
+            onClick={() => this.props.check('accepted')}
+          >
+            <Checkbox
+              label='Nem elfogadható'
+              checked={!accepted}
+            />
+          </Button>
+          <Header as='h5'>A feladat megoldásának szöveges értékelése:</Header>
           <Form>
             <Form.Field
               control={TextArea}
@@ -97,9 +131,9 @@ class CorrectSolutionForm extends Component {
             onClick={() => {
               this.props.correctSolution(
                 relevantSolution.id,
-                true,
-                this.props.correction.accepted,
-                this.props.correction.note,
+                corrected,
+                accepted,
+                note,
               );
               this.setState({ showModal: false });
               this.props.clearWrite();
@@ -120,4 +154,7 @@ export default connect(mapStateToProps, {
   writeSolution,
   check,
   clearWrite,
+  getSolutions,
+  getDocuments,
+  selectSolution,
 })(CorrectSolutionForm);

@@ -25,6 +25,7 @@ export const ADD_SOLUTION = 'add_solution';
 export const ADD_DOCUMENT = 'add_document';
 export const GET_DOCUMENTS = 'get_documents';
 export const CORRECT_SOLUTION = 'correct_solution';
+export const SELECT_SOLUTION = 'select_solution';
 export const CHECK = 'check';
 
 export const GET_EVENTS = 'get_events';

@@ -6,6 +6,7 @@ import { emptyMessage } from '../pages/Homework';
 import './Forms.css';
 import {
   getSolutions,
+  getDocuments,
 } from '../../actions/homework';
 
 class SolutionDetailsForm extends Component {
@@ -53,6 +54,7 @@ class SolutionDetailsForm extends Component {
             onClick={() => {
               this.setState({ showModal: true });
               this.props.getSolutions();
+              this.props.getDocuments();
             }}
           >
             <Icon name='external' />
@@ -65,13 +67,13 @@ class SolutionDetailsForm extends Component {
         </Modal.Header>
         <Modal.Content>
           <Header as='h3'>A feladat leírása:</Header>
-          {this.props.taskdesc.split('\n').map(s => (<p>{s}</p>))}
+          {this.props.taskdesc.split('\n').map(s => (<p key={Math.random()}>{s}</p>))}
           <Divider />
           <Header as='h3'>Nem érkezett még megoldás:</Header>
           {noSubmitStudents.length === 0 ?
               emptyMessage(emptyStudentText) :
               noSubmitStudents.map(student => (
-                <Button color='blue' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{student.full_name}</Button>
+                <Button key={Math.random()} color='blue' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{student.full_name}</Button>
               ))
           }
           <Divider />
@@ -80,6 +82,8 @@ class SolutionDetailsForm extends Component {
             emptyMessage(emptyStudentText) :
             waitForCorrectionStudents.map(student => (
               <CorrectSolutionForm
+                key={Math.random()}
+                color='orange'
                 studentName={student.nick}
                 studentFullName={student.full_name}
                 studentId={student.id}
@@ -89,19 +93,35 @@ class SolutionDetailsForm extends Component {
             ))
           }
           <Divider />
-          <Header as='h3'>A megoldás nem elfogadható:</Header>
+          <Header as='h3'>A megoldás nem elfogadható (A névre kattintva módosítható a javítás):</Header>
           {noAcceptStudents.length === 0 ?
             emptyMessage(emptyStudentText) :
             noAcceptStudents.map(student => (
-              <Button color='red' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{student.full_name}</Button>
+              <CorrectSolutionForm
+                key={Math.random()}
+                color='red'
+                studentName={student.nick}
+                studentFullName={student.full_name}
+                studentId={student.id}
+                taskTitle={this.props.tasktitle}
+                taskSolutions={taskSolutions}
+              />
             ))
         }
           <Divider />
-          <Header as='h3'>Elfogadva:</Header>
+          <Header as='h3'>Elfogadva (A névre kattintva módosítható a javítás):</Header>
           {acceptedStudents.length === 0 ?
             emptyMessage(emptyStudentText) :
             acceptedStudents.map(student => (
-              <Button color='green' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{student.full_name}</Button>
+              <CorrectSolutionForm
+                key={Math.random()}
+                color='green'
+                studentName={student.nick}
+                studentFullName={student.full_name}
+                studentId={student.id}
+                taskTitle={this.props.tasktitle}
+                taskSolutions={taskSolutions}
+              />
             ))
         }
         </Modal.Content>
@@ -124,5 +144,5 @@ class SolutionDetailsForm extends Component {
 const mapStateToProps = ({ homeworks, user }) => ({ homeworks, user });
 
 export default connect(mapStateToProps, {
-  getSolutions,
+  getSolutions, getDocuments,
 })(SolutionDetailsForm);
