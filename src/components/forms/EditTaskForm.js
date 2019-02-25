@@ -84,7 +84,7 @@ class EditTaskForm extends Component {
             color='green'
             disabled={
               title === '' ||
-              title.length > 150 ||
+              (title !== undefined ? title.length > 150 : false) ||
               text === '' ||
               deadline === '' || moment().isAfter(deadline)
             }
