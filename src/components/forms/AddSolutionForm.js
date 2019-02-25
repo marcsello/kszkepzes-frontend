@@ -6,6 +6,15 @@ import './Forms.css';
 import ConfirmModal from '../forms/ConfirmModal';
 import { emptyMessage } from '../pages/Homework';
 
+const allowedFileTypes = [
+  'image/jpeg',
+  'image/png',
+  'application/x-zip-compressed',
+];
+
+//in megabytes
+const maxFileSize = 50;
+
 class AddSolutionForm extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +32,7 @@ class AddSolutionForm extends Component {
     const accepted = false;
     const sentences = this.props.taskdesc.split('\n');
     const note = '';
-    const disabledText = 'A határidő lejárt, további beadás nem lehetséges.'
+    const disabledText = 'A határidő lejárt, további beadás nem lehetséges.';
     return (
       <Modal
         open={this.state.showModal}
@@ -65,7 +74,7 @@ class AddSolutionForm extends Component {
                 placeholder='Add meg a megoldás leírását...'
               />
               <Form.Field>
-                <label>Fájl:</label>
+                <label>Fájl (Megengedett fájltípusok: png, jpeg, jpg, zip. Maximum 50 MB.):</label>
                 <Input type='file' onChange={e => this.props.writeSolutionFile(e)} />
               </Form.Field>
             </Form>
@@ -86,7 +95,16 @@ class AddSolutionForm extends Component {
             ?
               <ConfirmModal
                 button={
-                  <Button disabled={(name === '' || description === '')} inverted color='green'>
+                  <Button
+                    disabled={
+                      name === '' ||
+                      description === '' ||
+                      !allowedFileTypes.includes(file.type) ||
+                      file.size > (maxFileSize) * (1024 ** 2)
+                    }
+                    inverted
+                    color='green'
+                  >
                     <Icon name='checkmark' /> Beadás
                   </Button>
                     }
@@ -95,6 +113,7 @@ class AddSolutionForm extends Component {
                   this.props.addSolution({
                     task, accepted, corrected, note, name, description, file,
                     });
+                  console.log(file);
                   this.setState({ showModal: false });
                   this.props.clearWrite();
                   }
