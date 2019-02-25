@@ -99,8 +99,10 @@ class AddSolutionForm extends Component {
                     disabled={
                       name === '' ||
                       description === '' ||
+                      (file === '' ? false :
                       !allowedFileTypes.includes(file.type) ||
                       file.size > (maxFileSize) * (1024 ** 2)
+                      )
                     }
                     inverted
                     color='green'
