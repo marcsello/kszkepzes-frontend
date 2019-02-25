@@ -65,7 +65,7 @@ class CorrectSolutionForm extends Component {
           { (relevantDocument !== undefined && relevantDocument !== null &&
           relevantDocument.description !== undefined && relevantDocument.description !== null
           && relevantDocument.description !== '')
-            ? relevantDocument.description.split('\n')
+            ? relevantDocument.description.split('\n').map(s => (<p key={Math.random()}>{s}</p>))
             : <p>Nincs leírás.</p>}
           <Header as='h5'>A beadott dokumentum:</Header>
           {fileLink === null ?
