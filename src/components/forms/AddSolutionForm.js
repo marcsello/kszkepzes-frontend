@@ -113,7 +113,6 @@ class AddSolutionForm extends Component {
                   this.props.addSolution({
                     task, accepted, corrected, note, name, description, file,
                     });
-                  console.log(file);
                   this.setState({ showModal: false });
                   this.props.clearWrite();
                   }
