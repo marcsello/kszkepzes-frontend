@@ -76,7 +76,12 @@ class AddTaskForm extends Component {
           <Button
             inverted
             color='green'
-            disabled={(title === '' || text === '' || deadline === '' || moment().isAfter(deadline))}
+            disabled={
+              title === '' ||
+              title.length > 150 ||
+              text === '' ||
+              deadline === '' || moment().isAfter(deadline)
+            }
             onClick={() => {
               this.props.addTask({ title, text, deadline });
               this.setState({ showModal: false });
