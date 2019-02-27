@@ -5,7 +5,10 @@ import {
   ADD_EVENT_NOTE,
   CLEAR_WRITE,
   DELETE_NOTE,
+  GET_NOTES_BY_PROFILE,
+  ADD_PROFILE_NOTE,
 } from './types';
+import { showMessage } from './messages';
 
 export const getNotesByEvent = id => (
   async (dispatch) => {
@@ -21,11 +24,25 @@ export const getNotesByEvent = id => (
   }
 );
 
+export const getNotesByProfile = id => (
+  async (dispatch) => {
+    try {
+      const response = await axios.get('/api/v1/notes/', { params: { profileID: id } });
+      dispatch({
+        type: GET_NOTES_BY_PROFILE,
+        payload: response.data,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
 export const writeNote = (event) => {
   return (dispatch => (dispatch({ type: WRITE_NOTE, payload: event.target.value })));
 };
 
-export const postEventNote = ({ eventid, userid, note }) => (
+export const postNote = ({ eventid, userid, note }) => (
   async (dispatch) => {
     try {
       const response = await axios.post('/api/v1/notes/', {
@@ -34,14 +51,22 @@ export const postEventNote = ({ eventid, userid, note }) => (
         note,
       });
       if (response.data.id) {
-        alert('Sikeres mentés!');
-        dispatch({
-          type: ADD_EVENT_NOTE,
-          payload: response.data,
-        });
+        dispatch(showMessage('A megjegyzés hozzáadva!', 'success'));
+        if (eventid) {
+          dispatch({
+            type: ADD_EVENT_NOTE,
+            payload: response.data,
+          });
+        }
+        if (userid) {
+          dispatch({
+            type: ADD_PROFILE_NOTE,
+            payload: response.data,
+          });
+        }
       }
     } catch (e) {
-      console.log(e);
+      dispatch(showMessage('A hozzáadás nem sikerült!', 'error'));
     }
   });
 
@@ -56,13 +81,13 @@ export const deleteNote = note => (
     try {
       const response = await axios.delete(`/api/v1/notes/${note.id}/`);
       if (!response.data.id) {
-        alert('Sikeres törlés!');
+        dispatch(showMessage('Sikeres törlés!', 'success'));
         dispatch({
           type: DELETE_NOTE,
           payload: note,
         });
       } else {
-        alert('A törlés nem sikerült!');
+        dispatch(showMessage('A törlés nem sikerült!', 'error'));
       }
     } catch (e) {
       console.log(e);

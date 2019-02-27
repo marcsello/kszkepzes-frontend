@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import CorrectSolutionForm from './CorrectSolutionForm';
 import { emptyMessage } from '../pages/Homework';
 import './Forms.css';
+import {
+  getSolutions,
+} from '../../actions/homework';
 
 class SolutionDetailsForm extends Component {
   constructor(props) {
@@ -22,22 +25,22 @@ class SolutionDetailsForm extends Component {
     const noAcceptStudents = [];
     const acceptedStudents = [];
 
-    for (let i = 0; i < this.props.homeworks.profiles.length; i += 1) {
-      const profileSolutions = taskSolutions.filter(solution =>
-        solution.created_by === this.props.homeworks.profiles[i].id);
+    this.props.homeworks.profiles.forEach((profile) => {
+          const profileSolutions = taskSolutions.filter(solution =>
+            solution.created_by === profile.id);
 
-      if (this.props.homeworks.profiles[i].role === 'Student') {
-        if (profileSolutions.length === 0) {
-          noSubmitStudents.push(this.props.homeworks.profiles[i]);
-        } else if (taskSolutions[taskSolutions.length - 1].corrected === false) {
-          waitForCorrectionStudents.push(this.props.homeworks.profiles[i]);
-        } else if (taskSolutions[taskSolutions.length - 1].accepted === false) {
-          noAcceptStudents.push(this.props.homeworks.profiles[i]);
-        } else {
-          acceptedStudents.push(this.props.homeworks.profiles[i]);
-        }
-      }
-    }
+          if (profile.role === 'Student') {
+            if (profileSolutions.length === 0) {
+              noSubmitStudents.push(profile);
+            } else if (profileSolutions[profileSolutions.length - 1].corrected === false) {
+              waitForCorrectionStudents.push(profile);
+            } else if (profileSolutions[profileSolutions.length - 1].accepted === false) {
+              noAcceptStudents.push(profile);
+            } else {
+              acceptedStudents.push(profile);
+            }
+          }
+          });
 
     const emptyStudentText = 'Nincs ilyen képződő jelenleg.';
 
@@ -45,7 +48,13 @@ class SolutionDetailsForm extends Component {
       <Modal
         open={this.state.showModal}
         trigger={
-          <button id='task' onClick={() => { this.setState({ showModal: true }); }}>
+          <button
+            id='task'
+            onClick={() => {
+              this.setState({ showModal: true });
+              this.props.getSolutions();
+            }}
+          >
             <Icon name='external' />
             {this.props.tasktitle}
           </button>
@@ -115,4 +124,5 @@ class SolutionDetailsForm extends Component {
 const mapStateToProps = ({ homeworks, user }) => ({ homeworks, user });
 
 export default connect(mapStateToProps, {
+  getSolutions,
 })(SolutionDetailsForm);

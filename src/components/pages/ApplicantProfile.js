@@ -1,8 +1,20 @@
 import React, { Component } from 'react';
-import { Container, Header, Item, Button, Label, List } from 'semantic-ui-react';
+import {
+  Container,
+  Header,
+  Item,
+  Button,
+  Label,
+  List,
+  Form,
+  Comment,
+} from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { getSelectedProfile, setStatus } from '../../actions/statistics';
+import { getNotesByProfile, writeNote, clearWrite, postNote, deleteNote } from '../../actions/notes';
 import ConfirmModal from '../forms/ConfirmModal';
+
+import moment from 'moment';
 
 const options = [
   { key: 'DT', text: 'DevTeam' },
@@ -15,6 +27,7 @@ const options = [
 class ApplicantProfile extends Component {
   componentWillMount() {
     this.props.getSelectedProfile(this.props.match.params.id);
+    this.props.getNotesByProfile(this.props.match.params.id);
   }
 
   renderGroups() {
@@ -29,7 +42,45 @@ class ApplicantProfile extends Component {
     ));
   }
 
+  renderComments() {
+    const notes = this.props.profileNotes;
+    return notes.map((note) => {
+      if (!note.event) {
+        return (
+          <Comment>
+            <Comment.Content>
+              <Comment.Author>{note.created_by_name}</Comment.Author>
+              <Comment.Metadata>
+                {moment(note.created_at).format('LL')}
+              </Comment.Metadata>
+              <Comment.Text>
+                {note.note}
+              </Comment.Text>
+            </Comment.Content>
+            { this.props.user.fullName === note.created_by_name ?
+              <ConfirmModal
+                text='törölni akarod a megjegyzést'
+                button={
+                  <Button
+                    compact
+                    color='red'
+                    size='mini'
+                  >
+                    Delete
+                  </Button>
+                }
+                onAccept={() => this.props.deleteNote(note)}
+              />
+            :
+            null }
+          </Comment>);
+      }
+      return '';
+    });
+  }
+
   render() {
+    const note = this.props.actualNote;
     const { id, signed, groups, role, full_name, nick, motivation_about, motivation_exercise, motivation_profession }
     = this.props.selectedProfile;
     return (
@@ -90,25 +141,51 @@ class ApplicantProfile extends Component {
           </Item.Content>
         </Item>
         { signed && role !== 'Staff' ?
-          <Container textAlign='center'>
-            <ConfirmModal
-              button={
+          <Container>
+            <Container textAlign='center'>
+              <ConfirmModal
+                button={
+                  <Button
+                    color='green'
+                  >Jelentkezés elfogadása
+                  </Button>}
+                text='elfogadod a jelentkezést'
+                onAccept={() => this.props.setStatus(id, 'Student')}
+              />
+              <ConfirmModal
+                button={
+                  <Button
+                    color='red'
+                  >Jelentkezés elutasítása
+                  </Button>}
+                text='elutasítod a jelentkezést'
+                onAccept={() => this.props.setStatus(id, 'Denied')}
+              />
+            </Container>
+            <Comment.Group>
+              <Header dividing>
+                Megjegyzések
+              </Header>
+              {this.renderComments()}
+              <Form reply>
+                <Form.TextArea
+                  value={note.note}
+                  onChange={e => this.props.writeNote(e)}
+                />
                 <Button
-                  color='green'
-                >Jelentkezés elfogadása
-                </Button>}
-              text='elfogadod a jelentkezést'
-              onAccept={() => this.props.setStatus(id, 'Student')}
-            />
-            <ConfirmModal
-              button={
-                <Button
-                  color='red'
-                >Jelentkezés elutasítása
-                </Button>}
-              text='elutasítod a jelentkezést'
-              onAccept={() => this.props.setStatus(id, 'Denied')}
-            />
+                  onClick={() => {
+                                  this.props.postNote({ userid: id,
+                                                        note: note.note });
+                                  this.props.clearWrite();
+                                }
+                          }
+                  content='Megjegyzés hozzáadása'
+                  labelPosition='left'
+                  icon='edit'
+                  primary
+                />
+              </Form>
+            </Comment.Group>
           </Container>
           :
           null
@@ -118,6 +195,18 @@ class ApplicantProfile extends Component {
   }
 }
 
-const mapStateToProps = ({ trainees: { selectedProfile } }) => ({ selectedProfile });
+const mapStateToProps = ({
+  user,
+  trainees: { selectedProfile },
+  notes: { profileNotes, actualNote }
+}) => ({ user, selectedProfile, profileNotes, actualNote });
 
-export default connect(mapStateToProps, { getSelectedProfile, setStatus })(ApplicantProfile);
+export default connect(mapStateToProps, {
+  getSelectedProfile,
+  setStatus,
+  postNote,
+  getNotesByProfile,
+  writeNote,
+  deleteNote,
+  clearWrite,
+})(ApplicantProfile);

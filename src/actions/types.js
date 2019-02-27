@@ -31,8 +31,8 @@ export const GET_EVENTS = 'get_events';
 export const GET_EVENT_BY_ID = 'get_event_by_id';
 
 export const GET_TRAINEES = 'get_trainees';
-export const VISITOR_CHANGE = 'visitor_change';
 export const ABSENT_CHANGE = 'absent_change';
+export const VISITOR_CHANGE = 'visitor_change';
 export const CHANGE_NO = 'change_no';
 
 export const GET_NOTES_BY_EVENT = 'get_notes_by_event';
@@ -47,7 +47,12 @@ export const WRITE_NOTE = 'write_note';
 export const CLEAR_NOTE = 'clear_note';
 export const ADD_EVENT_NOTE = 'add_note';
 export const DELETE_NOTE = 'delete_note';
+export const ADD_PROFILE_NOTE = 'add_profile_note';
+export const GET_NOTES_BY_PROFILE = 'get_notes_by_profile';
 
 export const GET_PROFILES = 'get_profiles';
 export const SET_STATUS = 'set_status';
 export const GET_SELECTED_PROFILE = 'get_selected_profile';
+
+export const SHOW_MESSAGE = 'show_message';
+export const DISMISS_MESSAGE = 'dismiss_message';

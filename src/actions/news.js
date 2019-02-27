@@ -1,6 +1,7 @@
 import axios from './session';
 import { GET_NEWS, WRITE_NEWS, ADD_NEWS, DELETE_NEWS,
-  CLEAR_WRITE, SELECT_NEWS, EDIT_NEWS } from './types';
+  CLEAR_WRITE, SELECT_NEWS, EDIT_NEWS, SHOW_MESSAGE } from './types';
+import { showMessage } from './messages';
 
 export const getNews = () => (
   async (dispatch) => {
@@ -25,16 +26,16 @@ export const postNews = ({ title, author, text }) => (
         text,
       });
       if (response.data.id) {
-        alert('Sikeres mentés!');
         dispatch({
           type: ADD_NEWS,
           payload: response.data,
         });
+        dispatch(showMessage('Hír hozzádva!', 'success'));
       } else {
-        alert('Mentés nem sikerült!');
+        dispatch(showMessage('Nem sikerült a hírt hozáadni!', 'error'));
       }
     } catch (e) {
-      console.log(e);
+      dispatch(showMessage('Nem sikerült a hírt hozáadni!', 'error'));
     }
   }
 );
@@ -48,17 +49,17 @@ export const editNews = ({ id, title, editedBy, text }) => (
         text,
       });
       if (response.data.id) {
-        alert('Sikeres mentés!');
+        dispatch(showMessage('Hír módosítva!', 'success'));
         dispatch({
           type: EDIT_NEWS,
           payload: response.data,
 
         });
       } else {
-        alert('Mentés nem sikerült!');
+        dispatch(showMessage('Nem sikerült a módosítás', 'error'));
       }
     } catch (e) {
-      console.log(e);
+      dispatch(showMessage('Nem sikerült a módosítás', 'error'));
     }
   }
 );
@@ -68,16 +69,16 @@ export const deleteNews = news => (
     try {
       const response = await axios.delete(`/api/v1/news/${news.id}/`);
       if (!response.data.id) {
-        alert('Sikeres törlés!');
+        dispatch(showMessage('Sikeres törlés!', 'success'));
         dispatch({
           type: DELETE_NEWS,
           payload: news,
         });
       } else {
-        alert('A törlés nem sikerült!');
+        dispatch(showMessage('A törlés nem sikerült!', 'error'));
       }
     } catch (e) {
-      console.log(e);
+      dispatch(showMessage('A törlés nem sikerült!', 'error'));
     }
   });
 
