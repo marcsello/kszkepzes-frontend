@@ -24,6 +24,8 @@ class EditTaskForm extends Component {
       <Modal
         open={this.state.showModal}
         onOpen={this.props.onClick}
+        closeOnDimmerClick
+        onClose={() => this.setState({ showModal: false })}
         trigger={
           <Button
             inverted

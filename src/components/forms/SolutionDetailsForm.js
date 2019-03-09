@@ -48,6 +48,8 @@ class SolutionDetailsForm extends Component {
     return (
       <Modal
         open={this.state.showModal}
+        closeOnDimmerClick
+        onClose={() => this.setState({ showModal: false })}
         trigger={
           <button
             id='task'

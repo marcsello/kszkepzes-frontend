@@ -43,6 +43,8 @@ class CorrectSolutionForm extends Component {
     return (
       <Modal
         open={this.state.showModal}
+        closeOnDimmerClick
+        onClose={() => this.setState({ showModal: false })}
         trigger={
           <Button
             inverted

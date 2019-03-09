@@ -12,7 +12,7 @@ const allowedFileTypes = [
   'application/x-zip-compressed',
 ];
 
-//in megabytes
+// in megabytes
 const maxFileSize = 50;
 
 class AddSolutionForm extends Component {
@@ -36,6 +36,8 @@ class AddSolutionForm extends Component {
     return (
       <Modal
         open={this.state.showModal}
+        closeOnDimmerClick
+        onClose={() => this.setState({ showModal: false })}
         trigger={
           <button
             id='task'
