@@ -1,10 +1,14 @@
-#task {
+#task, #tasknote{
   border: none;
   background-color: inherit;
   color: teal;
 }
 
-#task:hover {
+#tasknote {
+  color: black;
+}
+
+#task:hover, #tasknote:hover {
   color: red;
   cursor: pointer;
 }
