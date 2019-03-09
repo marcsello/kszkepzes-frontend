@@ -16,13 +16,13 @@ import {
   addTask,
   setSelectedTask,
   deleteTask,
-  addDocument,
   getProfiles,
 } from '../../actions/homework';
 import AddTaskForm from '../forms/AddTaskForm';
 import AddSolutionForm from '../forms/AddSolutionForm';
 import SolutionDetailsForm from '../forms/SolutionDetailsForm';
 import EditTaskForm from '../forms/EditTaskForm';
+import InfoModal from '../forms/InfoModal';
 import ConfirmModal from '../forms/ConfirmModal';
 
 const displayTypes = {
@@ -97,8 +97,12 @@ class Homework extends Component {
   }
 
   renderTaskList(active, staff) {
+    const { user, homeworks } = this.props;
+    const profileSolutions = homeworks.solutions.filter(solution =>
+      solution.created_by === user.id);
+
     if (!staff) {
-      return this.props.homeworks.tasks
+      return homeworks.tasks
         .filter(task => moment().isBefore(task.deadline) === active)
         .map(task => (
           <Table.Row
@@ -128,6 +132,25 @@ class Homework extends Component {
             <Table.Cell>
               <Icon name={displayTypes[this.getTaskDisplayStyle(task)].icon} />{' '}
               {displayTypes[this.getTaskDisplayStyle(task)].text}
+              {profileSolutions.filter(solution => solution.task === task.id)
+                && profileSolutions.filter(solution => solution.task === task.id).slice(-1)[0]
+                && profileSolutions.filter(solution => solution.task === task.id).slice(-1)[0].note
+                ?
+                  <div>
+                    <InfoModal
+                      button={
+                        <button id='tasknote'>
+                          (Megjegyzés <Icon name='external' />)
+                        </button>
+                      }
+                      title='Megjegyzés a feladathoz'
+                      content={profileSolutions.filter(solution =>
+                      solution.task === task.id).slice(-1)[0].note}
+                      onAccept={() => {}}
+                    />
+                  </div>
+                : ''
+              }
             </Table.Cell>
           </Table.Row>
         ));
@@ -286,14 +309,16 @@ class Homework extends Component {
   }
 
   render() {
-    if (this.props.user.role === 'Student') {
+    const { user } = this.props;
+
+    if (user.role === 'Student') {
       return (
         <div>
           {this.renderHomeworks(true, false)}
           {this.renderHomeworks(false, false)}
         </div>
       );
-    } else if (this.props.user.role === 'Staff') {
+    } else if (user.role === 'Staff') {
       return (
         <div>
           <Segment style={{ padding: '0 0 2em 0' }} vertical basic>
@@ -333,7 +358,6 @@ export default connect(
     getSolutions,
     addTask,
     deleteTask,
-    addDocument,
     getProfiles,
   },
 )(Homework);
