@@ -23,14 +23,13 @@ class CorrectSolutionForm extends Component {
     } = this.props;
     const taskSolutionsProfile =
     taskSolutions.filter(solution => solution.created_by === studentId);
-    const relevantSolution = taskSolutionsProfile[taskSolutionsProfile.length - 1];
+    const relevantSolution = taskSolutionsProfile.slice(-1)[0];
     const relevantDocuments = this.props.homeworks.documents.filter(document =>
       document.solution === relevantSolution.id).filter(document =>
       document.uploaded_by_name === studentFullName);
-    const relevantDocument = relevantDocuments[relevantDocuments.length - 1];
+    const relevantDocument = relevantDocuments.slice(-1)[0];
     let fileLink;
-    if (relevantDocument !== undefined && relevantDocument !== null &&
-    relevantDocument.file !== undefined && relevantDocument.file !== null) {
+    if (relevantDocument && relevantDocument.file) {
       fileLink = `/media${relevantDocument.file.split('media')[1]}`;
     } else {
       fileLink = null;
@@ -69,15 +68,15 @@ class CorrectSolutionForm extends Component {
             : <p>Nincs cím.</p>
           }
           <Header as='h5'>A megoldás leírása:</Header>
-          { (relevantDocument !== undefined && relevantDocument !== null &&
-          relevantDocument.description !== undefined && relevantDocument.description !== null
-          && relevantDocument.description !== '')
+          {(relevantDocument && relevantDocument.description)
             ? relevantDocument.description.split('\n').map(s => (<p key={Math.random()}>{s}</p>))
-            : <p>Nincs leírás.</p>}
+            : <p>Nincs leírás.</p>
+          }
           <Header as='h5'>A beadott dokumentum:</Header>
-          {fileLink === null ?
-            <p>Nincs fájl.</p> :
-            <a href={fileLink}>Fájl letöltése</a>}
+          {fileLink
+            ? <a href={fileLink}>Fájl letöltése</a>
+            : <p>Nincs fájl.</p>
+          }
           <Header as='h5'>Kijavítás állapotának változtatása:</Header>
           <Button
             color='orange'
