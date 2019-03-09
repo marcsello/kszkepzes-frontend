@@ -74,7 +74,7 @@ class CorrectSolutionForm extends Component {
           }
           <Header as='h5'>A beadott dokumentum:</Header>
           {fileLink
-            ? <a href={fileLink}>Fájl letöltése</a>
+            ? <a href={fileLink} rel='noreferrer noopener' target='_blank'>Fájl letöltése</a>
             : <p>Nincs fájl.</p>
           }
           <Header as='h5'>Kijavítás állapotának változtatása:</Header>
