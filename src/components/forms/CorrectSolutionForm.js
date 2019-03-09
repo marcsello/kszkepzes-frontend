@@ -63,6 +63,11 @@ class CorrectSolutionForm extends Component {
           A(z) {taskTitle} nevű feladat {studentFullName} által beadott megoldásának kijavítása:
         </Modal.Header>
         <Modal.Content>
+          <Header as='h5'>A megoldás címe:</Header>
+          {(relevantDocument && relevantDocument.description)
+            ? <p>{relevantDocument.name}</p>
+            : <p>Nincs cím.</p>
+          }
           <Header as='h5'>A megoldás leírása:</Header>
           { (relevantDocument !== undefined && relevantDocument !== null &&
           relevantDocument.description !== undefined && relevantDocument.description !== null
