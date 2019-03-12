@@ -45,10 +45,7 @@ class ConfirmModal extends Component {
           <Button
             color='green'
             inverted
-            onClick={() => { onAccept();
-                             this.close();
-                           }
-                    }
+            onClick={() => { onAccept(); this.close(); }}
           >
             <Icon name='checkmark' /> Igen
           </Button>

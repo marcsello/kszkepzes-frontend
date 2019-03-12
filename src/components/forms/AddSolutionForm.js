@@ -33,6 +33,7 @@ class AddSolutionForm extends Component {
     const sentences = this.props.taskdesc.split('\n');
     const note = '';
     const disabledText = 'A határidő lejárt, további beadás nem lehetséges.';
+
     return (
       <Modal
         open={this.state.showModal}
@@ -99,19 +100,16 @@ class AddSolutionForm extends Component {
                 button={
                   <Button
                     disabled={
-                      name === '' ||
-                      description === '' ||
-                      (file === '' ? false :
-                      !allowedFileTypes.includes(file.type) ||
-                      file.size > (maxFileSize) * (1024 ** 2)
-                      )
+                      !name || !description ||
+                      (!file ? false : !allowedFileTypes.includes(file.type) ||
+                      file.size > (maxFileSize) * (1024 ** 2))
                     }
                     inverted
                     color='green'
                   >
                     <Icon name='checkmark' /> Beadás
                   </Button>
-                    }
+                }
                 text='beadod az új megoldást, ami felülírja az előzőt'
                 onAccept={() => {
                   this.props.addSolution({
@@ -126,7 +124,11 @@ class AddSolutionForm extends Component {
               <Button
                 inverted
                 color='green'
-                disabled={(name === '' || description === '')}
+                disabled={
+                  !name || !description ||
+                  (!file ? false : !allowedFileTypes.includes(file.type) ||
+                  file.size > (maxFileSize) * (1024 ** 2))
+                }
                 onClick={() => {
                 this.props.addSolution({
                   task, accepted, corrected, note, name, description, file,
