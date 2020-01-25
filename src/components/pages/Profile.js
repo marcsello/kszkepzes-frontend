@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container, Form, Dropdown, Divider, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { textChange, submitRegistration, groupChange } from '../../actions';
+import { getDeadline } from '../../actions/auth'
 import HiddenForm from '../forms/HiddenForm'
 
 const options = [
@@ -14,6 +15,7 @@ const options = [
 
 class Profile extends Component {
   componentWillMount() {
+    this.props.getDeadline()
     if (!this.props.id) {
       this.props.history.push('/home');
     }
@@ -21,22 +23,25 @@ class Profile extends Component {
 
   render() {
     const {
-      nick, groups, motivationAbout, motivationProfession, motivationExercise, signed, id,
+      nick, groups, motivationAbout, motivationProfession, motivationExercise, signed, id, deadline, text: deadlineText
     } = this.props;
-    const endDate = new Date(2020, 2, 14, 23, 59, 59)
-    const endDateText = `február 14. 23:59-ig`
+    const endDate = new Date(deadline)
+    const endDateText = deadlineText
     let canEdit = Date.now()<endDate
     return (
       <Container
         style={{
-          marginTop: '0.5em',
+          marginTop: '1em',
         }}
       >
+        {canEdit ?
         <Segment inverted color='red' tertiary>
           <p style={{ fontSize: '1.33em' }}>
             A profilod mentés után is módosítható a későbbiekben, egészen {endDateText}.
           </p>
         </Segment>
+        : ''}
+
         <Form>
           {canEdit ? 
             <Form.Input
@@ -194,11 +199,12 @@ class Profile extends Component {
             }
             checked={signed}
             readOnly={!canEdit}
+            style={ !canEdit ? { marginBottom: '5em' } : null}
           />
           {canEdit ? 
           <Form.Button
             primary
-            style={{ marginBottom: '10em' }}
+            style={{ marginBottom: '5em' }}
             onClick={() => this.props.submitRegistration({
               nick, motivationAbout, motivationProfession, motivationExercise, signed, groups, id,
             })}
@@ -214,8 +220,8 @@ class Profile extends Component {
 
 const mapStateToProps = ({
   user: {
-    nick, groups, motivationAbout, motivationProfession, motivationExercise, signed, id,
-  },
+    nick, groups, motivationAbout, motivationProfession, motivationExercise, signed, id, deadline, text
+  }
 }) => ({
   nick,
   groups,
@@ -224,6 +230,8 @@ const mapStateToProps = ({
   motivationExercise,
   signed,
   id,
+  deadline,
+  text
 });
 
-export default connect(mapStateToProps, { textChange, submitRegistration, groupChange })(Profile);
+export default connect(mapStateToProps, { textChange, submitRegistration, groupChange, getDeadline })(Profile);

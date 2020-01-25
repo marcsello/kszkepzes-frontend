@@ -1,5 +1,5 @@
 import axios from './session';
-import { GET_USERDATA, PROFILE_CHANGE, GROUP_CHANGE } from './types';
+import { GET_USERDATA, PROFILE_CHANGE, GROUP_CHANGE, GET_DEADLINE } from './types';
 
 
 export const getUserData = () => (
@@ -38,6 +38,21 @@ export const getUserData = () => (
         payload: {
           id, joinDate, nick, motivationAbout, motivationProfession, motivationExercise, signed, groups, role, permission
         },
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
+export const getDeadline = () => (
+  async (dispatch) => {
+    try {
+      const response = await axios.get('/api/v1/profiles/deadline');
+
+      dispatch({
+        type: GET_DEADLINE,
+        payload: response.data,
       });
     } catch (e) {
       console.log(e);
