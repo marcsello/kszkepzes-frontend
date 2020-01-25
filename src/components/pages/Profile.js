@@ -81,7 +81,7 @@ class Profile extends Component {
           }
 
           <Divider horizontal />
-          {canEdit ? 
+          {canEdit ?
           <Form.TextArea
             rows={10}
             name='motivationExercise'
@@ -195,6 +195,7 @@ class Profile extends Component {
             checked={signed}
             readOnly={!canEdit}
           />
+          {canEdit ? 
           <Form.Button
             primary
             style={{ marginBottom: '10em' }}
@@ -204,6 +205,7 @@ class Profile extends Component {
           >
             Mentés
           </Form.Button>
+          : '' }
         </Form>
       </Container>
     );
