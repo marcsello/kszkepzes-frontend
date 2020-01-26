@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Header, Segment, Divider } from 'semantic-ui-react';
 import './Groups.css';
-import GrouCard from '../extra/GroupCard'
+import GroupCard from '../extra/GroupCard'
 
 import { connect } from 'react-redux';
 import { getGroups } from '../../actions/groups';
@@ -34,7 +34,7 @@ class Groups extends Component {
         <Segment style={{ padding: '1em 0em 5em' }} vertical>
           <Container text>
             { this.props.groups.map(item => {
-              return <GrouCard key={item.id} label={item.name} value={item.description}/>
+              return <GroupCard key={item.id} label={item.name} value={item.description}/>
             })}
           </Container>
         </Segment>
