@@ -29,7 +29,9 @@ class News extends Component {
               { this.props.user.role === 'Staff' ?
               <Grid.Column floated='right' width={4}>
                 <EditNewsForm
-                  onClick={() => this.props.setSelectedNews(item)}
+                  onClick={() => {
+                    this.props.setSelectedNews(item)
+                  }}
                 />
                 <Button
                   compact
@@ -54,9 +56,9 @@ class News extends Component {
                   <p> Szerkesztve: {moment(item.updated_at).format('LLLL')}</p>
                 </Grid.Column>
                 <Grid.Column floated='right' width={5}>
-                  <p> Írta: <strong>{item.author_name}</strong></p>
+                  <p> Írta: <strong>{item.author}</strong></p>
                   {/* TODO get the edited by name */}
-                  <p> Szerkesztette: {item.author_name}</p>
+                  <p> Szerkesztette: {item.last_update_by}</p>
                 </Grid.Column>
               </Grid.Row>
             </Grid>

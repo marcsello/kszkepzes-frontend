@@ -13,6 +13,7 @@ export const getUserData = () => (
         motivation_about: motivationAbout,
         motivation_profession: motivationProfession,
         motivation_exercise: motivationExercise,
+        full_name,
         signed,
         groups,
         role,
@@ -36,7 +37,7 @@ export const getUserData = () => (
       dispatch({
         type: GET_USERDATA,
         payload: {
-          id, joinDate, nick, motivationAbout, motivationProfession, motivationExercise, signed, groups, role, permission
+          id, joinDate, nick, motivationAbout, motivationProfession, motivationExercise, full_name, signed, groups, role, permission
         },
       });
     } catch (e) {

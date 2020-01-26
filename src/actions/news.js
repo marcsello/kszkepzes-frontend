@@ -39,11 +39,11 @@ export const postNews = ({ title, author, text }) => (
   }
 );
 
-export const editNews = ({ id, title, editedBy, text }) => (
+export const editNews = ({ id, title, text, updated_by}) => (
   async (dispatch) => {
     try {
       const response = await axios.patch(`/api/v1/news/${id}/`, {
-        author: editedBy,
+        updated_by,
         title,
         text,
       });
