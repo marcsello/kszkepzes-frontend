@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { Segment, Header, Divider } from 'semantic-ui-react';
 
-class HiddenForm extends Component {
+class GroupCard extends Component {
     render(){
         return (
             <Segment style={{ marginTop: 0 }}>
@@ -13,4 +13,4 @@ class HiddenForm extends Component {
     }
 }
 
-export default HiddenForm
+export default GroupCard
