@@ -37,10 +37,15 @@ class Profile extends Component {
         {canEdit ?
         <Segment inverted color='red' tertiary>
           <p style={{ fontSize: '1.33em' }}>
-            A profilod mentés után is módosítható a későbbiekben, egészen {endDateText}.
+            A profilod mentés után is módosítható a későbbiekben, egészen {endDateText}-ig.
           </p>
         </Segment>
-        : ''}
+        :
+        <Segment inverted color='red' tertiary>
+          <p style={{ fontSize: '1.33em' }}>
+            A határidő {endDateText} volt, már nem tudsz jelentkezni.
+          </p>
+        </Segment>}
 
         <Form>
           {canEdit ? 
