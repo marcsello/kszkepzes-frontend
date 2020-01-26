@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container, Accordion, Icon, Grid } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import 'moment/locale/hu';
 import { getStudentEvents } from '../../actions/statistics';
 
 class Schedule extends Component {
