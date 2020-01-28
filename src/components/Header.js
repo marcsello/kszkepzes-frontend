@@ -64,17 +64,19 @@ class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: false,
+      isOpen: false,
     };
   }
   componentWillMount() {
     this.props.getUserData();
   }
 
-  switchHeader() {
-    this.setState( oldState => {
-      visible: !oldState.visible
-    })
+  handleOpen = () => {
+    this.setState({ isOpen: true });
+  }
+
+  handleClose = () => {
+    this.setState({ isOpen: false });
   }
 
   render() {
@@ -103,7 +105,10 @@ class Header extends Component {
                       {menuItems.map((item, i) =>
                         (this.props.user.permission >= item.permissionLevel
                           && item.permissionLevel > 0?
-                            <Menu.Item key={i} as={Link} to={item.to}>{item.prefix}{item.text}</Menu.Item>
+                            <Menu.Item
+                              key={i} as={Link} to={item.to}>
+                                {item.prefix}{item.text}
+                            </Menu.Item>
                             : null
                         ))
                       }
@@ -132,17 +137,23 @@ class Header extends Component {
             <Menu inverted secondary size='normal'>
               <Menu.Item as={Link} to={menuItems[0].to}>{menuItems[0].prefix}{menuItems[0].text}</Menu.Item>     
               <Popup trigger={
-                  <Menu.Item position='right'>
+                  <Menu.Item onClick={this.handleClose} 
+                  position='right'>
                     <Icon name='bars' size='large' />
                   </Menu.Item>
                 }
                 position='center'
-                flowing hoverable inverted>
+                flowing hoverable inverted
+                open={this.state.isOpen}
+                onOpen={this.handleOpen}>
                   <Menu vertical inverted secondary size='normal'>
                     {menuItems.map((item, i) =>
                       ( (this.props.user.permission >= item.permissionLevel ||
                         item.permissionLevel === 0) && i>0?
-                          <Menu.Item key={i} as={Link} to={item.to}>{item.prefix}{item.text}</Menu.Item>
+                          <Menu.Item onClick={this.handleClose} 
+                          key={i} as={Link} to={item.to}>
+                            {item.prefix}{item.text}
+                          </Menu.Item>
                           : null
                       ))
                     }
@@ -150,11 +161,11 @@ class Header extends Component {
                       {
                         this.props.user.id ?
                           <Button.Group>
-                            <Button inverted as={Link} to='/profile'>Profilom</Button>
-                            <Button as='a' href='/api/v1/logout/' icon='sign out' />
+                            <Button onClick={this.handleClose} inverted as={Link} to='/profile'>Profilom</Button>
+                            <Button onClick={this.handleClose} as='a' href='/api/v1/logout/' icon='sign out' />
                           </Button.Group>
                         :
-                          <Button as='a' href='/api/v1/login/authsch/' inverted>Bejelentkezés</Button>
+                          <Button onClick={this.handleClose} as='a' href='/api/v1/login/authsch/' inverted>Bejelentkezés</Button>
                       }
                     </Menu.Item>
                   </Menu>
