@@ -39,6 +39,7 @@ const range = (count) => {
 
 class Home extends Component {
   render() {
+    const kszk_age = new Date().getFullYear() - 1976
     return (
       <div>
         <div className='car-image-kszk'>
@@ -146,7 +147,7 @@ class Home extends Component {
             <p style={{ fontSize: '1.33em', fontFamily: 'Arial' }}>
               A Kollégiumi Számítástechnikai Kör az Egyetem legrégebben működő
               és legnagyobb aktív, informatikával foglalkozó öntevékeny
-              csoportosulása, idén ünnepeljük 42. születésnapunkat. A patinás
+              csoportosulása, idén ünnepeljük {kszk_age}. születésnapunkat. A patinás
               név mögött vidám hangulatú, alkotó kedvű csapat rejlik, mely a Kar
               jó szakmai képességű, számítástechnika iránt kiemelten érdeklődő
               tagjaiból verbuválódott, és bővül évente új tehetségekkel, lelkes

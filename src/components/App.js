@@ -3,6 +3,7 @@ import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 
+
 const App = () => (
   <div style={{ minHeight: '100%', position: 'relative' }}>
     <header id='header' >

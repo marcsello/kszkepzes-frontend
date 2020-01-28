@@ -7,6 +7,9 @@ import {
   Segment,
   Visibility,
   Image,
+  Grid,
+  Popup,
+  Icon,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { getUserData } from '../actions';
@@ -58,7 +61,7 @@ const menuItems = [
 ];
 
 const FixedMenu = ({ user }) => (
-  <Menu fixed='top' size='large' pointing>
+  <Menu vertical fixed='top' size='medium' pointing>
     <Container>
       {menuItems.map((item, i) =>
         (user.permission >= item.permissionLevel ||
@@ -107,8 +110,7 @@ class Header extends Component {
 
   render() {
     const { visible } = this.state;
-
-    return (
+    return (   
       <div>
         {visible ? <FixedMenu user={this.props.user} /> : null}
         <Visibility
@@ -117,30 +119,54 @@ class Header extends Component {
           once={false}
         >
           <Segment inverted textAlign='center' vertical>
-            <Container>
+          <Grid verticalAlign='middle' columns={5} centered>
+            <Grid.Row>
               <Menu inverted secondary size='large'>
-
                 {menuItems.map((item, i) =>
-                  (this.props.user.permission >= item.permissionLevel ||
-                    (item.permissionLevel === 0) ?
-                      <Menu.Item key={i} as={Link} to={item.to}>{item.prefix}{item.text}</Menu.Item>
-                      :
-                    null))}
-
-                <Menu.Item position='right'>
-                  {
-                    this.props.user.id ?
-                      <Button.Group>
-                        <Button inverted as={Link} to='/profile'>Profilom</Button>
-                        <Button as='a' href='/api/v1/logout/' icon='sign out' />
-                      </Button.Group>
-                    :
-                      <Button as='a' href='/api/v1/login/authsch/' inverted>Bejelentkezés</Button>
+                  (item.permissionLevel === 0 ?
+                      <Grid.Column>
+                        <Menu.Item key={i} as={Link} to={item.to}>{item.prefix}{item.text}</Menu.Item>
+                      </Grid.Column>
+                      : null
+                  ))
+                }
+                <Popup trigger={
+                    <Menu.Item>
+                      <Icon name='angle down' size='large' />
+                    </Menu.Item>
                   }
-                </Menu.Item>
-
+                  position='center'
+                  flowing hoverable inverted>
+                    <Menu inverted secondary size='large'>
+                      <Grid.Row>
+                        {menuItems.map((item, i) =>
+                          (this.props.user.permission >= item.permissionLevel
+                            && item.permissionLevel > 0?
+                              <Grid.Column>
+                                <Menu.Item key={i} as={Link} to={item.to}>{item.prefix}{item.text}</Menu.Item>
+                              </Grid.Column>
+                              : null
+                          ))
+                        }
+                      </Grid.Row>
+                    </Menu>
+                </Popup>
+                <Grid.Column>
+                  <Menu.Item floated='right' width={5}>
+                    {
+                      this.props.user.id ?
+                        <Button.Group>
+                          <Button inverted as={Link} to='/profile'>Profilom</Button>
+                          <Button as='a' href='/api/v1/logout/' icon='sign out' />
+                        </Button.Group>
+                      :
+                        <Button as='a' href='/api/v1/login/authsch/' inverted>Bejelentkezés</Button>
+                    }
+                  </Menu.Item>
+                </Grid.Column>
               </Menu>
-            </Container>
+            </Grid.Row>
+          </Grid>
           </Segment>
         </Visibility>
       </div>
