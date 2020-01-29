@@ -6,15 +6,16 @@ import {
   Button,
   Segment,
   Image,
-  Grid,
   Popup,
   Icon,
   Responsive,
 } from 'semantic-ui-react';
+
 import { connect } from 'react-redux';
 import { getUserData } from '../actions';
 import KSZKlogo from './images/kszk_logo.svg';
 
+// Objects that will be converted to menu items in the render method
 const menuItems = [
   {
     text: 'Főoldal',
@@ -67,89 +68,100 @@ class Header extends Component {
       isOpen: false,
     };
   }
+  // Fetch the userData-s
   componentWillMount() {
     this.props.getUserData();
   }
 
+  // Hide the menu after clicking an item on mobile
   handleOpen = () => {
     this.setState({ isOpen: true });
   }
-
   handleClose = () => {
     this.setState({ isOpen: false });
   }
 
   render() {
-    const { visible } = this.state;
     return (
       <div>
-        <Responsive minWidth={600}>
+        {/* Tablet, Computer, ... view */}
+        <Responsive minWidth={600} >
           <Segment inverted textAlign='center' vertical>
             <Container>
-            <Menu inverted secondary size='large'>
-              {menuItems.map((item, i) =>
-                (item.permissionLevel === 0 ?
-                    <Menu.Item key={i} as={Link} to={item.to}>{item.prefix}{item.text}</Menu.Item>
+              <Menu inverted secondary size='large'>
+                {/* Menu items */}
+                {menuItems.map((item, i) => 
+                  (item.permissionLevel === 0 ?
+                    <Menu.Item key={i} as={Link} to={item.to}>
+                      {item.prefix}{item.text}
+                    </Menu.Item>
                     : null
-                ))
-              }
-              { this.props.user.id ?
-              <Popup trigger={
-                  <Menu.Item>
-                    <Icon name='angle down' size='large' />
-                  </Menu.Item>
+                  ))
                 }
-                position='center'
-                flowing hoverable inverted>
-                  <Menu inverted secondary size='large'>
+                {/* Arrow menu */}
+                { this.props.user.id ?
+                  <Popup flowing hoverable inverted 
+                    trigger={
+                      <Menu.Item>
+                        <Icon name='angle down' size='large' />
+                      </Menu.Item>
+                    }
+                    position='center'
+                  >
+                    <Menu inverted secondary size='large'>
                       {menuItems.map((item, i) =>
                         (this.props.user.permission >= item.permissionLevel
-                          && item.permissionLevel > 0?
-                            <Menu.Item
-                              key={i} as={Link} to={item.to}>
+                          && item.permissionLevel > 0 ?
+                            <Menu.Item key={i} as={Link} to={item.to}>
                                 {item.prefix}{item.text}
                             </Menu.Item>
                             : null
                         ))
                       }
-                  </Menu>
-              </Popup>
-              : null
-              }
-              <Menu.Item position='right' width={5}>
-                {
-                  this.props.user.id ?
+                    </Menu>
+                  </Popup>
+                  : null
+                }
+                {/* Login Button */}
+                <Menu.Item position='right'>
+                  {this.props.user.id ?
                     <Button.Group>
                       <Button inverted as={Link} to='/profile'>Profilom</Button>
                       <Button as='a' href='/api/v1/logout/' icon='sign out' />
                     </Button.Group>
-                  :
+                    :
                     <Button as='a' href='/api/v1/login/authsch/' inverted>Bejelentkezés</Button>
-                }
-              </Menu.Item>
-            </Menu>
+                  }
+                </Menu.Item>
+              </Menu>
             </Container>
           </Segment>
         </Responsive>
+        {/* Mobile view */}
         <Responsive maxWidth={599}>
           <Segment inverted textAlign='center' vertical>
             <Container>
-            <Menu inverted secondary size='normal'>
-              <Menu.Item as={Link} to={menuItems[0].to}>{menuItems[0].prefix}{menuItems[0].text}</Menu.Item>     
-              <Popup trigger={
-                  <Menu.Item onClick={this.handleClose} 
-                  position='right'>
-                    <Icon name='bars' size='large' />
-                  </Menu.Item>
-                }
-                position='center'
-                flowing hoverable inverted
-                open={this.state.isOpen}
-                onOpen={this.handleOpen}>
-                  <Menu vertical inverted secondary size='normal'>
+              <Menu inverted secondary size='big'>
+                {/* kszk logo + home link */}
+                <Menu.Item as={Link} to={menuItems[0].to}>
+                  {menuItems[0].prefix}{menuItems[0].text}
+                </Menu.Item>     
+                {/* Sandwich menu */}
+                <Popup flowing hoverable inverted trigger={
+                    <Menu.Item onClick={this.handleClose} 
+                    position='right'>
+                      <Icon name='bars' size='large' />
+                    </Menu.Item>
+                  }
+                  position='center'
+                  open={this.state.isOpen}
+                  onOpen={this.handleOpen}
+                  size='huge'
+                >
+                  <Menu vertical inverted secondary size='big'>
                     {menuItems.map((item, i) =>
-                      ( (this.props.user.permission >= item.permissionLevel ||
-                        item.permissionLevel === 0) && i>0?
+                      ((this.props.user.permission >= item.permissionLevel 
+                        ||item.permissionLevel === 0) && i>0?
                           <Menu.Item onClick={this.handleClose} 
                           key={i} as={Link} to={item.to}>
                             {item.prefix}{item.text}
@@ -158,19 +170,18 @@ class Header extends Component {
                       ))
                     }
                     <Menu.Item>
-                      {
-                        this.props.user.id ?
-                          <Button.Group>
-                            <Button onClick={this.handleClose} inverted as={Link} to='/profile'>Profilom</Button>
-                            <Button onClick={this.handleClose} as='a' href='/api/v1/logout/' icon='sign out' />
-                          </Button.Group>
+                      {this.props.user.id ?
+                        <Button.Group>
+                          <Button onClick={this.handleClose} inverted as={Link} to='/profile'>Profilom</Button>
+                          <Button onClick={this.handleClose} as='a' href='/api/v1/logout/' icon='sign out' />
+                        </Button.Group>
                         :
-                          <Button onClick={this.handleClose} as='a' href='/api/v1/login/authsch/' inverted>Bejelentkezés</Button>
+                        <Button onClick={this.handleClose} as='a' href='/api/v1/login/authsch/' inverted>Bejelentkezés</Button>
                       }
                     </Menu.Item>
                   </Menu>
-              </Popup>
-            </Menu>
+                </Popup>
+              </Menu>
             </Container>
           </Segment>
         </Responsive>
