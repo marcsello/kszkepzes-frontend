@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Accordion, Icon, Grid } from 'semantic-ui-react';
+import { Container, Accordion, Icon, Grid, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import 'moment/locale/hu';
@@ -25,7 +25,7 @@ class Schedule extends Component {
 
     const events = this.props.events;
     const panels = events.map(event => (
-      <>
+      <Accordion>
         <Accordion.Title
           active={activeIndex === event.id}
           index={event.id}
@@ -47,27 +47,40 @@ class Schedule extends Component {
              {event.description}
            </p>
          </Accordion.Content>
-        </>
+        </Accordion>
        ));
 
     return (
-      <Container
-        textAlign='center'
-        style={{
-          padding: '60px'
-        }}
-      >
-        <h2>Képzés alkalmak:</h2>
-        <Accordion
-          fluid
-          styled
-          defaultActiveIndex={-1}
-          panels={panels}
-        >
-        {panels}
-      </Accordion>
-      <h2>Tábor:</h2>
-      </Container>
+      <div>
+        <Container textAlign='center'>
+          <Header
+            as='h1'
+            content='Képzés alkalmak'
+            style={{
+                fontSize: '2em',
+                fontWeight: 'bold',
+                marginBottom: '0.5em',
+                marginTop: '0.5em',
+              }}
+          />
+          <Accordion fluid styled
+            defaultActiveIndex={-1}
+            panels={panels}
+          >
+            {panels}
+          </Accordion>
+          <Header
+            as='h1'
+            content='Tábor'
+            style={{
+                fontSize: '2em',
+                fontWeight: 'bold',
+                marginBottom: '0.5em',
+                marginTop: '1.5em',
+              }}
+          />
+        </Container>
+      </div>
     );
   }
 }
