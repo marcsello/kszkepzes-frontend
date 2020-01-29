@@ -13,26 +13,26 @@ export default class Statistics extends Component {
       <div>
           <Container
             textAlign="center"
-            style={{
-              padding: '60px',
-            }}
+            style={{paddingBottom: '5em', paddingTop: '1em'}}
           >
-          <Menu
+          <Menu tabular
             attached='top'
-            tabular
             size='huge'
-            compact={true}>
+            compact={true}
+          >
             <Menu.Item
               name='events'
               active={activeItem === 'events'}
               onClick={this.handleItemClick}
-            >Alkalmak
+            >
+              Alkalmak
             </Menu.Item>
             <Menu.Item
               name='trainees'
               active={activeItem === 'trainees'}
               onClick={this.handleItemClick}
-            >Képződők
+            >
+              Képződők
             </Menu.Item>
           </Menu>
           { activeItem === 'events' ? <Events /> : '' }

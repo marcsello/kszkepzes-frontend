@@ -101,7 +101,7 @@ class EventDetail extends Component {
             ''
         }
         </Container>
-          <Table celled centered>
+          <Table celled centered unstackable>
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell>Név</Table.HeaderCell>

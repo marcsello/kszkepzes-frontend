@@ -12,40 +12,44 @@ class Events extends Component {
   }
 
   renderEvents() {
-    return this.props.events.map((event) =>
-    { return (
-      <Table.Row>
-        <Table.Cell>
-          <Link to={`events/${event.id}`}>
-            {event.name}
-          </Link>
-        </Table.Cell>
-        <Table.Cell>{moment(event.date).format('LL')}</Table.Cell>
-        <Table.Cell>{event.visitor_number}</Table.Cell>
-        <Table.Cell>
-          <Button
-            onClick={() => this.props.deleteEvent(event)}
-            color='red'
-            compact
-            size='small'
-          >
-          Delete
-          </Button>
-        </Table.Cell>
-      </Table.Row>
-    );
+    return this.props.events.map((event) => { 
+      return (
+        <Table.Row >
+          <Table.Cell textAlign='center'>
+            <Link to={`events/${event.id}`}>
+              {event.name}
+            </Link>
+          </Table.Cell>
+          <Table.Cell textAlign='center'>
+            {moment(event.date).format('LL')}
+          </Table.Cell>
+          <Table.Cell textAlign='center'>
+            {event.visitor_number}
+          </Table.Cell>
+          <Table.Cell textAlign='center'>
+            <Button
+              onClick={() => this.props.deleteEvent(event)}
+              color='red'
+              compact
+              size='small'
+            >
+              Törlés
+            </Button>
+          </Table.Cell>
+        </Table.Row>
+      );
     });
   }
 
   render() {
     return (
       <Container textAlign='center'>
-        <Table color='blue' celled selectable compact>
+        <Table color='blue' unstackable celled selectable compact>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>Alkalom neve</Table.HeaderCell>
-              <Table.HeaderCell>Dátum</Table.HeaderCell>
-              <Table.HeaderCell>Jelen voltak</Table.HeaderCell>
+              <Table.HeaderCell textAlign='center'>Alkalom neve</Table.HeaderCell>
+              <Table.HeaderCell textAlign='center'>Dátum</Table.HeaderCell>
+              <Table.HeaderCell textAlign='center'>Jelen voltak</Table.HeaderCell>
               <Table.HeaderCell />
             </Table.Row>
           </Table.Header>
