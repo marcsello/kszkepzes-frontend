@@ -14,7 +14,7 @@ class Applications extends Component {
     return this.props.profiles.map((profile) =>
     { return (
       <Table.Row>
-        <Table.Cell>
+        <Table.Cell textAlign='center'>
           <Link to={`applicant/${profile.id}`}>
             {profile.full_name}
           </Link>
@@ -47,7 +47,7 @@ class Applications extends Component {
             <Label color='red'>Nem jelentkezett</Label>
           </Table.Cell>
         }
-        <Table.Cell>
+        <Table.Cell textAlign='center'>
         <ConfirmModal
           button = {<Button
             color='blue'
@@ -67,12 +67,9 @@ class Applications extends Component {
   render() {
     return (
       <Container
-        textAlign='center'
-        style={{
-          padding: '80px'
-        }}
+        textAlign='center' style={{paddingTop: '1em', paddingBottom: '3em'}}
       >
-        <Table color='blue' celled selectable compact>
+        <Table color='blue' unstackable celled selectable compact>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Jelentkezettek</Table.HeaderCell>
