@@ -37,6 +37,7 @@ class TraineeTableRow extends Component {
     };
   }
 
+  // Hides and shows the Add and More popup 
   triggerAdd = () => this.setState({ ...this.state, showAddPopup: !this.state.showAddPopup})
   triggerMore = () => this.setState({ ...this.state, showMorePopup: !this.state.showMorePopup })
 
@@ -50,6 +51,7 @@ class TraineeTableRow extends Component {
         <Table.Cell textAlign='center'>
           {trainee.full_name}
         </Table.Cell>
+        {/* Show and change Visitors status  */}
         {!this.props.edit ?
           <Table.Cell textAlign='center'>
             {
@@ -62,7 +64,7 @@ class TraineeTableRow extends Component {
                   <Icon color='red' name='cancel' />
               }
           </Table.Cell>
-          :
+        :
           <Table.Cell textAlign='center'>
             <Dropdown
               defaultValue={isVisitor ? 'Visitor' : isAbsent ? 'Absent' : 'No'}
@@ -72,33 +74,37 @@ class TraineeTableRow extends Component {
             />
           </Table.Cell>
         }
+        {/* Notes for trainees */}
         <Table.Cell>
           <Grid>
             <Grid.Row>
+              {/* Note text */}
               <Grid.Column floated='left' width={8}>
-
                 {notes.length > 0 ?
                   <Comment>
                     <Comment.Content>
                       <Comment.Author><b>{notes[0].created_by_name}:</b></Comment.Author>
                       <Comment.Text style={{wordWrap: 'break-word'}}>
-                        {notes[0].note.length > 25 ? notes[0].note.slice(0, 25).concat('...')
-                         :
-                         notes[0].note }
+                        {notes[0].note.length > 25 ? 
+                          notes[0].note.slice(0, 25).concat('...')
+                        :
+                          notes[0].note 
+                        }
                       </Comment.Text>
                     </Comment.Content>
                   </Comment>
-                  :
+                :
                   null
-                 }
+                }
               </Grid.Column>
+              {/* Note buttons */}
               <Grid.Column floated='right' width={6} textAlign='right'>
                 {notes.length > 0 ?
-                  <Popup
-                    basic
+                  <Popup basic
                     open={this.state.showMorePopup}
-                    trigger={<Button icon='comment alternate outline' 
-                    onClick={this.triggerMore} />}
+                    trigger={
+                      <Button icon='comment alternate outline' onClick={this.triggerMore} />
+                    }
                     content={notes.map((note) => {
                       return (
                         <Comment.Content>
@@ -111,11 +117,12 @@ class TraineeTableRow extends Component {
                     })}
                   />
                 :
-                null
+                  null
                 }
-                <Popup
-                  trigger={<Button icon='plus' onClick={this.triggerAdd}/>}
-                  basic
+                <Popup basic
+                  trigger={
+                    <Button icon='plus' onClick={this.triggerAdd}/>
+                  }
                   open={this.state.showAddPopup}
                   content={
                     <Form reply>
@@ -123,7 +130,7 @@ class TraineeTableRow extends Component {
                         value={note.note}
                         onChange={e => this.props.writeNote(e)}
                       />
-                      <Button
+                      <Button primary
                         onClick={() => {
                           this.triggerAdd()
                           this.props.postEventNote({ 
@@ -136,10 +143,9 @@ class TraineeTableRow extends Component {
                         content='Megjegyzés hozzáadása'
                         labelPosition='left'
                         icon='edit'
-                        primary
                       />
                     </Form>
-                }
+                  }
                 />
               </Grid.Column>
             </Grid.Row>

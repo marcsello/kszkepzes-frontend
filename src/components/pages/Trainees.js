@@ -9,27 +9,32 @@ class Trainees extends Component {
     this.props.getStaffEvents();
   }
 
+  // Number of visited events
   VisitedStatusNumber(trainee) {
     return (this.props.events.filter((event) => {
       return event.visitors.includes(trainee.id)
     })).length;
   }
 
+  // Every event with visit status in table cells
   renderVisitedStatus(trainee) {
     return (this.props.events.map((event) => {
       if (event.visitors.includes(trainee.id)) {
         return (
           <Table.Cell textAlign='center'>
             <Icon color='green' name='checkmark' />
-          </Table.Cell>);
+          </Table.Cell>
+        );
       }
       return (
         <Table.Cell textAlign='center'>
           <Icon color='red' name='cancel' />
-        </Table.Cell>);
+        </Table.Cell>
+      );
     }));
   }
 
+  // Every event rendered
   renderTraineesWithEvents() {
     return this.props.trainees.map((trainee) =>
     { return (
@@ -42,57 +47,74 @@ class Trainees extends Component {
     );
     });
   }
-  renderTraineesWithPoints() {
-    return this.props.trainees.map((trainee) =>
-    { return (
-      <Table.Row textAlign='center'>
-        <Table.Cell>
-          {trainee.full_name}
-        </Table.Cell>
-        <Table.Cell textAlign='center'>
-          {`${this.VisitedStatusNumber(trainee)} / ${this.props.events.length}`}
-        </Table.Cell>
-      </Table.Row>
-    );
+  // Only visit number rendered
+  renderTraineesWithVisitNum() {
+    return this.props.trainees.map((trainee) =>{ 
+      return (
+        <Table.Row textAlign='center'>
+          <Table.Cell>
+            {trainee.full_name}
+          </Table.Cell>
+          <Table.Cell textAlign='center'>
+            {`${this.VisitedStatusNumber(trainee)} / ${this.props.events.length}`}
+          </Table.Cell>
+        </Table.Row>
+      );
     });
   }
 
-  renderTableHeader() {
-    return (this.props.events.map(event => (
-      <Table.HeaderCell textAlign='center'>
+  // Column for each event
+  renderTableHeaderEvents() {
+    return (this.props.events.map(event => {
+      return (<Table.HeaderCell textAlign='center'>
         {event.name}
-      </Table.HeaderCell>)));
+      </Table.HeaderCell>
+      )
+    }));
   }
 
   render() {
     return (
       <Container textAlign='center'>
+        {/* Rendered on larger screens */}
         <Responsive minWidth={600} >
           <Table color='blue' unstackable celled selectable compact>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell textAlign='center'>Képződők</Table.HeaderCell>
-                { this.renderTableHeader() }
+                <Table.HeaderCell textAlign='center'>
+                  Képződők
+                </Table.HeaderCell>
+                { this.renderTableHeaderEvents() }
               </Table.Row>
             </Table.Header>
-
             <Table.Body>
-              {this.props.trainees ? this.renderTraineesWithEvents() : 'Nincsenek képződők'}
+              {this.props.trainees ? 
+                this.renderTraineesWithEvents() 
+              : 
+                'Nincsenek képződők'
+              }
             </Table.Body>
           </Table>
         </Responsive>
+        {/* Rendered on mobile */}
         <Responsive maxWidth={599} >
           <Table color='blue' unstackable celled selectable compact>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell textAlign='center'>Képződők</Table.HeaderCell>
+                <Table.HeaderCell textAlign='center'>
+                  Képződők
+                </Table.HeaderCell>
                 <Table.HeaderCell textAlign='center'>
                   Részvételi arány
                 </Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>
-              {this.props.trainees ? this.renderTraineesWithPoints() : 'Nincsenek képződők'}
+              {this.props.trainees ? 
+                this.renderTraineesWithVisitNum() 
+              : 
+                'Nincsenek képződők'
+              }
             </Table.Body>
           </Table>
         </Responsive>
