@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Accordion, Icon, Grid, Header } from 'semantic-ui-react';
+import { Container, Accordion, Icon, Grid, Header, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import 'moment/locale/hu';
@@ -43,9 +43,9 @@ class Schedule extends Component {
           </h2>
          </Accordion.Title>
          <Accordion.Content active={activeIndex === event.id}>
-           <p>
+           <Segment>
              {event.description}
-           </p>
+           </Segment>
          </Accordion.Content>
         </Accordion>
        ));

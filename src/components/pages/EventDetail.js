@@ -7,10 +7,12 @@ import {
   Form,
   Header,
   Table,
+  Segment,
   Icon,
   Checkbox,
   Popup,
   Grid,
+  Divider,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -37,8 +39,8 @@ class EventDetail extends Component {
   renderTrainees() {
     const event = this.props.selectedEvent;
     const note = this.props.actualNote;
-    return this.props.trainees.map((item) => {
-      const notes = this.props.eventNotes.filter(note => note.profile === item.id);
+    return this.props.trainees?.map((item) => {
+      const notes = this.props.eventNotes?.filter(note => note.profile === item.id);
       return (
         <TraineeTableRow
           selectedEvent={event}
@@ -48,19 +50,28 @@ class EventDetail extends Component {
         />
       );
     });
+    return null
   }
 
   renderEvent() {
     const { name, date, description } = this.props.selectedEvent;
     return (
-      <Item>
-        <Item.Header as='h2'>{name}</Item.Header>
-        <Item.Header as='h3'>Dátum: {moment(date).format('LL')}</Item.Header>
-        <Container textAlign='justified'>
-          <Item.Header as='h3'>Leírás</Item.Header>
-          <Item.Content>{description}</Item.Content>
-        </Container>
-      </Item>
+      <Segment>
+        <Item>
+          <Divider style={{ fontSize: '2em'}} horizontal>
+            <Header as='h1'>
+              {name}
+              <Item.Header as='h5'>
+                {moment(date).format('LL')}
+              </Item.Header>
+            </Header>
+          </Divider>
+          <Container textAlign='justified'>
+            <Item.Header as='h3'>Leírás</Item.Header>
+            <Item.Content>{description}</Item.Content>
+          </Container>
+        </Item>
+      </Segment>
     );
   }
 
@@ -89,11 +100,7 @@ class EventDetail extends Component {
     const event = this.props.selectedEvent;
     const note = this.props.actualNote;
     return (
-      <Container
-        style={{
-          padding: '80px'
-        }}
-      >
+      <Container style={{paddingTop: '1em', paddingBottom: '7em'}}>
         <Container textAlign='center'>
           { this.props.selectedEvent && this.props.trainees ?
             this.renderEvent()
@@ -103,7 +110,7 @@ class EventDetail extends Component {
         </Container>
           <Table celled centered unstackable>
             <Table.Header>
-              <Table.Row>
+              <Table.Row textAlign='center'>
                 <Table.HeaderCell>Név</Table.HeaderCell>
                 <Table.HeaderCell>Jelen volt</Table.HeaderCell>
                 <Table.HeaderCell>Megjegyzések</Table.HeaderCell>

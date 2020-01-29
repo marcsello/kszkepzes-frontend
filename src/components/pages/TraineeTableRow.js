@@ -47,7 +47,7 @@ class TraineeTableRow extends Component {
     const isAbsent = selectedEvent.absent.includes(trainee.id);
     return (
       <Table.Row>
-        <Table.Cell>
+        <Table.Cell textAlign='center'>
           {trainee.full_name}
         </Table.Cell>
         {!this.props.edit ?
@@ -75,14 +75,14 @@ class TraineeTableRow extends Component {
         <Table.Cell>
           <Grid>
             <Grid.Row>
-              <Grid.Column floated='left' width={8} textAlign='left'>
+              <Grid.Column floated='left' width={8}>
 
                 {notes.length > 0 ?
                   <Comment>
                     <Comment.Content>
-                      <Comment.Author>{notes[0].created_by_name}</Comment.Author>
+                      <Comment.Author><b>{notes[0].created_by_name}:</b></Comment.Author>
                       <Comment.Text>
-                        {notes[0].note.length > 50 ? notes[0].note.slice(0, 50).concat('...')
+                        {notes[0].note.length > 30 ? notes[0].note.slice(0, 50).concat('...')
                          :
                          notes[0].note }
                       </Comment.Text>
@@ -92,25 +92,27 @@ class TraineeTableRow extends Component {
                   null
                  }
               </Grid.Column>
-              <Grid.Column floated='right' width={3} textAlign='right'>
+              <Grid.Column floated='right' width={6} textAlign='right'>
                 {notes.length > 0 ?
                   <Popup
                     basic
                     open={this.state.showMorePopup}
-                    trigger={<Button icon='comment alternate outline' onClick={this.triggerMore} />}
+                    trigger={<Button icon='comment alternate outline' 
+                    onClick={this.triggerMore} />}
                     content={notes.map((note) => {
-                         return (
-                           <Comment.Content>
-                             <Comment.Author>{note.created_by_name}</Comment.Author>
-                             <Comment.Text>
-                               {note.note}
-                             </Comment.Text>
-                           </Comment.Content>
-                         );
-                        })}
+                      return (
+                        <Comment.Content>
+                          <Comment.Author>{note.created_by_name}</Comment.Author>
+                          <Comment.Text>
+                            {note.note}
+                          </Comment.Text>
+                        </Comment.Content>
+                      );
+                    })}
                   />
-             :
-             null}
+                :
+                null
+                }
                 <Popup
                   trigger={<Button icon='plus' onClick={this.triggerAdd}/>}
                   basic
@@ -123,12 +125,14 @@ class TraineeTableRow extends Component {
                       />
                       <Button
                         onClick={() => {
-                                        this.props.postEventNote({ eventid:selectedEvent.id,
-                                                                  userid: trainee.id,
-                                                                  note: note.note });
-                                        this.props.clearWrite();
-                                      }
-                                }
+                          this.triggerAdd()
+                          this.props.postEventNote({ 
+                            eventid: selectedEvent.id,
+                            userid: trainee.id,
+                            note: note.note 
+                          })
+                          this.props.clearWrite()
+                        }}
                         content='Megjegyzés hozzáadása'
                         labelPosition='left'
                         icon='edit'
