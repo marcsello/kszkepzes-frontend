@@ -81,8 +81,8 @@ class TraineeTableRow extends Component {
                   <Comment>
                     <Comment.Content>
                       <Comment.Author><b>{notes[0].created_by_name}:</b></Comment.Author>
-                      <Comment.Text>
-                        {notes[0].note.length > 30 ? notes[0].note.slice(0, 50).concat('...')
+                      <Comment.Text style={{wordWrap: 'break-word'}}>
+                        {notes[0].note.length > 25 ? notes[0].note.slice(0, 25).concat('...')
                          :
                          notes[0].note }
                       </Comment.Text>
@@ -102,7 +102,7 @@ class TraineeTableRow extends Component {
                     content={notes.map((note) => {
                       return (
                         <Comment.Content>
-                          <Comment.Author>{note.created_by_name}</Comment.Author>
+                          <Comment.Author><b>{note.created_by_name}:</b></Comment.Author>
                           <Comment.Text>
                             {note.note}
                           </Comment.Text>

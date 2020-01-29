@@ -29,7 +29,7 @@ export const postEventNote = ({ eventid, userid, note }) => (
     try {
       const response = await axios.post('/api/v1/notes/', {
         event: eventid ? eventid : '',
-        profile: userid ? eventid : '',
+        profile: userid ? userid : '',
         note,
       });
       if (response.data.id) {
