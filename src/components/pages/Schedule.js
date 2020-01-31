@@ -8,7 +8,7 @@ import { getStudentEvents } from '../../actions/statistics';
 class Schedule extends Component {
   state = { activeIndex: 0 }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
       this.props.getStudentEvents();
   }
 
@@ -25,7 +25,7 @@ class Schedule extends Component {
 
     const events = this.props.events;
     const panels = events.map(event => (
-      <Accordion>
+      <Accordion key={Math.random()}>
         <Accordion.Title
           active={activeIndex === event.id}
           index={event.id}
@@ -63,10 +63,7 @@ class Schedule extends Component {
                 marginTop: '0.5em',
               }}
           />
-          <Accordion fluid styled
-            defaultActiveIndex={-1}
-            panels={panels}
-          >
+          <Accordion fluid styled>
             {panels}
           </Accordion>
           <Header

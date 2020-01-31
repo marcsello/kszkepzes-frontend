@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getTrainees, getStaffEvents } from '../../actions/statistics';
 
 class Trainees extends Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.getTrainees();
     this.props.getStaffEvents();
   }

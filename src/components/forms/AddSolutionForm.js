@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 import { addSolution, writeSolution, writeSolutionFile, addDocument, clearWrite } from '../../actions/homework';
 import './Forms.css';
 import ConfirmModal from '../forms/ConfirmModal';
-import { emptyMessage } from '../pages/Homework';
+import { customMessage } from '../pages/Homework';
+import {
+  getDocuments,
+  getSolutions,
+} from '../../actions/homework';
 
 const allowedFileTypes = [
   'image/jpeg',
@@ -23,16 +27,29 @@ class AddSolutionForm extends Component {
     };
   }
 
+
   render() {
     const {
-      name, description, file,
-    } = this.props.newSolution;
+      name, description, file
+    } = this.props.newSolution
+
     const task = this.props.taskid;
     const corrected = false;
     const accepted = false;
     const sentences = this.props.taskdesc.split('\n');
     const note = '';
     const disabledText = 'A határidő lejárt, további beadás nem lehetséges.';
+
+    // const {
+    //   studentFullName, studentId, taskTitle, taskSolutions,
+    // } = this.props;
+    // const taskSolutionsProfile =
+    // taskSolutions.filter(solution => solution.created_by === studentId);
+    // const relevantSolution = taskSolutionsProfile.slice(-1)[0];
+    // const relevantDocuments = this.props.homeworks.documents.filter(document =>
+    //   document.solution === relevantSolution.id).filter(document =>
+    //   document.uploaded_by_name === studentFullName);
+    // const relevantDocument = relevantDocuments.slice(-1)[0];
 
     return (
       <Modal
@@ -42,7 +59,9 @@ class AddSolutionForm extends Component {
         trigger={
           <button
             id='task'
-            onClick={() => { this.setState({ showModal: true }); }}
+            onClick={() => { 
+              this.setState({ showModal: true });
+            }}
           >
             <Icon name='external' />
             {this.props.tasktitle}
@@ -55,10 +74,10 @@ class AddSolutionForm extends Component {
         <Modal.Content>
           <Modal.Description style={{ marginBottom: '2em' }}>
             <Header as='h5'>Feladat leírása:</Header>
-            {sentences.map(s => (<p>{s}</p>))}
+            {sentences.map(s => (<p key={Math.random()}>{s}</p>))}
           </Modal.Description>
           {this.props.disabled ?
-            emptyMessage(disabledText, undefined, undefined, this.props.disabled) :
+            customMessage(disabledText, undefined, undefined, this.props.disabled) :
             <Form>
               <Form.Field
                 control={Input}
@@ -154,5 +173,7 @@ export default connect(mapStateToProps, {
   writeSolution,
   writeSolutionFile,
   addDocument,
+  getDocuments,
   clearWrite,
+  getSolutions,
 })(AddSolutionForm);

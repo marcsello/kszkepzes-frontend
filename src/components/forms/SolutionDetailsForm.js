@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Modal, Button, Header, Icon, Divider } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import CorrectSolutionForm from './CorrectSolutionForm';
-import { emptyMessage } from '../pages/Homework';
+import { customMessage } from '../pages/Homework';
 import './Forms.css';
 import {
   getSolutions,
@@ -43,7 +43,7 @@ class SolutionDetailsForm extends Component {
       }
     });
 
-    const emptyStudentText = 'Nincs ilyen képződő jelenleg.';
+    const noStudentText = 'Nincs ilyen képződő jelenleg.';
 
     return (
       <Modal
@@ -73,7 +73,7 @@ class SolutionDetailsForm extends Component {
           <Divider />
           <Header as='h3'>Nem érkezett még megoldás:</Header>
           {noSubmitStudents.length === 0 ?
-              emptyMessage(emptyStudentText) :
+              customMessage(noStudentText) :
               noSubmitStudents.map(student => (
                 <Button key={Math.random()} color='blue' style={{ marginRight: '1.5em', marginTop: '1.5em' }}>{student.full_name}</Button>
               ))
@@ -81,7 +81,7 @@ class SolutionDetailsForm extends Component {
           <Divider />
           <Header as='h3'>Javításra vár (A névre kattintva kijavítható a megoldás):</Header>
           {waitForCorrectionStudents.length === 0 ?
-            emptyMessage(emptyStudentText) :
+            customMessage(noStudentText) :
             waitForCorrectionStudents.map(student => (
               <CorrectSolutionForm
                 key={Math.random()}
@@ -97,7 +97,7 @@ class SolutionDetailsForm extends Component {
           <Divider />
           <Header as='h3'>A megoldás nem elfogadható (A névre kattintva módosítható a javítás):</Header>
           {noAcceptStudents.length === 0 ?
-            emptyMessage(emptyStudentText) :
+            customMessage(noStudentText) :
             noAcceptStudents.map(student => (
               <CorrectSolutionForm
                 key={Math.random()}
@@ -113,7 +113,7 @@ class SolutionDetailsForm extends Component {
           <Divider />
           <Header as='h3'>Elfogadva (A névre kattintva módosítható a javítás):</Header>
           {acceptedStudents.length === 0 ?
-            emptyMessage(emptyStudentText) :
+            customMessage(noStudentText) :
             acceptedStudents.map(student => (
               <CorrectSolutionForm
                 key={Math.random()}

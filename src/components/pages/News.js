@@ -11,7 +11,7 @@ import { getNews, deleteNews, setSelectedNews } from '../../actions/news';
 import './News.css';
 
 class News extends Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.getNews();
   }
 
@@ -23,7 +23,7 @@ class News extends Component {
             style={{ fontSize: '2em', width: '100%' }}
           >
             <Grid>
-              <Grid.Column floated='center' width={12}>
+              <Grid.Column width={12}>
                 {item.title}
               </Grid.Column>
               { this.props.user.role === 'Staff' ?
@@ -70,7 +70,7 @@ class News extends Component {
 
   renderMultiLine(text) {
     const strings = text.split('\n');
-    return strings.map(string => <p>{string}</p>);
+    return strings.map(string => <p key={Math.random()}>{string}</p>);
   }
 
   render() {

@@ -6,7 +6,7 @@ import { getProfiles, setStatus } from '../../actions/statistics';
 import ConfirmModal from '../forms/ConfirmModal';
 
 class Applications extends Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.getProfiles();
   }
 

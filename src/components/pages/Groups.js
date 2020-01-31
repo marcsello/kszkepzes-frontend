@@ -8,7 +8,7 @@ import { getGroups } from '../../actions/groups';
 
 
 class Groups extends Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.getGroups()
   }
 

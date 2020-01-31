@@ -29,7 +29,7 @@ class EventDetail extends Component {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.getEventById(this.props.match.params.id);
     this.props.getTrainees();
     this.props.getNotesByEvent(this.props.match.params.id);

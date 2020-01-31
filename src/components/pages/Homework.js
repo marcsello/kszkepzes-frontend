@@ -25,6 +25,9 @@ import EditTaskForm from '../forms/EditTaskForm';
 import InfoModal from '../forms/InfoModal';
 import ConfirmModal from '../forms/ConfirmModal';
 
+// Display type for the Table Semantic UI component
+// {icon} {text} - Displayed for the student for each Task
+// {rowstyle} - Table row style (red text, yellow bg, ...)
 const displayTypes = {
   can_submit: {
     text: 'Beadható',
@@ -53,7 +56,7 @@ const displayTypes = {
   },
 };
 
-export const emptyMessage = (header, text, marginBottom, warning) => (
+export const customMessage = (header, text, marginBottom, warning) => (
   <Message
     style={{ marginBottom }}
     icon={warning ? 'warning' : 'info'}
@@ -71,11 +74,11 @@ class Homework extends Component {
     this.props.getSolutions(this.props.user.id);
   }
 
+  // Returns a table style for the given task
   getTaskDisplayStyle(task) {
-    const taskSolutions = this.props.homeworks.solutions.filter(solution =>
-      solution.task === task.id)
-      .filter(solution =>
-        solution.created_by === this.props.user.id);
+    const taskSolutions = this.props.homeworks.solutions.filter(solution => 
+      solution.task === task.id).filter(solution =>
+      solution.created_by === this.props.user.id);
 
     if (taskSolutions.length === 0) {
       if (moment().isBefore(task.deadline)) {
@@ -96,15 +99,19 @@ class Homework extends Component {
     return 'accepted';
   }
 
+  // Returns table rows for the tasks
+  // given parameters separates the active/inactive tasks and normal/staff users
   renderTaskList(active, staff) {
     const { user, homeworks } = this.props;
     const profileSolutions = homeworks.solutions.filter(solution =>
       solution.created_by === user.id);
 
+    // Normal user
     if (!staff) {
       return homeworks.tasks
         .filter(task => moment().isBefore(task.deadline) === active)
         .map(task => (
+          // Style
           <Table.Row
             key={task.id}
             warning={
@@ -117,6 +124,7 @@ class Homework extends Component {
             displayTypes[this.getTaskDisplayStyle(task)].rowstyle.negative
           }
           >
+            {/* Form component */}
             <Table.Cell>
               <AddSolutionForm
                 taskid={task.id}
@@ -126,9 +134,11 @@ class Homework extends Component {
                 disabled={moment().isAfter(task.deadline)}
               />
             </Table.Cell>
+            {/* Deadline Date */}
             <Table.Cell>
               {moment(task.deadline).format('YYYY. MM. DD. HH:mm')}
             </Table.Cell>
+            {/* Status (Javításra vár, ...) */}
             <Table.Cell>
               <Icon name={displayTypes[this.getTaskDisplayStyle(task)].icon} />{' '}
               {displayTypes[this.getTaskDisplayStyle(task)].text}
@@ -156,6 +166,8 @@ class Homework extends Component {
         ));
     }
 
+    // Staff 
+
     const deleteButton = (
       <Button
         inverted
@@ -181,6 +193,7 @@ class Homework extends Component {
           displayTypes[this.getTaskDisplayStyle(task)].rowstyle.negative
         }
         >
+          {/* Form */}
           <Table.Cell>
             <SolutionDetailsForm
               taskid={task.id}
@@ -188,9 +201,11 @@ class Homework extends Component {
               taskdesc={task.text}
             />
           </Table.Cell>
+          {/* Deadline Date */}
           <Table.Cell>
             {moment(task.deadline).format('YYYY. MM. DD. HH:mm')}
           </Table.Cell>
+          {/* Admin buttons */}
           <Table.Cell>
             <EditTaskForm onClick={() => this.props.setSelectedTask(task)} />
             <ConfirmModal
@@ -203,6 +218,7 @@ class Homework extends Component {
       ));
   }
 
+  // Active/Inactive tasks table
   renderHomeworksTable(active, staff) {
     let tableColor = 'green';
     let marginBottom = '0em';
@@ -258,22 +274,22 @@ class Homework extends Component {
     );
   }
 
+  // Headers and stuff around the Tables
   renderHomeworks(active, staff) {
-    let empty = false;
-    let emptyText = 'Jelenleg nincs egyetlen beadható feladat sem. ';
+    let noTask = false;
+    let noTaskText = 'Jelenleg nincs egyetlen beadható feladat sem. ';
     let marginBottom = '0em';
-    const emptyHeaderText = 'Nincs feladat.';
+    const noTaskHeaderText = 'Nincs feladat.';
     let headerText = 'Aktív feladatok';
 
     if (staff) {
       headerText = 'Aktív feladatok kijavítása, módosítása vagy törlése';
     }
 
-    if (
-      this.props.homeworks.tasks.filter(task =>
-        moment().isBefore(task.deadline) === active).length === 0
+    if (this.props.homeworks.tasks.filter(task =>
+          moment().isBefore(task.deadline) === active).length === 0
     ) {
-      empty = true;
+      noTask = true;
     }
 
     if (!active) {
@@ -282,7 +298,7 @@ class Homework extends Component {
       } else {
         headerText = 'Lejárt határidejű feladatok';
       }
-      emptyText = 'Jelenleg nincs egyetlen lejárt határidejű feladat sem.';
+      noTaskText = 'Jelenleg nincs egyetlen lejárt határidejű feladat sem.';
       marginBottom = '3em';
     }
 
@@ -300,9 +316,11 @@ class Homework extends Component {
                 marginTop: '0.5em',
               }}
           />
-          {empty
-            ? emptyMessage(emptyHeaderText, emptyText, marginBottom, false)
-            : this.renderHomeworksTable(active, staff)}
+          {noTask ? 
+            customMessage(noTaskHeaderText, noTaskText, marginBottom, false)
+            : 
+            this.renderHomeworksTable(active, staff)
+          }
         </Container>
       </Segment>
     );
@@ -323,9 +341,7 @@ class Homework extends Component {
         <div>
           <Segment style={{ padding: '0 0 2em 0' }} vertical basic>
             <Container>
-              <Header
-                as='h1'
-                dividing
+              <Header dividing as='h1'
                 content='Új házi feladat létrehozása'
                 style={{
                       fontSize: '2em',
@@ -344,7 +360,7 @@ class Homework extends Component {
         </div>
       );
     }
-    return null;
+    return null; // ¯\_(ツ)_/¯
   }
 }
 

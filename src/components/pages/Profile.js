@@ -14,7 +14,7 @@ const options = [
 ];
 
 class Profile extends Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.getDeadline()
     if (!this.props.id) {
       this.props.history.push('/home');
@@ -104,7 +104,7 @@ class Profile extends Component {
                   nem titkolt célunk ezzel a lelkesedés felmérése.
                   A válaszokat a kérdések alatti szövegdobozba várjuk.
                 </b>
-                <ol>
+                <ul>
                   <li>
                   Szeretnéd kedvenc tantárgyad vik.wiki oldalát elérni,
                   de szomorúan látod, hogy az oldal nem jön be.
@@ -134,12 +134,12 @@ class Profile extends Component {
                   (használd az előző feladatban kapott adatokat).
                   Belépés után keresd meg a feladat megoldását!
                   </li>
-                </ol>
+                </ul>
               </div>
             }
             value={motivationExercise}
           /> :
-            <HiddenForm 
+            <HiddenForm
               fontWeight='normal'
               label={
                 <div>
@@ -148,7 +148,7 @@ class Profile extends Component {
                     nem titkolt célunk ezzel a lelkesedés felmérése.
                     A válaszokat a kérdések alatti szövegdobozba várjuk.
                   </b>
-                  <ol>
+                  <ul>
                     <li>
                     Szeretnéd kedvenc tantárgyad vik.wiki oldalát elérni,
                     de szomorúan látod, hogy az oldal nem jön be.
@@ -157,7 +157,6 @@ class Profile extends Component {
                     Csodálkozva látod, hogy a böngésző címsorába írva eléred a kiszolgáló webszervert.
                     Mi lehet a baj?
                     </li>
-                    <br />
                     <li>
                     Két előadás közti szünetben úgy döntesz,
                     hogy laptopoddal az index.hu tech cikkeit fogod görgetni.
@@ -167,18 +166,16 @@ class Profile extends Component {
                     Ugyanakkor a Facebook, a Gmail, a YouTube, de még az egyetemi
                     oldalak többsége is működik. Szerinted mi lehet a hiba oka?
                     </li>
-                    <br />
                     <li>
                     Találsz egy értelmetlen szöveget egy honlapon (például: <a href='http://kszkepzes18.sch.bme.hu/zebra.html'>http://kszkepzes18.sch.bme.hu/zebra.html</a>), de feltűnik, hogy két egyenlőségjellel fejeződik be. Nyomozz, s a végeredményt (amit találtál) írd ide!
                     </li>
-                    <br />
                     <li>
                     A <b>kszkepzes18.sch.bme.hu</b> címen elérhető gépen
                     fut egy szolgáltatás az alapértelmezett <b>5432</b> porton
                     (használd az előző feladatban kapott adatokat).
                     Belépés után keresd meg a feladat megoldását!
                     </li>
-                  </ol>
+                  </ul>
                 </div>
               }
               value={motivationExercise} />

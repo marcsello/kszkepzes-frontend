@@ -69,7 +69,7 @@ class Header extends Component {
     };
   }
   // Fetch the userData-s
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.getUserData();
   }
 
@@ -106,7 +106,7 @@ class Header extends Component {
                         <Icon name='angle down' size='large' />
                       </Menu.Item>
                     }
-                    position='center'
+                    position='top center'
                   >
                     <Menu inverted secondary size='large'>
                       {menuItems.map((item, i) =>
@@ -141,7 +141,7 @@ class Header extends Component {
         <Responsive maxWidth={599}>
           <Segment inverted textAlign='center' vertical>
             <Container>
-              <Menu inverted secondary size='big'>
+              <Menu inverted secondary size='large'>
                 {/* kszk logo + home link */}
                 <Menu.Item as={Link} to={menuItems[0].to}>
                   {menuItems[0].prefix}{menuItems[0].text}
@@ -153,12 +153,13 @@ class Header extends Component {
                       <Icon name='bars' size='large' />
                     </Menu.Item>
                   }
-                  position='center'
+                  position='top center'
                   open={this.state.isOpen}
                   onOpen={this.handleOpen}
+                  on='click'
                   size='huge'
                 >
-                  <Menu vertical inverted secondary size='big'>
+                  <Menu vertical inverted secondary size='large'>
                     {menuItems.map((item, i) =>
                       ((this.props.user.permission >= item.permissionLevel 
                         ||item.permissionLevel === 0) && i>0?

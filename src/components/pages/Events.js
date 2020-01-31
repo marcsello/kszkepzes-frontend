@@ -7,7 +7,7 @@ import { getStaffEvents, deleteEvent } from '../../actions/statistics';
 import AddEventForm from '../forms/AddEventForm';
 
 class Events extends Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.getStaffEvents();
   }
 
