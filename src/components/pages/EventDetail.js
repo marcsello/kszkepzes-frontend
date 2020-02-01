@@ -42,7 +42,7 @@ class EventDetail extends Component {
           notes={notes}
           trainee={item}
           edit={this.state.edit}
-          key={Math.random()}
+          key={item.id}
         />
       );
     });
