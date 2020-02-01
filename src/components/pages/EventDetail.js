@@ -50,7 +50,6 @@ class EventDetail extends Component {
         />
       );
     });
-    return null
   }
 
   renderEvent() {

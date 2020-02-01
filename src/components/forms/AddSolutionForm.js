@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Button, Form, Input, TextArea, Icon, Header, Segment, Message } from 'semantic-ui-react';
+import { Modal, Button, Form, Input, TextArea, Icon, Header, Segment, Divider } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { addSolution, writeSolution, writeSolutionFile, addDocument, clearWrite } from '../../actions/homework';
 import './Forms.css';
@@ -44,12 +44,6 @@ class AddSolutionForm extends Component {
     const lastDesc = thisTaskDocument[0]?.description
     const lastFile = thisTaskDocument[0]?.file
 
-    console.log(lastName, lastDesc, lastFile)
-
-    // const name = thisTaskDocument[0]?.name
-    // const description = thisTaskDocument[0]?.description
-    // const file = '';
-
     const corrected = false;
     const accepted = false;
     const sentences = this.props.taskdesc.split('\n');
@@ -82,10 +76,9 @@ class AddSolutionForm extends Component {
             {sentences.map(s => (<p key={Math.random()}>{s}</p>))}
           </Modal.Description>
           {this.props.disabled ?
-            customMessage(disabledText, undefined, undefined, this.props.disabled) :
-            <Form>
+            <div>
               {lastName ?
-                <Segment style={{paddingBottom: '1em'}}>
+                <div style={{paddingBottom: '1em'}}>
                   <div style={{ marginBottom: '1em', fontWeight: 'bold' }}>Legutóbbi megoldásod:</div>
                   <Segment attached='top'>
                     <h5 style={{paddingBottom: '0.4em'}}>Cím:</h5>
@@ -103,12 +96,39 @@ class AddSolutionForm extends Component {
                       <span>-</span>
                     }
                   </Segment>
-                </Segment>
+                </div>
+              :
+                customMessage(disabledText, undefined, undefined, this.props.disabled)
+              }
+            </div>
+            
+            :
+            <Form>
+              {lastName ?
+                <div style={{paddingBottom: '1em'}}>
+                  <div style={{ fontWeight: 'bold' }}>Legutóbbi megoldásod:</div>
+                  <Segment attached='top'>
+                    <h5 style={{paddingBottom: '0.4em'}}>Cím:</h5>
+                    {lastName}
+                  </Segment>
+                  <Segment attached>
+                    <h5 style={{paddingBottom: '0.4em'}}>Leírás:</h5>
+                    {lastDesc}
+                  </Segment>
+                  <Segment attached='bottom'>
+                    <h5>Beadott fájl:</h5>
+                    {lastFile ? 
+                      <a href={lastFile} rel='noreferrer noopener' target='_blank'>Fájl letöltése</a>
+                    :
+                      <span>-</span>
+                    }
+                  </Segment>
+                </div>
                 
                 :
                 null
               }
-
+              <Divider />
               <Form.Field
                 control={Input}
                 label='Megoldás címe:'

@@ -7,6 +7,7 @@ import {
   Icon,
   Message,
   Button,
+  Label,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -140,6 +141,16 @@ class Homework extends Component {
             <Table.Cell>
               {moment(task.deadline).format('YYYY. MM. DD. HH:mm')}
             </Table.Cell>
+
+            <Table.Cell>
+              <Label color={
+                  displayTypes[this.getTaskDisplayStyle(task)].rowstyle.positive ? 
+                    'green' 
+                  : moment().isAfter(task.deadline) ? 'red' 
+                  : displayTypes[this.getTaskDisplayStyle(task)].rowstyle.negative ? 'red': null}>
+                {task.bits} bit 
+              </Label>
+            </Table.Cell>
             {/* Status (Javításra vár, ...) */}
             <Table.Cell>
               <Icon name={displayTypes[this.getTaskDisplayStyle(task)].icon} />{' '}
@@ -237,15 +248,17 @@ class Homework extends Component {
             <Table.Row>
               <Table.HeaderCell>
                 <Icon circular name='home' />
-              Feladat megnevezése / beadása
+                Feladat megnevezése / beadása
               </Table.HeaderCell>
               <Table.HeaderCell>
                 <Icon circular name='calendar' />
-              Beadási határidő
+                Beadási határidő
+              </Table.HeaderCell>
+              <Table.HeaderCell width={2}>
               </Table.HeaderCell>
               <Table.HeaderCell>
                 <Icon circular name='tasks' />
-              Állapot
+                Állapot
               </Table.HeaderCell>
             </Table.Row>
           </Table.Header>
@@ -310,7 +323,9 @@ class Homework extends Component {
           <Header
             as='h1'
             dividing
-            content={headerText}
+            content={
+              headerText
+            }
             style={{
                 fontSize: '2em',
                 fontWeight: 'normal',
@@ -333,7 +348,7 @@ class Homework extends Component {
 
     if (user.role === 'Student') {
       return (
-        <div>
+        <div style={{paddingBottom: '2em'}}>
           {this.renderHomeworks(true, false)}
           {this.renderHomeworks(false, false)}
         </div>

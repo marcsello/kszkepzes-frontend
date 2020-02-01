@@ -17,6 +17,7 @@ export const getUserData = () => (
         signed,
         groups,
         role,
+        bits
       } = user.data;
       let permission;
       switch (role) {
@@ -37,7 +38,7 @@ export const getUserData = () => (
       dispatch({
         type: GET_USERDATA,
         payload: {
-          id, joinDate, nick, motivationAbout, motivationProfession, motivationExercise, full_name, signed, groups, role, permission
+          id, joinDate, nick, motivationAbout, motivationProfession, motivationExercise, full_name, signed, groups, role, permission, bits
         },
       });
     } catch (e) {
