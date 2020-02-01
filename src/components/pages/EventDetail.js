@@ -75,17 +75,19 @@ class EventDetail extends Component {
     return notes.map((note) => {
       if (!note.profile) {
         return (
-          <Comment key={Math.random()}>
-            <Comment.Content>
-              <Comment.Author>{note.created_by_name}</Comment.Author>
-              <Comment.Metadata>
-                {moment(note.created_at).format('LL')}
-              </Comment.Metadata>
-              <Comment.Text>
-                {note.note}
-              </Comment.Text>
-            </Comment.Content>
-          </Comment>);
+          <Segment>
+            <Comment key={Math.random()}>
+              <Comment.Content>
+                <Comment.Author>{note.created_by_name}</Comment.Author>
+                <Comment.Metadata>
+                  {moment(note.created_at).format('LL')}
+                </Comment.Metadata>
+                <Comment.Text>
+                  {note.note}
+                </Comment.Text>
+              </Comment.Content>
+            </Comment>
+          </Segment>);
       }
       return '';
     });

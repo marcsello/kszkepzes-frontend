@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Container, Menu } from 'semantic-ui-react';
 import Events from './Events'
-import Trainees from './Trainees'
+import Presence from './Presence'
+import LeaderBoard from './LeaderBoard'
 
 export default class Statistics extends Component {
   state = { activeItem: 'events' }
@@ -28,15 +29,23 @@ export default class Statistics extends Component {
               Alkalmak
             </Menu.Item>
             <Menu.Item
-              name='trainees'
-              active={activeItem === 'trainees'}
+              name='presence'
+              active={activeItem === 'presence'}
               onClick={this.handleItemClick}
             >
-              Képződők
+              Jelenlét
+            </Menu.Item>
+            <Menu.Item
+              name='leaderboard'
+              active={activeItem === 'leaderboard'}
+              onClick={this.handleItemClick}
+            >
+              Ranglista
             </Menu.Item>
           </Menu>
           { activeItem === 'events' ? <Events /> : '' }
-          { activeItem === 'trainees' ? <Trainees /> : '' }
+          { activeItem === 'presence' ? <Presence /> : '' }
+          { activeItem === 'leaderboard' ? <LeaderBoard /> : '' }
         </Container>
       </div>
     );

@@ -3,7 +3,7 @@ import { Container, Table, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { getTrainees, getStaffEvents } from '../../actions/statistics';
 
-class Trainees extends Component {
+class Presence extends Component {
   UNSAFE_componentWillMount() {
     this.props.getTrainees();
     this.props.getStaffEvents();
@@ -79,4 +79,4 @@ class Trainees extends Component {
 
 const mapStateToProps = ({ trainees: { trainees }, events: { events }, user }) => ({ trainees, events, user });
 
-export default connect(mapStateToProps, { getTrainees, getStaffEvents })(Trainees);
+export default connect(mapStateToProps, { getTrainees, getStaffEvents })(Presence);
