@@ -13,6 +13,7 @@ import moment from 'moment';
 import {
   getTasks,
   getSolutions,
+  getDocuments,
   addTask,
   setSelectedTask,
   deleteTask,
@@ -69,18 +70,18 @@ export const customMessage = (header, text, marginBottom, warning) => (
 
 class Homework extends Component {
   componentDidMount() {
-    this.props.getTasks();
-    this.props.getProfiles();
-    this.props.getSolutions(this.props.user.id);
+    this.props.getTasks()
+    this.props.getProfiles()
+    this.props.getSolutions()
+    this.props.getDocuments()
   }
 
   // Returns a table style for the given task
   getTaskDisplayStyle(task) {
-    const taskSolutions = this.props.homeworks.solutions.filter(solution => 
-      solution.task === task.id).filter(solution =>
-      solution.created_by === this.props.user.id);
+    const taskSolution = this.props.homeworks.solutions
+      .filter(solution => solution.task === task.id)
 
-    if (taskSolutions.length === 0) {
+    if (taskSolution.length === 0) {
       if (moment().isBefore(task.deadline)) {
         return 'can_submit';
       }
@@ -88,11 +89,11 @@ class Homework extends Component {
       return 'no_submit';
     }
 
-    if (taskSolutions[taskSolutions.length - 1].corrected === false) {
+    if (taskSolution[0].corrected === false) {
       return 'wait_correction';
     }
 
-    if (taskSolutions[taskSolutions.length - 1].accepted === false) {
+    if (taskSolution[0].accepted === false) {
       return 'no_accept';
     }
 
@@ -103,8 +104,9 @@ class Homework extends Component {
   // given parameters separates the active/inactive tasks and normal/staff users
   renderTaskList(active, staff) {
     const { user, homeworks } = this.props;
-    const profileSolutions = homeworks.solutions.filter(solution =>
-      solution.created_by === user.id);
+    const profileSolutions = homeworks.solutions
+      .filter(solution => solution.created_by === user.id);
+    
 
     // Normal user
     if (!staff) {
@@ -372,6 +374,7 @@ export default connect(
     getTasks,
     setSelectedTask,
     getSolutions,
+    getDocuments,
     addTask,
     deleteTask,
     getProfiles,

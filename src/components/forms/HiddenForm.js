@@ -5,11 +5,11 @@ class HiddenForm extends Component {
     render(){
         return (
             <div>
-                <p style={{ marginBottom: 0, fontWeight: this.props.fontWeight }}>{this.props.label}</p>
+                <div style={{ marginBottom: 0, fontWeight: this.props.fontWeight }}>{this.props.label}</div>
                 <Segment style={{ marginTop: 0 }}>
-                <p>
+                <div>
                     {this.props.value}
-                </p>
+                </div>
                 </Segment>
             </div>
         )

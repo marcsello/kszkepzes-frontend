@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Button, Form, Input, TextArea, Icon, Header } from 'semantic-ui-react';
+import { Modal, Button, Form, Input, TextArea, Icon, Header, Segment, Message } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { addSolution, writeSolution, writeSolutionFile, addDocument, clearWrite } from '../../actions/homework';
 import './Forms.css';
@@ -20,6 +20,7 @@ const allowedFileTypes = [
 const maxFileSize = 50;
 
 class AddSolutionForm extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -27,29 +28,33 @@ class AddSolutionForm extends Component {
     };
   }
 
-
   render() {
     const {
       name, description, file
     } = this.props.newSolution
 
     const task = this.props.taskid;
+
+    const thisTaskSolution = this.props.homeworks.solutions
+      .filter(solution => solution.task === task)
+    const thisTaskDocument = this.props.homeworks.documents
+      .filter(document => document.solution === thisTaskSolution[0]?.id)
+
+    const lastName = thisTaskDocument[0]?.name
+    const lastDesc = thisTaskDocument[0]?.description
+    const lastFile = thisTaskDocument[0]?.file
+
+    console.log(lastName, lastDesc, lastFile)
+
+    // const name = thisTaskDocument[0]?.name
+    // const description = thisTaskDocument[0]?.description
+    // const file = '';
+
     const corrected = false;
     const accepted = false;
     const sentences = this.props.taskdesc.split('\n');
     const note = '';
     const disabledText = 'A határidő lejárt, további beadás nem lehetséges.';
-
-    // const {
-    //   studentFullName, studentId, taskTitle, taskSolutions,
-    // } = this.props;
-    // const taskSolutionsProfile =
-    // taskSolutions.filter(solution => solution.created_by === studentId);
-    // const relevantSolution = taskSolutionsProfile.slice(-1)[0];
-    // const relevantDocuments = this.props.homeworks.documents.filter(document =>
-    //   document.solution === relevantSolution.id).filter(document =>
-    //   document.uploaded_by_name === studentFullName);
-    // const relevantDocument = relevantDocuments.slice(-1)[0];
 
     return (
       <Modal
@@ -79,6 +84,31 @@ class AddSolutionForm extends Component {
           {this.props.disabled ?
             customMessage(disabledText, undefined, undefined, this.props.disabled) :
             <Form>
+              {lastName ?
+                <Segment style={{paddingBottom: '1em'}}>
+                  <div style={{ marginBottom: '1em', fontWeight: 'bold' }}>Legutóbbi megoldásod:</div>
+                  <Segment attached='top'>
+                    <h5 style={{paddingBottom: '0.4em'}}>Cím:</h5>
+                    {lastName}
+                  </Segment>
+                  <Segment attached>
+                    <h5 style={{paddingBottom: '0.4em'}}>Leírás:</h5>
+                    {lastDesc}
+                  </Segment>
+                  <Segment attached='bottom'>
+                    <h5>Beadott fájl:</h5>
+                    {lastFile ? 
+                      <a href={lastFile} rel='noreferrer noopener' target='_blank'>Fájl letöltése</a>
+                    :
+                      <span>-</span>
+                    }
+                  </Segment>
+                </Segment>
+                
+                :
+                null
+              }
+
               <Form.Field
                 control={Input}
                 label='Megoldás címe:'

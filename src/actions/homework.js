@@ -31,10 +31,10 @@ export const getTasks = () => (
   }
 );
 
-export const getSolutions = id => (
+export const getSolutions = taskId => (
   async (dispatch) => {
     try {
-      const response = await axios.get('/api/v1/homework/solutions/', { params: { profileID: id } });
+      const response = await axios.get('/api/v1/homework/solutions/', { task: taskId });
       dispatch({
         type: GET_SOLUTIONS,
         payload: response.data,
@@ -183,11 +183,11 @@ export const addSolution = ({
   }
 );
 
-export const getDocuments = (id, solution) => (
+export const getDocuments = (solutionID) => (
   async (dispatch) => {
     try {
       const response =
-      await axios.get('/api/v1/documents', { params: { profileID: id, solutionID: solution } });
+      await axios.get('/api/v1/documents', { params: { solution: solutionID } });
       dispatch({
         type: GET_DOCUMENTS,
         payload: response.data,
