@@ -8,10 +8,6 @@ import {
   Header,
   Table,
   Segment,
-  Icon,
-  Checkbox,
-  Popup,
-  Grid,
   Divider,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';

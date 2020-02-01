@@ -336,7 +336,29 @@ class Homework extends Component {
           {noTask ? 
             customMessage(noTaskHeaderText, noTaskText, marginBottom, false)
             : 
-            this.renderHomeworksTable(active, staff)
+            <div>
+              {this.renderHomeworksTable(active, staff)}
+              {!active ?
+                <Header
+                  as='h3'
+                  content={
+                    <div >
+                      Jelenlegi bitjeid száma:
+                      <Label color='green' size='large'>
+                        {this.props.user.bits} bit 
+                      </Label>
+                    </div>
+                  }
+                  style={{
+                      fontWeight: 'normal',
+                      marginTop: '0.5em',
+                    }}
+                  textAlign='right'
+                />
+                : null
+              }
+            </div>
+            
           }
         </Container>
       </Segment>
