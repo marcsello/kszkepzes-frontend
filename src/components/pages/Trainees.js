@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Table, Icon, Responsive } from 'semantic-ui-react';
+import { Container, Table, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { getTrainees, getStaffEvents } from '../../actions/statistics';
 
@@ -7,13 +7,6 @@ class Trainees extends Component {
   UNSAFE_componentWillMount() {
     this.props.getTrainees();
     this.props.getStaffEvents();
-  }
-
-  // Number of visited events
-  VisitedStatusNumber(trainee) {
-    return (this.props.events.filter((event) => {
-      return event.visitors.includes(trainee.id)
-    })).length;
   }
 
   // Every event with visit status in table cells
@@ -47,21 +40,6 @@ class Trainees extends Component {
     );
     });
   }
-  // Only visit number rendered
-  renderTraineesWithVisitNum() {
-    return this.props.trainees.map((trainee) =>{ 
-      return (
-        <Table.Row textAlign='center'>
-          <Table.Cell>
-            {trainee.full_name}
-          </Table.Cell>
-          <Table.Cell textAlign='center'>
-            {`${this.VisitedStatusNumber(trainee)} / ${this.props.events.length}`}
-          </Table.Cell>
-        </Table.Row>
-      );
-    });
-  }
 
   // Column for each event
   renderTableHeaderEvents() {
@@ -75,49 +53,25 @@ class Trainees extends Component {
 
   render() {
     return (
-      <Container textAlign='center'>
-        {/* Rendered on larger screens */}
-        <Responsive minWidth={600} >
-          <Table color='blue' unstackable celled selectable compact>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell textAlign='center'>
-                  Képződők
-                </Table.HeaderCell>
-                { this.renderTableHeaderEvents() }
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {this.props.trainees ? 
-                this.renderTraineesWithEvents() 
-              : 
-                'Nincsenek képződők'
-              }
-            </Table.Body>
-          </Table>
-        </Responsive>
-        {/* Rendered on mobile */}
-        <Responsive maxWidth={599} >
-          <Table color='blue' unstackable celled selectable compact>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell textAlign='center'>
-                  Képződők
-                </Table.HeaderCell>
-                <Table.HeaderCell textAlign='center'>
-                  Részvételi arány
-                </Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {this.props.trainees ? 
-                this.renderTraineesWithVisitNum() 
-              : 
-                'Nincsenek képződők'
-              }
-            </Table.Body>
-          </Table>
-        </Responsive>
+      <Container textAlign='center' style={{overflowX: 'scroll'}}>
+        <Table color='blue' unstackable celled selectable compact>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell textAlign='center'>
+                Képződők
+              </Table.HeaderCell>
+              { this.renderTableHeaderEvents() }
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+
+            {this.props.trainees ? 
+              this.renderTraineesWithEvents() 
+            : 
+              'Nincsenek képződők'
+            }
+          </Table.Body>
+        </Table>
       </Container>
     );
   }

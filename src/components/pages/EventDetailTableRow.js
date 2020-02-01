@@ -43,7 +43,7 @@ class TraineeTableRow extends Component {
 
   render() {
     const note = this.props.actualNote;
-    const { trainee, edit, actualNote, selectedEvent, notes } = this.props;
+    const { trainee, selectedEvent, notes } = this.props;
     const isVisitor = selectedEvent.visitors.includes(trainee.id);
     const isAbsent = selectedEvent.absent.includes(trainee.id);
     return (
@@ -70,8 +70,20 @@ class TraineeTableRow extends Component {
               defaultValue={isVisitor ? 'Visitor' : isAbsent ? 'Absent' : 'No'}
               selection
               options={visitStates}
-              onChange={(_, v) => this.props.visitorChange({ id : trainee.id, value: v.value })}
+              onChange={(_, v) => {
+                this.props.visitorChange({ id : trainee.id, value: v.value })
+                // Submit with error check
+                this.props.submitVisitors(this.props.selectedEvent)
+                  .then( value => {
+                    if(value === true) {
+                      console.log('success')
+                    } else {
+                      console.log('error')
+                    }
+                  })
+              }}
             />
+             
           </Table.Cell>
         }
         {/* Notes for trainees */}
@@ -157,4 +169,7 @@ class TraineeTableRow extends Component {
 }
 const mapStateToProps = ({ notes: { actualNote } }) => ({ actualNote })
 
-export default connect(mapStateToProps, { writeNote, clearWrite, postEventNote, visitorChange})(TraineeTableRow)
+export default connect(mapStateToProps, 
+  { writeNote, clearWrite, postEventNote, 
+    visitorChange, submitVisitors})
+    (TraineeTableRow)

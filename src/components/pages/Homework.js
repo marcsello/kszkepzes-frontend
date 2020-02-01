@@ -338,7 +338,7 @@ class Homework extends Component {
             : 
             <div>
               {this.renderHomeworksTable(active, staff)}
-              {!active ?
+              {!active && !staff ?
                 <Header
                   as='h3'
                   content={
@@ -377,7 +377,7 @@ class Homework extends Component {
       );
     } else if (user.role === 'Staff') {
       return (
-        <div>
+        <div style={{paddingBottom: '2em'}}>
           <Segment style={{ padding: '0 0 2em 0' }} vertical basic>
             <Container>
               <Header dividing as='h1'

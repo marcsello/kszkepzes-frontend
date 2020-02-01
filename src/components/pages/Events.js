@@ -44,21 +44,24 @@ class Events extends Component {
   render() {
     return (
       <Container textAlign='center'>
-        <Table color='blue' unstackable celled selectable compact>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell textAlign='center'>Alkalom neve</Table.HeaderCell>
-              <Table.HeaderCell textAlign='center'>Dátum</Table.HeaderCell>
-              <Table.HeaderCell textAlign='center'>Jelen voltak</Table.HeaderCell>
-              <Table.HeaderCell />
-            </Table.Row>
-          </Table.Header>
-
-          <Table.Body>
-            {this.props.events ? this.renderEvents() : 'Nincs még alaklom beírva'}
-          </Table.Body>
-        </Table>
-        <AddEventForm />
+        <div style={{overflowX: 'scroll'}}>
+          <Table color='blue' unstackable celled selectable compact
+          size='small'>
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell textAlign='center'>Alkalom neve</Table.HeaderCell>
+                <Table.HeaderCell textAlign='center'>Dátum</Table.HeaderCell>
+                <Table.HeaderCell textAlign='center'>Jelen voltak</Table.HeaderCell>
+                <Table.HeaderCell />
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {this.props.events ? this.renderEvents() : 'Nincs még alkalom beírva'}
+            </Table.Body>
+          </Table>
+        </div>
+        <br />
+        <AddEventForm/>
       </Container>
     );
   }

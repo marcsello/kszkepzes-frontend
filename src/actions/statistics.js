@@ -82,14 +82,21 @@ export const visitorChange = ({ id, value }) => {
   }
 };
 
-export const submitVisitors = ({ id, visitors }) => (
+export const submitVisitors = ({ id, visitors, absent }) => (
   async () => {
     try {
       const response = await axios.patch(`/api/v1/staff_events/${id}/`, {
-        visitors
-      });
+        visitors: visitors,
+        absent: absent
+      })
+      if(response.data.id === id) {
+        return true
+      } else {
+        return false
+      }
     } catch (e) {
       console.log(e);
+      return false
     }
   }
 );
