@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Header, Segment, Divider } from 'semantic-ui-react';
+import { Container, Header, Segment } from 'semantic-ui-react';
 import './Groups.css';
 import GroupCard from '../extra/GroupCard'
 
@@ -46,4 +46,3 @@ class Groups extends Component {
 const mapStateToProps = ({ groups }) => ({ groups });
 
 export default connect(mapStateToProps, { getGroups })(Groups);
-
