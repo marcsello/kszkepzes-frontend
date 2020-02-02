@@ -1,5 +1,6 @@
 import { GET_TASKS,
   GET_SOLUTIONS,
+  CORRECT_SOLUTION,
   ADD_TASK,
   DELETE_TASK,
   EDIT_TASK,
@@ -22,6 +23,11 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, tasks: action.payload };
     case GET_SOLUTIONS:
       return { ...state, solutions: action.payload };
+    case CORRECT_SOLUTION:
+      const modifiedSolution = state.solutions.find(sol => sol.id === action.payload.id);
+      const modifiedSolutions = state.solutions.slice();
+      modifiedSolutions.splice(state.solutions.indexOf(modifiedSolution), 1, action.payload);
+      return { ...state, solutions: [...modifiedSolutions] };
     case ADD_SOLUTION:
       return { ...state, solutions: [action.payload, ...state.solutions], id: action.payload.id };
     case ADD_TASK:

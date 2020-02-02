@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Container, Form, Dropdown, Divider, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { textChange, submitRegistration, groupChange } from '../../actions';
+import { getDeadline } from '../../actions/auth'
+import HiddenForm from '../forms/HiddenForm'
 
 const options = [
   { key: 'DT', text: 'DevTeam', value: 'DT' },
@@ -12,7 +14,8 @@ const options = [
 ];
 
 class Profile extends Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
+    this.props.getDeadline()
     if (!this.props.id) {
       this.props.history.push('/home');
     }
@@ -20,30 +23,51 @@ class Profile extends Component {
 
   render() {
     const {
+<<<<<<< HEAD
       role, nick, groups, motivationAbout, motivationProfession, motivationExercise, signed, id,
+=======
+      nick, groups, motivationAbout, motivationProfession, 
+      motivationExercise, signed, id, deadline, messageBefore, 
+      messageAfter
+>>>>>>> dev
     } = this.props;
+    const endDate = new Date(deadline)
+    let canEdit = Date.now()<endDate
     return (
       <Container
         style={{
-          marginTop: '0.5em',
+          marginTop: '1em',
         }}
       >
+        {canEdit ?
         <Segment inverted color='red' tertiary>
+<<<<<<< HEAD
           <p style={{ fontSize: '1.33em' }}>
             A profilod mentés után is módosítható a későbbiekben, egészen február 13. 17:00-ig.
           </p>
+=======
+          <p style={{ fontSize: '1.3em' }} dangerouslySetInnerHTML={{__html: messageBefore}} />
+>>>>>>> dev
         </Segment>
+        :
+        <Segment inverted color='red' tertiary>
+          <p style={{ fontSize: '1.3em' }} dangerouslySetInnerHTML={{__html: messageAfter}} />
+        </Segment>}
+
         <Form>
-          <Form.Input
+          {canEdit ? 
+            <Form.Input
             fluid
             name='nick'
             label='Becenév'
             onChange={e => this.props.textChange(e)}
             placeholder='Becenév'
             value={nick}
-          />
-
+            /> :
+            <HiddenForm fontWeight='bold' label='Becenév' value={nick} />
+          }
           <Divider horizontal>Motiváció</Divider>
+          {canEdit ? 
           <Form.TextArea
             rows={10}
             name='motivationAbout'
@@ -51,9 +75,14 @@ class Profile extends Component {
             onChange={e => this.props.textChange(e)}
             placeholder='Mesélj nekünk egy kicsit magadról. Milyen szakmai vagy más eredményeket értél el, amikre büszke vagy?'
             value={motivationAbout}
-          />
-
+          /> :
+            <HiddenForm 
+              fontWeight='bold'
+              label='Mesélj nekünk egy kicsit magadról. Milyen szakmai vagy más eredményeket értél el, amikre büszke vagy?' 
+              value={motivationAbout} />
+          }
           <Divider horizontal />
+          {canEdit ? 
           <Form.TextArea
             rows={10}
             label='Mit vársz el a képzéstől, miért szeretnél rá jelentkezni, szerinted mire tudod majd használni az itt megszerzett tudást? Mit szeretnél elérni a szakmádban?'
@@ -61,9 +90,15 @@ class Profile extends Component {
             onChange={e => this.props.textChange(e)}
             placeholder='Mit vársz el a képzéstől, miért szeretnél rá jelentkezni, szerinted mire tudod majd használni az itt megszerzett tudást? Mit szeretnél elérni a szakmádban?'
             value={motivationProfession}
-          />
+          /> :
+            <HiddenForm
+              fontWeight='bold'
+              label='Mit vársz el a képzéstől, miért szeretnél rá jelentkezni, szerinted mire tudod majd használni az itt megszerzett tudást? Mit szeretnél elérni a szakmádban?' 
+              value={motivationProfession} />
+          }
 
           <Divider horizontal />
+          {canEdit ?
           <Form.TextArea
             rows={10}
             name='motivationExercise'
@@ -76,7 +111,7 @@ class Profile extends Component {
                   nem titkolt célunk ezzel a lelkesedés felmérése.
                   A válaszokat a kérdések alatti szövegdobozba várjuk.
                 </b>
-                <ol>
+                <ul>
                   <li>
                   Szeretnéd kedvenc tantárgyad vik.wiki oldalát elérni,
                   de szomorúan látod, hogy az oldal nem jön be.
@@ -106,11 +141,52 @@ class Profile extends Component {
                   (használd az előző feladatban kapott adatokat).
                   Belépés után keresd meg a feladat megoldását!
                   </li>
-                </ol>
+                </ul>
               </div>
             }
             value={motivationExercise}
-          />
+          /> :
+            <HiddenForm
+              fontWeight='normal'
+              label={
+                <div>
+                  <b>Alább találsz néhány elgondolkodtató kérdést, megoldandó feladatot.
+                    A kérdések és feladatok elkészítése opcionális,
+                    nem titkolt célunk ezzel a lelkesedés felmérése.
+                    A válaszokat a kérdések alatti szövegdobozba várjuk.
+                  </b>
+                  <ul>
+                    <li>
+                    Szeretnéd kedvenc tantárgyad vik.wiki oldalát elérni,
+                    de szomorúan látod, hogy az oldal nem jön be.
+                    A Steam pedig hibátlanul megy a háttérben és az emailek is megérkeznek...
+                    Szobatársadnak pont megvan a vik.wiki szerverének IP-címe.
+                    Csodálkozva látod, hogy a böngésző címsorába írva eléred a kiszolgáló webszervert.
+                    Mi lehet a baj?
+                    </li>
+                    <li>
+                    Két előadás közti szünetben úgy döntesz,
+                    hogy laptopoddal az index.hu tech cikkeit fogod görgetni.
+                    Ám az oldal nem válaszol, a hiba okát megpróbálod kideríteni.
+                    Ekkor veszed észre, hogy az alábbiakat sem éred el:
+                    sze.hu, 444.hu, corvinus.hu, startlap.hu.
+                    Ugyanakkor a Facebook, a Gmail, a YouTube, de még az egyetemi
+                    oldalak többsége is működik. Szerinted mi lehet a hiba oka?
+                    </li>
+                    <li>
+                    Találsz egy értelmetlen szöveget egy honlapon (például: <a href='http://kszkepzes18.sch.bme.hu/zebra.html'>http://kszkepzes18.sch.bme.hu/zebra.html</a>), de feltűnik, hogy két egyenlőségjellel fejeződik be. Nyomozz, s a végeredményt (amit találtál) írd ide!
+                    </li>
+                    <li>
+                    A <b>kszkepzes18.sch.bme.hu</b> címen elérhető gépen
+                    fut egy szolgáltatás az alapértelmezett <b>5432</b> porton
+                    (használd az előző feladatban kapott adatokat).
+                    Belépés után keresd meg a feladat megoldását!
+                    </li>
+                  </ul>
+                </div>
+              }
+              value={motivationExercise} />
+          }
 
           <Divider horizontal>Érdekelődés</Divider>
           <Dropdown
@@ -121,8 +197,10 @@ class Profile extends Component {
             onChange={(_, v) => this.props.groupChange(v.value)}
             options={options}
             defaultValue={groups}
+            disabled={!canEdit}
           />
           <br />
+<<<<<<< HEAD
           { role === 'Applicant' ?
             <Form.Checkbox
               name='signed'
@@ -135,15 +213,29 @@ class Profile extends Component {
             :
             null
         }
+=======
+          <Form.Checkbox
+            name='signed'
+            label='Szeretnék jelentkezni a KSZKépzésre'
+            onChange={(_, v) =>
+              this.props.textChange({ target: { name: v.name, value: v.checked } })
+            }
+            checked={signed}
+            readOnly={!canEdit}
+            style={ !canEdit ? { marginBottom: '5em' } : null}
+          />
+          {canEdit ? 
+>>>>>>> dev
           <Form.Button
             primary
-            style={{ marginBottom: '10em' }}
+            style={{ marginBottom: '5em' }}
             onClick={() => this.props.submitRegistration({
               nick, motivationAbout, motivationProfession, motivationExercise, signed, groups, id,
             })}
           >
             Mentés
           </Form.Button>
+          : '' }
         </Form>
       </Container>
     );
@@ -152,8 +244,15 @@ class Profile extends Component {
 
 const mapStateToProps = ({
   user: {
+<<<<<<< HEAD
     role, nick, groups, motivationAbout, motivationProfession, motivationExercise, signed, id,
   },
+=======
+    nick, groups, motivationAbout, motivationProfession, 
+    motivationExercise, signed, id, deadline, messageBefore, 
+    messageAfter
+  }
+>>>>>>> dev
 }) => ({
   role,
   nick,
@@ -163,6 +262,9 @@ const mapStateToProps = ({
   motivationExercise,
   signed,
   id,
+  deadline,
+  messageBefore,
+  messageAfter
 });
 
-export default connect(mapStateToProps, { textChange, submitRegistration, groupChange })(Profile);
+export default connect(mapStateToProps, { textChange, submitRegistration, groupChange, getDeadline })(Profile);

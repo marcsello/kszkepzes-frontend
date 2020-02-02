@@ -18,6 +18,8 @@ class AddTaskForm extends Component {
     return (
       <Modal
         open={this.state.showModal}
+        closeOnDimmerClick
+        onClose={() => this.setState({ showModal: false })}
         trigger={
           <Button
             inverted
@@ -76,7 +78,12 @@ class AddTaskForm extends Component {
           <Button
             inverted
             color='green'
-            disabled={(title === '' || text === '' || deadline === '' || moment().isAfter(deadline))}
+            disabled={
+              title === '' ||
+              title.length > 150 ||
+              text === '' ||
+              deadline === '' || moment().isAfter(deadline)
+            }
             onClick={() => {
               this.props.addTask({ title, text, deadline });
               this.setState({ showModal: false });

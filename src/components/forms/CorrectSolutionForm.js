@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { Modal, Button, Icon, Checkbox, Form, TextArea, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { correctSolution, writeSolution, check, clearWrite } from '../../actions/homework';
+import { correctSolution,
+  writeSolution,
+  check,
+  clearWrite,
+  getSolutions,
+  getDocuments,
+  selectSolution } from '../../actions/homework';
 
 class CorrectSolutionForm extends Component {
   constructor(props) {
@@ -17,30 +23,36 @@ class CorrectSolutionForm extends Component {
     } = this.props;
     const taskSolutionsProfile =
     taskSolutions.filter(solution => solution.created_by === studentId);
-    const relevantSolution = taskSolutionsProfile[taskSolutionsProfile.length - 1];
+    const relevantSolution = taskSolutionsProfile.slice(-1)[0];
     const relevantDocuments = this.props.homeworks.documents.filter(document =>
       document.solution === relevantSolution.id).filter(document =>
       document.uploaded_by_name === studentFullName);
-    const relevantDocument = relevantDocuments[relevantDocuments.length - 1];
+    const relevantDocument = relevantDocuments.slice(-1)[0];
     let fileLink;
-    if (relevantDocument !== undefined && relevantDocument !== null &&
-    relevantDocument.file !== undefined && relevantDocument.file !== null) {
+    if (relevantDocument && relevantDocument.file) {
       fileLink = `/media${relevantDocument.file.split('media')[1]}`;
     } else {
       fileLink = null;
     }
-
-
-    const { note } = this.props.correction;
+    const {
+      corrected,
+      accepted,
+      note,
+    } = this.props.correction;
     return (
       <Modal
         open={this.state.showModal}
+        closeOnDimmerClick
+        onClose={() => this.setState({ showModal: false })}
         trigger={
           <Button
             inverted
-            color='orange'
+            color={this.props.color}
             style={{ marginRight: '1.5em', marginTop: '1.5em' }}
-            onClick={() => { this.setState({ showModal: true }); }}
+            onClick={() => {
+              this.setState({ showModal: true });
+              this.props.selectSolution(relevantSolution);
+            }}
           >
             {studentFullName}
           </Button>
@@ -50,26 +62,54 @@ class CorrectSolutionForm extends Component {
           A(z) {taskTitle} nevű feladat {studentFullName} által beadott megoldásának kijavítása:
         </Modal.Header>
         <Modal.Content>
+          <Header as='h5'>A megoldás címe:</Header>
+          {(relevantDocument && relevantDocument.description)
+            ? <p>{relevantDocument.name}</p>
+            : <p>Nincs cím.</p>
+          }
           <Header as='h5'>A megoldás leírása:</Header>
-          { (relevantDocument !== undefined && relevantDocument !== null &&
-          relevantDocument.description !== undefined && relevantDocument.description !== null
-          && relevantDocument.description !== '')
-            ? relevantDocument.description.split('\n')
-            : <p>Nincs leírás.</p>}
+          {(relevantDocument && relevantDocument.description)
+            ? relevantDocument.description.split('\n').map(s => (<p key={Math.random()}>{s}</p>))
+            : <p>Nincs leírás.</p>
+          }
           <Header as='h5'>A beadott dokumentum:</Header>
-          {fileLink === null ?
-            <p>Nincs fájl.</p> :
-            <a href={fileLink}>Fájl letöltése</a>}
-          <Header as='h5'>Elfogadás/Elutasítás:</Header>
-          <Button color={this.props.correction.accepted ? 'green' : 'red'} onClick={() => this.props.check()}>
+          {fileLink
+            ? <a href={fileLink} rel='noreferrer noopener' target='_blank'>Fájl letöltése</a>
+            : <p>Nincs fájl.</p>
+          }
+          <Header as='h5'>Kijavítás állapotának változtatása:</Header>
+          <Button
+            color='orange'
+            inverted={corrected}
+            onClick={() => this.props.check('corrected')}
+          >
             <Checkbox
-              label={this.props.correction.accepted
-                ? 'Elfogadható'
-                : 'Nem elfogadható'}
-              checked={this.props.correction.accepted}
+              label='Nincs kijavítva'
+              checked={!corrected}
             />
           </Button>
-          <Header as='h5'>Megjegyzés:</Header>
+          <Header as='h5'>Elfogadás/elutasítás:</Header>
+          <Button
+            color='green'
+            inverted={!accepted}
+            onClick={() => this.props.check('accepted')}
+          >
+            <Checkbox
+              label='Elfogadható'
+              checked={accepted}
+            />
+          </Button>
+          <Button
+            color='red'
+            inverted={accepted}
+            onClick={() => this.props.check('accepted')}
+          >
+            <Checkbox
+              label='Nem elfogadható'
+              checked={!accepted}
+            />
+          </Button>
+          <Header as='h5'>A feladat megoldásának szöveges értékelése:</Header>
           <Form>
             <Form.Field
               control={TextArea}
@@ -97,9 +137,9 @@ class CorrectSolutionForm extends Component {
             onClick={() => {
               this.props.correctSolution(
                 relevantSolution.id,
-                true,
-                this.props.correction.accepted,
-                this.props.correction.note,
+                corrected,
+                accepted,
+                note,
               );
               this.setState({ showModal: false });
               this.props.clearWrite();
@@ -120,4 +160,7 @@ export default connect(mapStateToProps, {
   writeSolution,
   check,
   clearWrite,
+  getSolutions,
+  getDocuments,
+  selectSolution,
 })(CorrectSolutionForm);

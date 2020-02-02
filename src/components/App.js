@@ -4,6 +4,7 @@ import Main from './Main';
 import Footer from './Footer';
 import AlertMessage from './AlertMessage';
 
+
 const App = () => (
   <div style={{ minHeight: '100%', position: 'relative' }}>
     <Header className='header'>

@@ -7,13 +7,24 @@ import {
   Form,
   Header,
   Table,
+<<<<<<< HEAD
+=======
+  Segment,
+  Divider,
+>>>>>>> dev
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { getEventById, getTrainees, visitorChange, submitVisitors } from '../../actions/statistics';
+<<<<<<< HEAD
 import { getNotesByEvent, writeNote, clearWrite, postNote, deleteNote } from '../../actions/notes';
 import TraineeTableRow from './TraineeTableRow';
 import ConfirmModal from '../forms/ConfirmModal';
+=======
+import { getNotesByEvent, writeNote, clearWrite, postEventNote } from '../../actions/notes';
+import TraineeTableRow from './EventDetailTableRow';
+
+>>>>>>> dev
 
 class EventDetail extends Component {
   constructor(props) {
@@ -23,7 +34,7 @@ class EventDetail extends Component {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.getEventById(this.props.match.params.id);
     this.props.getTrainees();
     this.props.getNotesByEvent(this.props.match.params.id);
@@ -32,14 +43,20 @@ class EventDetail extends Component {
 
   renderTrainees() {
     const event = this.props.selectedEvent;
+<<<<<<< HEAD
     return this.props.trainees.map((item) => {
       const notes = this.props.eventNotes.filter(note => note.profile === item.id);
+=======
+    return this.props.trainees?.map((item) => {
+      const notes = this.props.eventNotes?.filter(note => note.profile === item.id);
+>>>>>>> dev
       return (
         <TraineeTableRow
           selectedEvent={event}
           notes={notes}
           trainee={item}
           edit={this.state.edit}
+          key={item.id}
         />
       );
     });
@@ -48,14 +65,22 @@ class EventDetail extends Component {
   renderEvent() {
     const { name, date, description } = this.props.selectedEvent;
     return (
-      <Item>
-        <Item.Header as='h2'>{name}</Item.Header>
-        <Item.Header as='h3'>Dátum: {moment(date).format('LL')}</Item.Header>
-        <Container textAlign='justified'>
-          <Item.Header as='h3'>Leírás</Item.Header>
-          <Item.Content>{description}</Item.Content>
-        </Container>
-      </Item>
+      <Segment>
+        <Item>
+          <Divider style={{ fontSize: '2em'}} horizontal>
+            <Header as='h1'>
+              {name}
+              <Item.Header style={{ fontSize: '0.6em'}}>
+                {moment(date).format('LL')}
+              </Item.Header>
+            </Header>
+          </Divider>
+          <Container textAlign='justified'>
+            <Item.Header as='h3'>Leírás</Item.Header>
+            <Item.Content>{description}</Item.Content>
+          </Container>
+        </Item>
+      </Segment>
     );
   }
 
@@ -64,6 +89,7 @@ class EventDetail extends Component {
     return notes.map((note) => {
       if (!note.profile) {
         return (
+<<<<<<< HEAD
           <Comment>
             <Comment.Content>
               <Comment.Author>{note.created_by_name}</Comment.Author>
@@ -91,6 +117,21 @@ class EventDetail extends Component {
             :
             null }
           </Comment>);
+=======
+          <Segment>
+            <Comment key={Math.random()}>
+              <Comment.Content>
+                <Comment.Author>{note.created_by_name}</Comment.Author>
+                <Comment.Metadata>
+                  {moment(note.created_at).format('LL')}
+                </Comment.Metadata>
+                <Comment.Text>
+                  {note.note}
+                </Comment.Text>
+              </Comment.Content>
+            </Comment>
+          </Segment>);
+>>>>>>> dev
       }
       return '';
     });
@@ -100,11 +141,7 @@ class EventDetail extends Component {
     const event = this.props.selectedEvent;
     const note = this.props.actualNote;
     return (
-      <Container
-        style={{
-          padding: '80px'
-        }}
-      >
+      <Container style={{paddingTop: '1em', paddingBottom: '7em'}}>
         <Container textAlign='center'>
           { this.props.selectedEvent && this.props.trainees ?
             this.renderEvent()
@@ -112,6 +149,7 @@ class EventDetail extends Component {
             ''
         }
         </Container>
+<<<<<<< HEAD
           <Table centered>
             <Table.Header>
               <Table.Row>
@@ -134,16 +172,60 @@ class EventDetail extends Component {
             onClick={() => this.setState({ edit: true })}
           >
           Szerkeszt
+=======
+        <Table celled unstackable>
+          <Table.Header>
+            <Table.Row textAlign='center'>
+              <Table.HeaderCell>Név</Table.HeaderCell>
+              <Table.HeaderCell>Jelen volt</Table.HeaderCell>
+              <Table.HeaderCell>Megjegyzések</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            { this.props.selectedEvent ?
+              this.renderTrainees()
+              :
+              null
+            }
+          </Table.Body>
+        </Table>
+        {!this.state.edit ?
+          <Button onClick={() => this.setState({ edit: true })}>
+            Módosítás
           </Button>
-          { this.state.edit ?
+        : 
+          <Button onClick={() => {
+              this.setState({ edit: false });
+              this.props.submitVisitors(this.props.selectedEvent);
+            }}
+          > Kész
+>>>>>>> dev
+          </Button>
+        }
+        <Comment.Group>
+          <Header dividing>
+            Megjegyzések
+          </Header>
+          {this.props.eventNotes ?
+            this.renderComments()
+            :
+            ''
+          }
+          <Form reply>
+            <Form.TextArea
+              value={note.note}
+              onChange={e => this.props.writeNote(e)}
+            />
             <Button
               inverted
               color='blue'
               onClick={() => {
-                              this.setState({ edit: false });
-                              this.props.submitVisitors(this.props.selectedEvent);
+                              this.props.postEventNote({ eventid: event.id,
+                                                        note: note.note });
+                              this.props.clearWrite();
                             }
                       }
+<<<<<<< HEAD
             >Mentés
             </Button>
             :
@@ -177,6 +259,15 @@ class EventDetail extends Component {
               />
             </Form>
           </Comment.Group>
+=======
+              content='Megjegyzés hozzáadása'
+              labelPosition='left'
+              icon='edit'
+              primary
+            />
+          </Form>
+        </Comment.Group>
+>>>>>>> dev
       </Container>
     );
   }

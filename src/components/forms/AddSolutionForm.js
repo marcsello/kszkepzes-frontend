@@ -1,12 +1,26 @@
 import React, { Component } from 'react';
-import { Modal, Button, Form, Input, TextArea, Icon, Header } from 'semantic-ui-react';
+import { Modal, Button, Form, Input, TextArea, Icon, Header, Segment, Divider } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { addSolution, writeSolution, writeSolutionFile, addDocument, clearWrite } from '../../actions/homework';
 import './Forms.css';
 import ConfirmModal from '../forms/ConfirmModal';
-import { emptyMessage } from '../pages/Homework';
+import { customMessage } from '../pages/Homework';
+import {
+  getDocuments,
+  getSolutions,
+} from '../../actions/homework';
+
+const allowedFileTypes = [
+  'image/jpeg',
+  'image/png',
+  'application/x-zip-compressed',
+];
+
+// in megabytes
+const maxFileSize = 50;
 
 class AddSolutionForm extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -16,21 +30,37 @@ class AddSolutionForm extends Component {
 
   render() {
     const {
-      name, description, file,
-    } = this.props.newSolution;
+      name, description, file
+    } = this.props.newSolution
+
     const task = this.props.taskid;
+
+    const thisTaskSolution = this.props.homeworks.solutions
+      .filter(solution => solution.task === task)
+    const thisTaskDocument = this.props.homeworks.documents
+      .filter(document => document.solution === thisTaskSolution[0]?.id)
+
+    const lastName = thisTaskDocument[0]?.name
+    const lastDesc = thisTaskDocument[0]?.description
+    const lastFile = thisTaskDocument[0]?.file
+
     const corrected = false;
     const accepted = false;
     const sentences = this.props.taskdesc.split('\n');
     const note = '';
-    const disabledText = 'A határidő lejárt, további beadás nem lehetséges.'
+    const disabledText = 'A határidő lejárt, további beadás nem lehetséges.';
+
     return (
       <Modal
         open={this.state.showModal}
+        closeOnDimmerClick
+        onClose={() => this.setState({ showModal: false })}
         trigger={
           <button
             id='task'
-            onClick={() => { this.setState({ showModal: true }); }}
+            onClick={() => { 
+              this.setState({ showModal: true });
+            }}
           >
             <Icon name='external' />
             {this.props.tasktitle}
@@ -43,11 +73,62 @@ class AddSolutionForm extends Component {
         <Modal.Content>
           <Modal.Description style={{ marginBottom: '2em' }}>
             <Header as='h5'>Feladat leírása:</Header>
-            {sentences.map(s => (<p>{s}</p>))}
+            {sentences.map(s => (<p key={Math.random()}>{s}</p>))}
           </Modal.Description>
           {this.props.disabled ?
-            emptyMessage(disabledText, undefined, undefined, this.props.disabled) :
+            <div>
+              {lastName ?
+                <div style={{paddingBottom: '1em'}}>
+                  <div style={{ marginBottom: '1em', fontWeight: 'bold' }}>Legutóbbi megoldásod:</div>
+                  <Segment attached='top'>
+                    <h5 style={{paddingBottom: '0.4em'}}>Cím:</h5>
+                    {lastName}
+                  </Segment>
+                  <Segment attached>
+                    <h5 style={{paddingBottom: '0.4em'}}>Leírás:</h5>
+                    {lastDesc}
+                  </Segment>
+                  <Segment attached='bottom'>
+                    <h5>Beadott fájl:</h5>
+                    {lastFile ? 
+                      <a href={lastFile} rel='noreferrer noopener' target='_blank'>Fájl letöltése</a>
+                    :
+                      <span>-</span>
+                    }
+                  </Segment>
+                </div>
+              :
+                customMessage(disabledText, undefined, undefined, this.props.disabled)
+              }
+            </div>
+            
+            :
             <Form>
+              {lastName ?
+                <div style={{paddingBottom: '1em'}}>
+                  <div style={{ fontWeight: 'bold' }}>Legutóbbi megoldásod:</div>
+                  <Segment attached='top'>
+                    <h5 style={{paddingBottom: '0.4em'}}>Cím:</h5>
+                    {lastName}
+                  </Segment>
+                  <Segment attached>
+                    <h5 style={{paddingBottom: '0.4em'}}>Leírás:</h5>
+                    {lastDesc}
+                  </Segment>
+                  <Segment attached='bottom'>
+                    <h5>Beadott fájl:</h5>
+                    {lastFile ? 
+                      <a href={lastFile} rel='noreferrer noopener' target='_blank'>Fájl letöltése</a>
+                    :
+                      <span>-</span>
+                    }
+                  </Segment>
+                </div>
+                
+                :
+                null
+              }
+              <Divider />
               <Form.Field
                 control={Input}
                 label='Megoldás címe:'
@@ -65,7 +146,7 @@ class AddSolutionForm extends Component {
                 placeholder='Add meg a megoldás leírását...'
               />
               <Form.Field>
-                <label>Fájl:</label>
+                <label>Fájl (Megengedett fájltípusok: png, jpeg, jpg, zip. Maximum 50 MB.):</label>
                 <Input type='file' onChange={e => this.props.writeSolutionFile(e)} />
               </Form.Field>
             </Form>
@@ -86,10 +167,18 @@ class AddSolutionForm extends Component {
             ?
               <ConfirmModal
                 button={
-                  <Button disabled={(name === '' || description === '')} inverted color='green'>
+                  <Button
+                    disabled={
+                      !name || !description ||
+                      (!file ? false : !allowedFileTypes.includes(file.type) ||
+                      file.size > (maxFileSize) * (1024 ** 2))
+                    }
+                    inverted
+                    color='green'
+                  >
                     <Icon name='checkmark' /> Beadás
                   </Button>
-                    }
+                }
                 text='beadod az új megoldást, ami felülírja az előzőt'
                 onAccept={() => {
                   this.props.addSolution({
@@ -104,7 +193,11 @@ class AddSolutionForm extends Component {
               <Button
                 inverted
                 color='green'
-                disabled={(name === '' || description === '')}
+                disabled={
+                  !name || !description ||
+                  (!file ? false : !allowedFileTypes.includes(file.type) ||
+                  file.size > (maxFileSize) * (1024 ** 2))
+                }
                 onClick={() => {
                 this.props.addSolution({
                   task, accepted, corrected, note, name, description, file,
@@ -130,5 +223,7 @@ export default connect(mapStateToProps, {
   writeSolution,
   writeSolutionFile,
   addDocument,
+  getDocuments,
   clearWrite,
+  getSolutions,
 })(AddSolutionForm);

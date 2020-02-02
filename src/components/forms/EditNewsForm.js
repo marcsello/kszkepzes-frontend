@@ -14,7 +14,7 @@ class EditNewsForm extends Component {
 
   render() {
     const { id, title, text } = this.props.selectedNews;
-    const editedBy = this.props.user.id;
+    const updated_by = this.props.user.id;
     return (
       <Modal
         open={this.state.showModal}
@@ -63,7 +63,7 @@ class EditNewsForm extends Component {
             color='green'
             onClick={() => {
                     this.props.editNews({
-                                       id, title, text, editedBy,
+                                       id, title, text, updated_by,
                                       });
                     this.setState({ showModal: false });
                     this.props.clearWrite();

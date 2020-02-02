@@ -87,6 +87,7 @@ export const visitorChange = ({ id, value }) => {
 };
 
 export const submitVisitors = ({ id, visitors, absent }) => (
+<<<<<<< HEAD
   async (dispatch) => {
     try {
       const response = await axios.patch(`/api/v1/staff_events/${id}/`, {
@@ -98,6 +99,22 @@ export const submitVisitors = ({ id, visitors, absent }) => (
       }
     } catch (e) {
       dispatch(showMessage('Nem sikerült a változtatás!', 'error'));
+=======
+  async () => {
+    try {
+      const response = await axios.patch(`/api/v1/staff_events/${id}/`, {
+        visitors: visitors,
+        absent: absent
+      })
+      if(response.data.id === id) {
+        return true
+      } else {
+        return false
+      }
+    } catch (e) {
+      console.log(e);
+      return false
+>>>>>>> dev
     }
   }
 );

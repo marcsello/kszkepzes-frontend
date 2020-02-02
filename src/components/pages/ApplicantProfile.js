@@ -25,7 +25,7 @@ const options = [
 ];
 
 class ApplicantProfile extends Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.getSelectedProfile(this.props.match.params.id);
     this.props.getNotesByProfile(this.props.match.params.id);
   }
@@ -84,7 +84,7 @@ class ApplicantProfile extends Component {
     const { id, signed, groups, role, full_name, nick, motivation_about, motivation_exercise, motivation_profession }
     = this.props.selectedProfile;
     return (
-      <Container style={{ padding: '60px' }}>
+      <Container style={{ paddingTop: '3em', paddingBottom: '6em' }}>
         <Item>
           <Item.Content>
             <Container textAlign='center'>
@@ -92,7 +92,7 @@ class ApplicantProfile extends Component {
               <Item.Meta>{nick}</Item.Meta>
             </Container>
             <Item.Description>
-              <Container textAlign='justified' style={{ padding: '30px' }}>
+              <Container textAlign='justified' style={{ padding: '1em' }}>
                 <Header as='h3'>Magamról, eddigi tevékenységem:</Header>
                 <p>{motivation_about}</p>
                 <Header as='h3'>Szakmai motiváció:</Header>
@@ -108,7 +108,7 @@ class ApplicantProfile extends Component {
                   null
                 }
               </Container>
-              <Container textAlign='center' style={{ padding: '20px' }}>
+              <Container textAlign='center' style={{ padding: '1em' }}>
                 <Header as='h3'>Státusz:</Header>
                 { signed ?
                   <div>
@@ -141,6 +141,7 @@ class ApplicantProfile extends Component {
           </Item.Content>
         </Item>
         { signed && role !== 'Staff' ?
+<<<<<<< HEAD
           <Container>
             <Container textAlign='center'>
               <ConfirmModal
@@ -186,6 +187,27 @@ class ApplicantProfile extends Component {
                 />
               </Form>
             </Comment.Group>
+=======
+          <Container textAlign='center'>
+            <ConfirmModal 
+              button={
+                <Button 
+                  color='green'
+                >Jelentkezés elfogadása
+                </Button>}
+              text='elfogadod a jelentkezést'
+              onAccept={() => this.props.setStatus(id, 'Student')}
+            />
+            <ConfirmModal 
+              button={
+                <Button 
+                  color='red'
+                >Jelentkezés elutasítása
+                </Button>}
+              text='elutasítod a jelentkezést'
+              onAccept={() => this.props.setStatus(id, 'Denied')}
+            />
+>>>>>>> dev
           </Container>
           :
           null

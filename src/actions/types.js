@@ -1,5 +1,8 @@
 export const GET_USERDATA = 'get_userdata';
 export const GET_NEWS = 'get_news';
+export const GET_DEADLINE = 'get_deadline';
+
+export const GET_GROUPS = 'get_groups';
 
 export const PROFILE_CHANGE = 'profile_change';
 export const GROUP_CHANGE = 'group_change';
@@ -10,6 +13,8 @@ export const ADD_NEWS = 'add_news';
 export const DELETE_NEWS = 'delete_news';
 export const EDIT_NEWS = 'edit_news';
 export const SELECT_NEWS = 'select_news';
+
+export const GET_MENTORS = 'get_mentors';
 
 export const GET_TASKS = 'get_homeworks';
 export const ADD_TASK = 'add_task';
@@ -25,6 +30,7 @@ export const ADD_SOLUTION = 'add_solution';
 export const ADD_DOCUMENT = 'add_document';
 export const GET_DOCUMENTS = 'get_documents';
 export const CORRECT_SOLUTION = 'correct_solution';
+export const SELECT_SOLUTION = 'select_solution';
 export const CHECK = 'check';
 
 export const GET_EVENTS = 'get_events';

@@ -39,6 +39,7 @@ const range = (count) => {
 
 class Home extends Component {
   render() {
+    const kszk_age = new Date().getFullYear() - 1976
     return (
       <div>
         <div className='car-image-kszk'>
@@ -111,6 +112,7 @@ class Home extends Component {
               Kik is vagyunk mi?
             </Header>
             <p style={{ fontSize: '1.33em', fontFamily: 'Arial' }}>
+<<<<<<< HEAD
               A Kollégiumi Számítástechnikai Kör az Egyetem legrégebben működő
               és legnagyobb aktív, informatikával foglalkozó öntevékeny
               csoportosulása, idén ünnepeljük 43. születésnapunkat. A patinás
@@ -118,6 +120,15 @@ class Home extends Component {
               jó szakmai képességű, számítástechnika iránt kiemelten érdeklődő
               tagjaiból verbuválódott, és bővül évente új tehetségekkel, lelkes
               informatikusokkal, villamosmérnökökkel.
+=======
+              A Kollégiumi Számítástechnikai Kör az Egyetem legrégebben működő
+              és legnagyobb aktív, informatikával foglalkozó öntevékeny
+              csoportosulása, idén ünnepeljük {kszk_age}. születésnapunkat. A patinás
+              név mögött vidám hangulatú, alkotó kedvű csapat rejlik, mely a Kar
+              jó szakmai képességű, számítástechnika iránt kiemelten érdeklődő
+              tagjaiból verbuválódott, és bővül évente új tehetségekkel, lelkes
+              informatikusokkal, villamosmérnökökkel.
+>>>>>>> dev
             </p>
             <Button as={Link} size='large' to='/groups'>
               Ismerd meg a köreinket! <Icon name='right arrow' />

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Header, Icon, Modal } from 'semantic-ui-react';
 
-class ConfirmModal extends Component {
+class InfoModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,7 +14,7 @@ class ConfirmModal extends Component {
    open = () => this.setState({ showModal: true})
 
   render() {
-    const { button, text, onAccept } = this.props;
+    const { button, title, content } = this.props;
     const open = this.state.showModal;
     return (
       <Modal
@@ -26,27 +26,17 @@ class ConfirmModal extends Component {
         size='small'
         basic
       >
-        <Header icon='question' content='Megerősítés' />
+        <Header icon='info' content={title} />
         <Modal.Content>
-          <p>
-            Biztos hogy {text}?
-          </p>
+            {content.split('\n').map(s => (<p key={Math.random()}>{s}</p>))}
         </Modal.Content>
         <Modal.Actions>
           <Button
-            basic
-            color='red'
-            inverted
-            onClick={() => this.close()}
-          >
-            <Icon name='remove' /> Nem
-          </Button>
-          <Button
             color='green'
             inverted
-            onClick={() => { onAccept(); this.close(); }}
+            onClick= {() => this.close()}
           >
-            <Icon name='checkmark' /> Igen
+            <Icon name='checkmark' /> Rendben
           </Button>
         </Modal.Actions>
       </Modal>
@@ -54,4 +44,4 @@ class ConfirmModal extends Component {
   }
 }
 
-export default ConfirmModal;
+export default InfoModal;

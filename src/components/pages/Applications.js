@@ -6,7 +6,7 @@ import { getProfiles, setStatus } from '../../actions/statistics';
 import ConfirmModal from '../forms/ConfirmModal';
 
 class Applications extends Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.getProfiles();
   }
 
@@ -14,7 +14,7 @@ class Applications extends Component {
     return this.props.profiles.map((profile) =>
     { return (
       <Table.Row>
-        <Table.Cell>
+        <Table.Cell textAlign='center'>
           <Link to={`applicant/${profile.id}`}>
             {profile.full_name}
           </Link>
@@ -51,6 +51,7 @@ class Applications extends Component {
             }
           </Table.Cell>
         }
+<<<<<<< HEAD
         <Table.Cell>
           { profile.role !== 'Staff' ?
             <ConfirmModal
@@ -65,6 +66,19 @@ class Applications extends Component {
             />
           :
           null }
+=======
+        <Table.Cell textAlign='center'>
+        <ConfirmModal
+          button = {<Button
+            color='blue'
+            size='tiny'
+          >
+          ADD STAFF STATUS
+        </Button>}
+        text='staff jogot adsz neki'
+        onAccept={() => this.props.setStatus(profile.id, 'Staff')}
+        />
+>>>>>>> dev
         </Table.Cell>
       </Table.Row>
     );
@@ -74,12 +88,13 @@ class Applications extends Component {
   render() {
     return (
       <Container
-        textAlign='center'
-        style={{
-          padding: '80px'
-        }}
+        textAlign='center' style={{paddingTop: '1em', paddingBottom: '3em'}}
       >
+<<<<<<< HEAD
         <Table color='blue' selectable compact>
+=======
+        <Table color='blue' unstackable celled selectable compact>
+>>>>>>> dev
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Jelentkezettek</Table.HeaderCell>

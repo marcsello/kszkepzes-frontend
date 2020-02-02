@@ -1,6 +1,11 @@
 import axios from './session';
+<<<<<<< HEAD
 import { GET_USERDATA, PROFILE_CHANGE, GROUP_CHANGE } from './types';
 import { showMessage } from './messages';
+=======
+import { GET_USERDATA, PROFILE_CHANGE, GROUP_CHANGE, GET_DEADLINE } from './types';
+
+>>>>>>> dev
 
 export const getUserData = () => (
   async (dispatch) => {
@@ -14,9 +19,11 @@ export const getUserData = () => (
         motivation_about: motivationAbout,
         motivation_profession: motivationProfession,
         motivation_exercise: motivationExercise,
+        full_name,
         signed,
         groups,
         role,
+        bits
       } = user.data;
       let permission;
       switch (role) {
@@ -37,8 +44,27 @@ export const getUserData = () => (
       dispatch({
         type: GET_USERDATA,
         payload: {
+<<<<<<< HEAD
           id, fullName, joinDate, nick, motivationAbout, motivationProfession, motivationExercise, signed, groups, role, permission
+=======
+          id, joinDate, nick, motivationAbout, motivationProfession, motivationExercise, full_name, signed, groups, role, permission, bits
+>>>>>>> dev
         },
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
+export const getDeadline = () => (
+  async (dispatch) => {
+    try {
+      const response = await axios.get('/api/v1/profiles/deadline');
+
+      dispatch({
+        type: GET_DEADLINE,
+        payload: response.data,
       });
     } catch (e) {
       console.log(e);

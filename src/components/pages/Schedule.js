@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { Container, Accordion, Icon, Grid } from 'semantic-ui-react';
+import { Container, Accordion, Icon, Grid, Header, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import 'moment/locale/hu';
 import { getStudentEvents } from '../../actions/statistics';
 
 class Schedule extends Component {
   state = { activeIndex: 0 }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
       this.props.getStudentEvents();
   }
 
@@ -24,7 +25,11 @@ class Schedule extends Component {
 
     const events = this.props.events;
     const panels = events.map(event => (
+<<<<<<< HEAD
       <div>
+=======
+      <Accordion key={Math.random()}>
+>>>>>>> dev
         <Accordion.Title
           active={activeIndex === event.id}
           index={event.id}
@@ -42,11 +47,16 @@ class Schedule extends Component {
           </h3>
          </Accordion.Title>
          <Accordion.Content active={activeIndex === event.id}>
+<<<<<<< HEAD
            <h4>Leírás:</h4>
            <p>
+=======
+           <Segment>
+>>>>>>> dev
              {event.description}
-           </p>
+           </Segment>
          </Accordion.Content>
+<<<<<<< HEAD
        </div>
        ));
 
@@ -67,6 +77,39 @@ class Schedule extends Component {
         {panels}
       </Accordion>
       </Container>
+=======
+        </Accordion>
+       ));
+
+    return (
+      <div>
+        <Container textAlign='center'>
+          <Header
+            as='h1'
+            content='Képzés alkalmak'
+            style={{
+                fontSize: '2em',
+                fontWeight: 'bold',
+                marginBottom: '0.5em',
+                marginTop: '0.5em',
+              }}
+          />
+          <Accordion fluid styled>
+            {panels}
+          </Accordion>
+          <Header
+            as='h1'
+            content='Tábor'
+            style={{
+                fontSize: '2em',
+                fontWeight: 'bold',
+                marginBottom: '0.5em',
+                marginTop: '1.5em',
+              }}
+          />
+        </Container>
+      </div>
+>>>>>>> dev
     );
   }
 }

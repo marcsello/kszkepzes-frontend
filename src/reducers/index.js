@@ -11,7 +11,12 @@ import NoteReducer from './NoteReducer';
 import TraineeReducer from './TraineeReducer';
 import CorrectSolutionReducer from './CorrectSolutionReducer';
 import EditTaskReducer from './EditTaskReducer';
+<<<<<<< HEAD
 import MessageReducer from './MessageReducer';
+=======
+import GroupsReducer from './GroupsReducer';
+import MentorsReducer from './MentorsReducer';
+>>>>>>> dev
 
 const rootReducer = combineReducers({
   user: UserReducer,
@@ -22,11 +27,16 @@ const rootReducer = combineReducers({
   events: EventReducer,
   trainees: TraineeReducer,
   notes: NoteReducer,
+<<<<<<< HEAD
   homeworks: HomeworksReducer,
   newTask: AddTaskReducer,
   newSolution: AddSolutionReducer,
   correction: CorrectSolutionReducer,
   message: MessageReducer,
+=======
+  groups: GroupsReducer,
+  mentors: MentorsReducer,
+>>>>>>> dev
 });
 
 export default rootReducer;

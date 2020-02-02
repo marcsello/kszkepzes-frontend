@@ -12,7 +12,7 @@ import { getNews, deleteNews, setSelectedNews } from '../../actions/news';
 import './News.css';
 
 class News extends Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.getNews();
   }
 
@@ -20,6 +20,7 @@ class News extends Component {
     return this.props.news.map(item => (
       <Item key={item.id}>
         <Item.Content>
+<<<<<<< HEAD
           <Container text textAlign='left'>
             <Item.Header
               style={{ fontSize: '2em', width: '100%' }}
@@ -28,9 +29,31 @@ class News extends Component {
                 <Grid.Column
                   floated='left'
                   width={this.props.user.role === 'Staff' ? 12 : 16}
+=======
+          <Item.Header
+            style={{ fontSize: '2em', width: '100%' }}
+          >
+            <Grid>
+              <Grid.Column width={12}>
+                {item.title}
+              </Grid.Column>
+              { this.props.user.role === 'Staff' ?
+              <Grid.Column floated='right' width={4}>
+                <EditNewsForm
+                  onClick={() => {
+                    this.props.setSelectedNews(item)
+                  }}
+                />
+                <Button
+                  compact
+                  color='red'
+                  size='mini'
+                  onClick={() => this.props.deleteNews(item)}
+>>>>>>> dev
                 >
                   {item.title}
                 </Grid.Column>
+<<<<<<< HEAD
                 { this.props.user.role === 'Staff' ?
                   <Grid.Column floated='right' width={4}>
                     <EditNewsForm
@@ -58,6 +81,16 @@ class News extends Component {
               {this.renderMultiLine(item.text)}
             </Item.Description>
         </Container>
+=======
+                <Grid.Column floated='right' width={5}>
+                  <p> Írta: <strong>{item.author}</strong></p>
+                  {/* TODO get the edited by name */}
+                  <p> Szerkesztette: {item.last_update_by}</p>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Item.Extra>
+>>>>>>> dev
         </Item.Content>
       </Item>
     ));
@@ -65,13 +98,13 @@ class News extends Component {
 
   renderMultiLine(text) {
     const strings = text.split('\n');
-    return strings.map(string => <p>{string}</p>);
+    return strings.map(string => <p key={Math.random()}>{string}</p>);
   }
 
   render() {
     return (
       <div>
-        <Segment style={{ padding: '3em 3em' }} vertical>
+        <Segment vertical>
           {/*  { this.props.user.is_superuser ? <AddNewsForm /> : ''} */}
           <Container text textAlign='center' style={{ marginBottom: '3em' }}>
             {this.props.user.role === 'Staff' ?
