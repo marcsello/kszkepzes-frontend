@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 
 import Home from './pages/Home';
-import Trainers from './pages/Trainers';
+import Mentors from './pages/Mentors';
 import Schedule from './pages/Schedule';
 import NotFound from './pages/NotFound';
 import Profile from './pages/Profile';
@@ -19,7 +19,7 @@ const Main = () => (
     <Redirect exact from='/' to='/home' />
     <Route exact path='/home' component={Home} />
     <Route path='/news' component={News} />
-    <Route path='/trainers' component={Trainers} />
+    <Route path='/mentors' component={Mentors} />
     <Route path='/schedule' component={Schedule} />
     <Route path='/profile' component={withRouter(Profile)} />
     <Route path='/statistics' component={Statistics} />

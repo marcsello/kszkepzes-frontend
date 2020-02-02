@@ -23,10 +23,11 @@ class Profile extends Component {
 
   render() {
     const {
-      nick, groups, motivationAbout, motivationProfession, motivationExercise, signed, id, deadline, text: deadlineText
+      nick, groups, motivationAbout, motivationProfession, 
+      motivationExercise, signed, id, deadline, messageBefore, 
+      messageAfter
     } = this.props;
     const endDate = new Date(deadline)
-    const endDateText = deadlineText
     let canEdit = Date.now()<endDate
     return (
       <Container
@@ -36,15 +37,11 @@ class Profile extends Component {
       >
         {canEdit ?
         <Segment inverted color='red' tertiary>
-          <p style={{ fontSize: '1.33em' }}>
-            A profilod mentés után is módosítható a későbbiekben, egészen {endDateText}-ig.
-          </p>
+          <p style={{ fontSize: '1.3em' }} dangerouslySetInnerHTML={{__html: messageBefore}} />
         </Segment>
         :
         <Segment inverted color='red' tertiary>
-          <p style={{ fontSize: '1.33em' }}>
-            A határidő {endDateText} volt, már nem tudsz jelentkezni.
-          </p>
+          <p style={{ fontSize: '1.3em' }} dangerouslySetInnerHTML={{__html: messageAfter}} />
         </Segment>}
 
         <Form>
@@ -222,7 +219,9 @@ class Profile extends Component {
 
 const mapStateToProps = ({
   user: {
-    nick, groups, motivationAbout, motivationProfession, motivationExercise, signed, id, deadline, text
+    nick, groups, motivationAbout, motivationProfession, 
+    motivationExercise, signed, id, deadline, messageBefore, 
+    messageAfter
   }
 }) => ({
   nick,
@@ -233,7 +232,8 @@ const mapStateToProps = ({
   signed,
   id,
   deadline,
-  text
+  messageBefore,
+  messageAfter
 });
 
 export default connect(mapStateToProps, { textChange, submitRegistration, groupChange, getDeadline })(Profile);

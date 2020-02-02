@@ -14,6 +14,8 @@ export const DELETE_NEWS = 'delete_news';
 export const EDIT_NEWS = 'edit_news';
 export const SELECT_NEWS = 'select_news';
 
+export const GET_MENTORS = 'get_mentors';
+
 export const GET_TASKS = 'get_homeworks';
 export const ADD_TASK = 'add_task';
 export const DELETE_TASK = 'delete_task';
