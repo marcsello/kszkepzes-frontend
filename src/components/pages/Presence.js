@@ -14,13 +14,13 @@ class Presence extends Component {
     return (this.props.events.map((event) => {
       if (event.visitors.includes(trainee.id)) {
         return (
-          <Table.Cell textAlign='center'>
+          <Table.Cell textAlign='center' key={Math.random()}>
             <Icon color='green' name='checkmark' />
           </Table.Cell>
         );
       }
       return (
-        <Table.Cell textAlign='center'>
+        <Table.Cell textAlign='center' key={Math.random()}>
           <Icon color='red' name='cancel' />
         </Table.Cell>
       );
@@ -31,7 +31,7 @@ class Presence extends Component {
   renderTraineesWithEvents() {
     return this.props.trainees.map((trainee) =>
     { return (
-      <Table.Row>
+      <Table.Row key={Math.random()}>
         <Table.Cell textAlign='center'>
           {trainee.full_name}
         </Table.Cell>
@@ -44,7 +44,8 @@ class Presence extends Component {
   // Column for each event
   renderTableHeaderEvents() {
     return (this.props.events.map(event => {
-      return (<Table.HeaderCell textAlign='center'>
+      return (
+      <Table.HeaderCell textAlign='center' key={event.id}>
         {event.name}
       </Table.HeaderCell>
       )
@@ -68,7 +69,11 @@ class Presence extends Component {
             {this.props.trainees ? 
               this.renderTraineesWithEvents() 
             : 
-              'Nincsenek képződők'
+              <Table.Row>
+                <Table.Cell>
+                  Nincsenek képződők
+                </Table.Cell>
+              </Table.Row>
             }
           </Table.Body>
         </Table>

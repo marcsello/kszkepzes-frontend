@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Table, Icon } from 'semantic-ui-react';
+import { Container, Table } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { getTrainees } from '../../actions/statistics';
 
@@ -15,11 +15,11 @@ class LeaderBoard extends Component {
         - (Number(a.homework_bits) + a.events_visited)
     }).map((trainee) => { 
       return (
-        <Table.Row>
+        <Table.Row key={trainee.nick}>
           <Table.Cell textAlign='center'>
-            {trainee.full_name}
+            {trainee.full_name} 
           </Table.Cell>
-          <Table.Cell textAlign='center'>
+          <Table.Cell textAlign='center' >
             {trainee.events_visited}
           </Table.Cell>
           <Table.Cell textAlign='center'>
@@ -54,11 +54,14 @@ class LeaderBoard extends Component {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-
             {this.props.trainees ? 
               this.renderTraineeBits() 
             : 
-              'Nincsenek képződők'
+              <Table.Row>
+                <Table.Cell>
+                  Nincsenek képződők
+                </Table.Cell>
+              </Table.Row>
             }
           </Table.Body>
         </Table>

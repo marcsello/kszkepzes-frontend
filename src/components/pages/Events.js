@@ -14,7 +14,7 @@ class Events extends Component {
   renderEvents() {
     return this.props.events.map((event) => { 
       return (
-        <Table.Row >
+        <Table.Row key={event.id}>
           <Table.Cell textAlign='center'>
             <Link to={`events/${event.id}`}>
               {event.name}
