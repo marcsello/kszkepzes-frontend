@@ -71,6 +71,7 @@ export const editTask = ({
   title,
   text,
   deadline,
+  bits,
 }) => (
   async (dispatch) => {
     try {
@@ -78,6 +79,7 @@ export const editTask = ({
         title,
         text,
         deadline,
+        bits,
       });
       if (response.data.id) {
         dispatch({

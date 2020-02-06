@@ -218,6 +218,12 @@ class Homework extends Component {
           <Table.Cell>
             {moment(task.deadline).format('YYYY. MM. DD. HH:mm')}
           </Table.Cell>
+          {/* Bits */}
+          <Table.Cell>
+              <Label color={null}>
+                {task.bits} bit 
+              </Label>
+            </Table.Cell>
           {/* Admin buttons */}
           <Table.Cell>
             <EditTaskForm onClick={() => this.props.setSelectedTask(task)} />
@@ -277,6 +283,8 @@ class Homework extends Component {
             <Table.HeaderCell>
               <Icon circular name='calendar' />
               Beadási határidő
+            </Table.HeaderCell>
+            <Table.HeaderCell width={2}>
             </Table.HeaderCell>
             <Table.HeaderCell>
               <Icon circular name='edit' />
