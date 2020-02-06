@@ -30,7 +30,7 @@ class CorrectSolutionForm extends Component {
     const relevantDocument = relevantDocuments.slice(-1)[0];
     let fileLink;
     if (relevantDocument && relevantDocument.file) {
-      fileLink = `/media${relevantDocument.file.split('media')[1]}`;
+      fileLink = `${relevantDocument.file}`;
     } else {
       fileLink = null;
     }
