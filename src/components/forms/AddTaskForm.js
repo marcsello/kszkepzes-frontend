@@ -14,7 +14,7 @@ class AddTaskForm extends Component {
   }
 
   render() {
-    const { title, text, deadline } = this.props.newTask;
+    const { title, text, deadline, bits = 1 } = this.props.newTask;
     return (
       <Modal
         open={this.state.showModal}
@@ -62,6 +62,15 @@ class AddTaskForm extends Component {
               }}
               value={deadline}
             />
+            <Form.Field
+              control={Input}
+              type='number'
+              label='Bitek száma:'
+              name='bits'
+              onChange={e => this.props.writeTask(e)}
+              value={bits}
+              placeholder='Add meg a feladatért kapható bitek számát ...'
+            />
           </Form>
         </Modal.Content>
         <Modal.Actions>
@@ -85,7 +94,7 @@ class AddTaskForm extends Component {
               deadline === '' || moment().isAfter(deadline)
             }
             onClick={() => {
-              this.props.addTask({ title, text, deadline });
+              this.props.addTask({ title, text, deadline, bits });
               this.setState({ showModal: false });
               this.props.clearWrite();
               }}
