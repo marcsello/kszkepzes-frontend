@@ -14,7 +14,7 @@ class AddNewsForm extends Component {
 
   render() {
     const { title, text } = this.props.newNews;
-    const author = this.props.user.id;
+    const updated_by = this.props.user.id;
     return (
       <Modal
         open={this.state.showModal}
@@ -60,7 +60,7 @@ class AddNewsForm extends Component {
             inverted
             color='green'
             onClick={() => {
-                    this.props.postNews({ title, text, author });
+                    this.props.postNews({ title, text, updated_by });
                     this.setState({ showModal: false });
                     this.props.clearWrite();
                     }}
