@@ -87,61 +87,118 @@ class Header extends Component {
     this.setState({ isOpen: false });
   }
 
+  renderHeader(inHeader, hasArrowMenu) {
+    let renderedItemNum = 0
+    let current = 0
+    let maxNum = 0
+    if(this.props.user.id) {
+      maxNum = menuItems.filter(item => {
+        return this.props.user.permission >= item.permissionLevel
+      }).length
+    } else {
+      maxNum = 3
+    }
+     
+    return (
+      <Segment inverted textAlign='center' vertical>
+        <Container>
+          <Menu inverted secondary size='large'>
+            {/* Default Menu items */}
+            {menuItems.map((item, i) => {
+              if (item.permissionLevel === 0) {
+                renderedItemNum += 1
+                return (
+                  <Menu.Item key={i} as={Link} to={item.to}>
+                  {item.prefix}{item.text}
+                </Menu.Item>
+                )
+              }else {
+                return null
+              }
+              })
+            }
+            {/* After default menu items */}
+            {menuItems.map((item, i) => {
+              
+              if (this.props.user.permission >= item.permissionLevel
+              && item.permissionLevel > 0
+              && renderedItemNum < inHeader
+              && current < i) {
+                renderedItemNum += 1
+                current = i
+                return (
+                  <Menu.Item key={i} as={Link} to={item.to}>
+                    {item.prefix}{item.text}
+                  </Menu.Item>
+                )
+              } else {
+                return null
+              }
+              })
+            }
+            {/* Arrow menu */}
+            { this.props.user.id && (current + 1) < maxNum ?
+              <Popup flowing hoverable inverted 
+                trigger={
+                  <Menu.Item>
+                    <Icon name='angle down' size='large' />
+                  </Menu.Item>
+                }
+                position='top center'
+              >
+                <Menu inverted secondary size='large'>
+                  {menuItems.map((item, i) => {
+                    return (this.props.user.permission >= item.permissionLevel
+                      && item.permissionLevel > 0
+                      && current < i ?
+                        <Menu.Item key={i} as={Link} to={item.to}>
+                            {item.prefix}{item.text}
+                        </Menu.Item>
+                      : null
+                    )})
+                  }
+                </Menu>
+              </Popup>
+              : null
+            }
+            {/* Login Button */}
+            <Menu.Item position='right'>
+              {this.props.user.id ?
+                <Button.Group>
+                  <Button inverted as={Link} to='/profile'>Profilom</Button>
+                  <Button as='a' href='/api/v1/logout/' icon='sign out' />
+                </Button.Group>
+                :
+                <Button as='a' href='/api/v1/login/authsch/' inverted>Bejelentkezés</Button>
+              }
+            </Menu.Item>
+          </Menu>
+        </Container>
+      </Segment>
+    )
+  }
+
   render() {
     return (
       <div>
         {/* Tablet, Computer, ... view */}
-        <Responsive minWidth={600} >
-          <Segment inverted textAlign='center' vertical>
-            <Container>
-              <Menu inverted secondary size='large'>
-                {/* Menu items */}
-                {menuItems.map((item, i) => 
-                  (item.permissionLevel === 0 ?
-                    <Menu.Item key={i} as={Link} to={item.to}>
-                      {item.prefix}{item.text}
-                    </Menu.Item>
-                    : null
-                  ))
-                }
-                {/* Arrow menu */}
-                { this.props.user.id ?
-                  <Popup flowing hoverable inverted 
-                    trigger={
-                      <Menu.Item>
-                        <Icon name='angle down' size='large' />
-                      </Menu.Item>
-                    }
-                    position='top center'
-                  >
-                    <Menu inverted secondary size='large'>
-                      {menuItems.map((item, i) =>
-                        (this.props.user.permission >= item.permissionLevel
-                          && item.permissionLevel > 0 ?
-                            <Menu.Item key={i} as={Link} to={item.to}>
-                                {item.prefix}{item.text}
-                            </Menu.Item>
-                            : null
-                        ))
-                      }
-                    </Menu>
-                  </Popup>
-                  : null
-                }
-                {/* Login Button */}
-                <Menu.Item position='right'>
-                  {this.props.user.id ?
-                    <Button.Group>
-                      <Button inverted as={Link} to='/profile'>Profilom</Button>
-                      <Button as='a' href='/api/v1/logout/' icon='sign out' />
-                    </Button.Group>
-                    :
-                    <Button as='a' href='/api/v1/login/authsch/' inverted>Bejelentkezés</Button>
-                  }
-                </Menu.Item>
-              </Menu>
-            </Container>
-          </Segment>
+        <Responsive minWidth={600} maxWidth={700}>
+          {this.renderHeader(3)}
+        </Responsive>
+        <Responsive minWidth={701} maxWidth={800}>
+          {this.renderHeader(4)}
+        </Responsive>
+        <Responsive minWidth={801} maxWidth={1000}>
+          {this.renderHeader(5)}
+        </Responsive>
+        <Responsive minWidth={1001} maxWidth={1100}>
+          {this.renderHeader(6)}
+        </Responsive>
+        <Responsive minWidth={1101} maxWidth={1200}>
+          {this.renderHeader(7)}
+        </Responsive>
+        <Responsive minWidth={1201}>
+          {this.renderHeader(8)}
         </Responsive>
         {/* Mobile view */}
         <Responsive maxWidth={599}>
