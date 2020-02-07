@@ -45,13 +45,14 @@ export const getSolutions = taskId => (
   }
 );
 
-export const addTask = ({ title, text, deadline }) => (
+export const addTask = ({ title, text, deadline, bits }) => (
   async (dispatch) => {
     try {
       const response = await axios.post('/api/v1/homework/tasks/', {
         title,
         text,
         deadline,
+        bits,
       });
       if (response.data.id) {
         dispatch({
@@ -70,6 +71,7 @@ export const editTask = ({
   title,
   text,
   deadline,
+  bits,
 }) => (
   async (dispatch) => {
     try {
@@ -77,6 +79,7 @@ export const editTask = ({
         title,
         text,
         deadline,
+        bits,
       });
       if (response.data.id) {
         dispatch({

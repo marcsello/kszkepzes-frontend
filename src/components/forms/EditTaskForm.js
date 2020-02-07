@@ -19,6 +19,7 @@ class EditTaskForm extends Component {
       title,
       text,
       deadline,
+      bits,
     } = this.props.selectedTask;
     return (
       <Modal
@@ -68,6 +69,15 @@ class EditTaskForm extends Component {
               }}
               value={deadline}
             />
+            <Form.Field
+              control={Input}
+              type='number'
+              label='Bitek száma:'
+              name='bits'
+              onChange={e => this.props.writeTask(e)}
+              value={bits}
+              placeholder='Add meg a feladatért kapható bitek számát ...'
+            />
           </Form>
         </Modal.Content>
         <Modal.Actions>
@@ -96,6 +106,7 @@ class EditTaskForm extends Component {
                 title,
                 text,
                 deadline,
+                bits,
               });
               this.setState({ showModal: false });
               this.props.clearWrite();

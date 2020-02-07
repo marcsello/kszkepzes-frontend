@@ -81,67 +81,39 @@ class Mentors extends Component {
   render() {
     return (
       <div>
+        <Segment inverted textAlign='center' vertical>
+          <Container>
+            <Header
+              as='h1'
+              content='Mentorok'
+              inverted
+              style={{
+                fontSize: '3em',
+                fontWeight: 'normal',
+                marginBottom: 0,
+                marginTop: '0.5em',
+              }}
+            />
+          </Container>
+        </Segment>
+
         <Responsive minWidth={768}>
-          <Segment inverted textAlign='center' vertical>
-            <Container>
-              <Header
-                as='h1'
-                content='Mentorok'
-                inverted
-                style={{
-                  fontSize: '3em',
-                  fontWeight: 'normal',
-                  marginBottom: 0,
-                  marginTop: '0.5em',
-                }}
-              />
-            </Container>
-          </Segment>
           <Container style={{paddingTop: '2em', paddingBottom: '5em'}}> 
             {this.renderMentorsNormal()}
           </Container>
         </Responsive>
+
         <Responsive minWidth={551} maxWidth={767}>
-          <Segment inverted textAlign='center' vertical>
-            <Container>
-              <Header
-                as='h1'
-                content='Mentorok'
-                inverted
-                style={{
-                  fontSize: '3em',
-                  fontWeight: 'normal',
-                  marginBottom: 0,
-                  marginTop: '0.5em',
-                }}
-              />
-            </Container>
-          </Segment>
           <Container style={{paddingTop: '2em', paddingBottom: '5em'}}> 
-            <Card.Group itemsPerRow={2}>
+            <Card.Group centered itemsPerRow={2}>
               {this.renderMentorsMobile()}
             </Card.Group>
           </Container>
         </Responsive>
 
         <Responsive maxWidth={550}>
-          <Segment inverted textAlign='center' vertical>
-            <Container>
-              <Header
-                as='h1'
-                content='Mentorok'
-                inverted
-                style={{
-                  fontSize: '3em',
-                  fontWeight: 'normal',
-                  marginBottom: 0,
-                  marginTop: '0.5em',
-                }}
-              />
-            </Container>
-          </Segment>
           <Container style={{paddingTop: '2em', paddingBottom: '5em'}}> 
-            <Card.Group itemsPerRow={1}>
+            <Card.Group centered itemsPerRow={1}>
               {this.renderMentorsMobile()}
             </Card.Group>
           </Container>

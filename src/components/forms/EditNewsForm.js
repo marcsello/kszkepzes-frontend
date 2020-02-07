@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Button, Form, Input, TextArea, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import { writeNews, editNews, clearWrite } from '../../actions/news';
 
@@ -13,7 +14,7 @@ class EditNewsForm extends Component {
   }
 
   render() {
-    const { id, title, text } = this.props.selectedNews;
+    const { id, title, text, author, last_update_by, created_at, updated_at } = this.props.selectedNews;
     const updated_by = this.props.user.id;
     return (
       <Modal
@@ -31,6 +32,10 @@ class EditNewsForm extends Component {
       >
         <Modal.Header>Szerkesztés:</Modal.Header>
         <Modal.Content>
+          <p style={{fontStyle: 'italic' }}><b>Közzétéve:</b> {moment(created_at).format('LLLL')} <br />
+          <b>Írta:</b> {author} <br />
+          <b>Szerkesztve:</b> {moment(updated_at).format('LLLL')} <br />
+          <b>Szerkesztette:</b> {last_update_by}</p>
           <Form>
             <Form.Field
               control={Input}

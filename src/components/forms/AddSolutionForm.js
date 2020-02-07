@@ -42,7 +42,7 @@ class AddSolutionForm extends Component {
 
     const lastName = thisTaskDocument[0]?.name
     const lastDesc = thisTaskDocument[0]?.description
-    const lastFile = thisTaskDocument[0]?.file
+    const lastFile = thisTaskDocument[0]?.file_url
 
     const corrected = false;
     const accepted = false;

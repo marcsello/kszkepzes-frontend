@@ -16,11 +16,11 @@ export const getNews = () => (
   }
 );
 
-export const postNews = ({ title, author, text }) => (
+export const postNews = ({ title, updated_by, text }) => (
   async (dispatch) => {
     try {
       const response = await axios.post('/api/v1/news/', {
-        author,
+        updated_by,
         title,
         text,
       });
