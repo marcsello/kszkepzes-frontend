@@ -29,8 +29,8 @@ class CorrectSolutionForm extends Component {
       document.uploaded_by_name === studentFullName);
     const relevantDocument = relevantDocuments.slice(-1)[0];
     let fileLink;
-    if (relevantDocument && relevantDocument.file) {
-      fileLink = `${relevantDocument.file}`;
+    if (relevantDocument && relevantDocument.file_url) {
+      fileLink = `${relevantDocument.file_url}`;
     } else {
       fileLink = null;
     }
