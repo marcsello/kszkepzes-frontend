@@ -37,7 +37,6 @@ class ConfirmModal extends Component {
             basic
             color='red'
             inverted
-            inverted
             onClick={() => this.close()}
           >
             <Icon name='remove' /> Nem

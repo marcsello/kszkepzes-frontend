@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Button, Form, Input, TextArea, Icon } from 'semantic-ui-react';
+import { Modal, Button, Form, Input, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { DateTimeInput } from 'semantic-ui-calendar-react';
 import { writeEvent, eventDate, addEvent } from '../../actions/statistics'
@@ -25,7 +25,7 @@ class AddEventForm extends Component {
   }
 
   render() {
-    const { name, date, description } = this.props.newEvent;
+    const { name, description } = this.props.newEvent;
     return (
       <Modal
         open={this.state.showModal}

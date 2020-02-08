@@ -10,12 +10,11 @@ COPY ./public ./public
 COPY package.json yarn.lock package-lock.json ./
 
 # Installing dependencies
-RUN npm install
-
-# Building the application
-RUN npm run build
+RUN npm install 
+RUN npm install serve
+RUN yarn build
 
 # Running
 EXPOSE 3000
-ENTRYPOINT ["npm", "run", "start"]
+ENTRYPOINT ["npm", "run", "deploy"]
 
