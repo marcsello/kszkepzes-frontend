@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import Slider from 'react-slick';
 import { Link } from 'react-router-dom';
 import './Home.css';
-import KSZKbiglogo from '../images/kszk_big_logo.png';
+import KSZKbiglogo from '../images/kszk_with_shadow.png';
 import { getImages } from '../../actions/home'
 
 const settings = {
