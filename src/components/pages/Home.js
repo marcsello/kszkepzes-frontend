@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import Slider from 'react-slick';
 import { Link } from 'react-router-dom';
 import './Home.css';
-import KSZKbiglogo from '../images/kszk_big_logo.png';
+import KSZKbiglogo from '../images/kszk_with_shadow.png';
 import { getImages } from '../../actions/home'
 
 const settings = {
@@ -58,6 +58,7 @@ class Home extends Component {
                   fontSize: '3.5vw',
                   fontWeight: 'normal',
                   marginBottom: 0,
+                  textShadow: "black 0 0 10px",
                   marginTop: '0.5vw',
                 }}
               />
@@ -69,6 +70,7 @@ class Home extends Component {
                   fontSize: '4.5vw',
                   fontWeight: 'bold',
                   marginBottom: '0.5vw',
+                  textShadow: "black 0 0 10px",
                   marginTop: '0.5vw',
                 }}
               />
@@ -80,6 +82,7 @@ class Home extends Component {
                   fontSize: '3vw',
                   fontWeight: 'normal',
                   marginBottom: 0,
+                  textShadow: "black 0 0 10px",
                   marginTop: '0.5vw',
                 }}
               />
@@ -96,6 +99,7 @@ class Home extends Component {
                   fontSize: '3vw',
                   fontWeight: 'normal',
                   marginBottom: 0,
+                  textShadow: "black 0 0 10px",
                   marginTop: '1vw',
                 }}
               />
@@ -124,6 +128,7 @@ class Home extends Component {
                       style={{
                         fontSize: '2vw',
                         marginTop: '1vw',
+                        boxShadow: "black 0 0 10px",
                         marginBottom: '1vw',
                       }}
                     >
