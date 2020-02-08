@@ -13,6 +13,7 @@ import Slider from 'react-slick';
 import { Link } from 'react-router-dom';
 import './Home.css';
 import KSZKbiglogo from '../images/kszk_big_logo.png';
+import { getImages } from '../../actions/home'
 
 const settings = {
   dots: false,
@@ -28,26 +29,22 @@ const settings = {
   initialSlide: Math.floor((Math.random() * 32) + 1),
 };
 
-const range = (count) => {
-  const newArray = [];
-  for (let i = 1; i < count; i += 1) {
-    newArray.push(i);
+class Home extends Component {
+  UNSAFE_componentWillMount() {
+    this.props.getImages();
   }
 
-  return newArray;
-};
-
-class Home extends Component {
   render() {
     const kszk_age = new Date().getFullYear() - 1976
+    console.log(this.props.images)
     return (
       <div>
         <div className='car-image-kszk'>
           <Slider {...settings}>
             {
-              range(32).map(image => (
+              this.props.images.map(image => (
                 <div key={image}>
-                  <img src={`images/${image}.jpg`} width='100%' alt='' />
+                  <img src={image.image} width='100%' alt='' />
                 </div>
               ))
             }
@@ -209,8 +206,8 @@ class Home extends Component {
   }
 }
 
-const mapStateToProps = ({ user }) => ({
-  user,
+const mapStateToProps = ({ user, images }) => ({
+  user, images
 });
 
-export default connect(mapStateToProps, {})(Home);
+export default connect(mapStateToProps, { getImages })(Home);

@@ -13,6 +13,7 @@ import CorrectSolutionReducer from './CorrectSolutionReducer';
 import EditTaskReducer from './EditTaskReducer';
 import GroupsReducer from './GroupsReducer';
 import MentorsReducer from './MentorsReducer';
+import ImagesReducer from './ImagesReducer';
 
 const rootReducer = combineReducers({
   user: UserReducer,
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   notes: NoteReducer,
   groups: GroupsReducer,
   mentors: MentorsReducer,
+  images: ImagesReducer,
 });
 
 export default rootReducer;
