@@ -36,7 +36,6 @@ class Home extends Component {
 
   render() {
     const kszk_age = new Date().getFullYear() - 1976
-    console.log(this.props.images)
     return (
       <div>
         <div className='car-image-kszk'>
@@ -56,7 +55,7 @@ class Home extends Component {
                 content='Üdvözlünk a'
                 inverted
                 style={{
-                  fontSize: '3vw',
+                  fontSize: '3.5vw',
                   fontWeight: 'normal',
                   marginBottom: 0,
                   marginTop: '0.5vw',
@@ -67,7 +66,7 @@ class Home extends Component {
                 content='Kollégiumi Számítástechnikai Kör'
                 inverted
                 style={{
-                  fontSize: '4vw',
+                  fontSize: '4.5vw',
                   fontWeight: 'bold',
                   marginBottom: '0.5vw',
                   marginTop: '0.5vw',

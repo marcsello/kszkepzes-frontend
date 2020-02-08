@@ -186,6 +186,7 @@ class AddSolutionForm extends Component {
                     });
                   this.setState({ showModal: false });
                   this.props.clearWrite();
+                  window.location.reload();
                   }
                 }
               />
